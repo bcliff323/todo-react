@@ -12,6 +12,7 @@ export default function Layout(props: Props) {
 			my-5
 			w-full
 			sm:w-2/3
+			md:w-1/2
 		">
 			{children}
 		</div>
