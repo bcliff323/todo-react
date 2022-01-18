@@ -1,5 +1,6 @@
 import {FormEvent, useState} from 'react';
 import Layout from '../components/Layout';
+import EditableText from '../components/EditableText';
 import useLocalStorage from 'use-local-storage';
 import cloneDeep from 'lodash/cloneDeep';
 import {TodoList} from '../types';
@@ -26,6 +27,7 @@ export default function Home(props: Props) {
 					ordinal: 0
 				}
 			]);
+			setListName("");
 			return;
 		}
 		const savedData = cloneDeep(savedListData);
@@ -39,6 +41,19 @@ export default function Home(props: Props) {
 			(list as TodoList).ordinal = i;
 			return list;
 		}));
+		setListName("");
+	}
+
+	function handleUpdateListTitle(title: string, id: number) {
+		const savedData = cloneDeep(savedListData || []);
+
+		setSavedListData(savedData.map((list, i) => {
+			if (parseInt((list as TodoList).id, 10) === id) {
+				(list as TodoList).title = title;
+				return list;
+			}
+			return list;
+		}));
 	}
 
 	return (
@@ -47,14 +62,26 @@ export default function Home(props: Props) {
 			<form onSubmit={handleSubmit}>
 				<input
 					name="values"
+					value={listName}
+					placeholder="Enter List Name"
 					onChange={
-						(e) => { setListName(e.target.value || ""); }
+						(e) => {
+							setListName(e.target.value || "");
+						}
 					} />
 				<button type="submit">Go</button>
 			</form>
 			<div>
 				{
-					savedListData && savedListData.map((list, i) => <div key={i}>{(list as TodoList).title}</div>)
+					savedListData && savedListData.map(
+						(list, i) => 
+							<EditableText key={i} 
+								text={(list as TodoList).title}
+								saveText={(title: string) => {
+									handleUpdateListTitle(title, parseInt((list as TodoList).id));
+								}}
+								/>
+						)
 				}
 			</div>
 		</Layout>
