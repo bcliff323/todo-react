@@ -10,7 +10,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={
           <LocalStorageProvider>
-            <Home useLocalStorage={useLocalStorage} />
+            <Home />
           </LocalStorageProvider>
         } />
       </Routes>

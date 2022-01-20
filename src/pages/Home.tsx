@@ -2,61 +2,33 @@ import {FormEvent, useState, useContext} from 'react';
 import Layout from '../components/Layout';
 import EditableText from '../components/EditableText';
 import {LocalStorageContext} from '../context/LocalStorageContext';
-import useLocalStorage from 'use-local-storage';
 import cloneDeep from 'lodash/cloneDeep';
 import {TodoList} from '../types';
 import "../css/styles.css";
 
 type Props = {
-	useLocalStorage: typeof useLocalStorage;
   children?: React.ReactNode;
 };
 
 export default function Home(props: Props) {
-	const {useLocalStorage} = props;
-	const [savedListData, setSavedListData] = useLocalStorage<object[]>("todo-lists");
+	const {
+		savedListData,
+		addNewList,
+		updateListTitle
+	} = useContext(LocalStorageContext);
+
 	const [listName, setListName] = useState<string>("");
 
-	const {foo, setFooValue} = useContext(LocalStorageContext);
 
 	function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
-		if (!savedListData) {
-			setSavedListData([
-				{
-					id: 1,
-					title: listName,
-					todos: [],
-					ordinal: 0
-				}
-			]);
-			setListName("");
-			return;
-		}
-		const savedData = cloneDeep(savedListData);
-		savedData.unshift({
-			id: savedData.length + 1,
-			title: listName,
-			todos: [],
-			ordinal: 0
-		});
-		setSavedListData(savedData.map((list, i) => {
-			(list as TodoList).ordinal = i;
-			return list;
-		}));
+		addNewList(listName);
 		setListName("");
 	}
 
-	function handleUpdateListTitle(title: string, id: number) {
-		const savedData = cloneDeep(savedListData || []);
-
-		setSavedListData(savedData.map((list, i) => {
-			if (parseInt((list as TodoList).id, 10) === id) {
-				(list as TodoList).title = title;
-				return list;
-			}
-			return list;
-		}));
+	function handleUpdateListTitle(title: string, id: string) {
+		const i = parseInt(id, 10);
+		updateListTitle(title, i);
 	}
 
 	return (
@@ -81,7 +53,7 @@ export default function Home(props: Props) {
 							<EditableText key={i} 
 								text={(list as TodoList).title}
 								saveText={(title: string) => {
-									handleUpdateListTitle(title, parseInt((list as TodoList).id));
+									handleUpdateListTitle(title, (list as TodoList).id);
 								}}
 								/>
 						)

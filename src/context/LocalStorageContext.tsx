@@ -1,13 +1,17 @@
 import {createContext, useContext} from 'react';
+import useLocalStorage from 'use-local-storage';
+import {TodoList} from '../types';
 
 interface ILocalStorageContext {
-  foo: string;
-	setFooValue: (val: string) => void;
+	savedListData: object[] | undefined;
+	addNewList: (title: string) => void;
+	updateListTitle: (title: string, id: number) => void;
 }
 
 const defaultState = {
-	foo: 'bar',
-	setFooValue: (val: string) => {}
+	savedListData: [],
+	addNewList: (title: string) => {},
+	updateListTitle: (title: string, id: number) => {}
 };
 
 export const LocalStorageContext = createContext<ILocalStorageContext>(defaultState);
