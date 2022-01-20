@@ -1,6 +1,7 @@
-import {FormEvent, useState} from 'react';
+import {FormEvent, useState, useContext} from 'react';
 import Layout from '../components/Layout';
 import EditableText from '../components/EditableText';
+import {LocalStorageContext} from '../context/LocalStorageContext';
 import useLocalStorage from 'use-local-storage';
 import cloneDeep from 'lodash/cloneDeep';
 import {TodoList} from '../types';
@@ -15,6 +16,8 @@ export default function Home(props: Props) {
 	const {useLocalStorage} = props;
 	const [savedListData, setSavedListData] = useLocalStorage<object[]>("todo-lists");
 	const [listName, setListName] = useState<string>("");
+
+	const {foo, setFooValue} = useContext(LocalStorageContext);
 
 	function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
