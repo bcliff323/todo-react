@@ -6,12 +6,14 @@ interface ILocalStorageContext {
 	savedListData: object[] | undefined;
 	addNewList: (title: string) => void;
 	updateListTitle: (title: string, id: number) => void;
+	deleteList: (id: number) => void;
 }
 
 const defaultState = {
 	savedListData: [],
 	addNewList: (title: string) => {},
-	updateListTitle: (title: string, id: number) => {}
+	updateListTitle: (title: string, id: number) => {},
+	deleteList: (id: number) => {}
 };
 
 export const LocalStorageContext = createContext<ILocalStorageContext>(defaultState);

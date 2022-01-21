@@ -14,7 +14,8 @@ export default function Home(props: Props) {
 	const {
 		savedListData,
 		addNewList,
-		updateListTitle
+		updateListTitle,
+		deleteList
 	} = useContext(LocalStorageContext);
 
 	const [listName, setListName] = useState<string>("");
@@ -24,11 +25,6 @@ export default function Home(props: Props) {
 		event.preventDefault();
 		addNewList(listName);
 		setListName("");
-	}
-
-	function handleUpdateListTitle(title: string, id: string) {
-		const i = parseInt(id, 10);
-		updateListTitle(title, i);
 	}
 
 	return (
@@ -53,7 +49,12 @@ export default function Home(props: Props) {
 							<EditableText key={i} 
 								text={(list as TodoList).title}
 								saveText={(title: string) => {
-									handleUpdateListTitle(title, (list as TodoList).id);
+									const i = parseInt((list as TodoList).id, 10);
+									updateListTitle(title, i);
+								}}
+								deleteList={() => {	
+									const i = parseInt((list as TodoList).id, 10);
+									deleteList(i);
 								}}
 								/>
 						)

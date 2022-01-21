@@ -29,7 +29,7 @@ export default function LocalStorageProvider({children}: Props) {
 			]);
 			return;
 		}
-		
+
 		const savedData = cloneDeep(savedListData);
 		savedData.unshift({
 			id: savedData.length + 1,
@@ -54,10 +54,20 @@ export default function LocalStorageProvider({children}: Props) {
 		}));
 	}
 
+	const deleteList = (id: number) => {
+		const savedData = cloneDeep(savedListData || []);
+
+		setSavedListData(savedData.filter((list, i) => {
+			const matched = parseInt((list as TodoList).id, 10) === id;
+			return !matched;
+		}));
+	}
+
 	const ctx = {
 		savedListData,
 		addNewList,
-		updateListTitle
+		updateListTitle,
+		deleteList
 	};
 	
 	return (
