@@ -1,4 +1,5 @@
 import {FormEvent, useState, useContext} from 'react';
+import {DragDropContext, Droppable, Draggable, DropResult} from "react-beautiful-dnd";
 import Layout from '../components/Layout';
 import EditableText from '../components/EditableText';
 import {LocalStorageContext} from '../context/LocalStorageContext';
@@ -27,6 +28,18 @@ export default function Home(props: Props) {
 		setListName("");
 	}
 
+	function onDragEnd(result: DropResult) {
+		if (!result.destination) {
+			return;
+		}
+
+		if (result.destination.index === result.source.index) {
+			return;
+		}
+
+		console.log(result);
+	}
+
 	return (
 		<Layout>
 			<h1>Todo Manager</h1>
@@ -43,22 +56,40 @@ export default function Home(props: Props) {
 				<button type="submit">Go</button>
 			</form>
 			<div>
-				{
-					savedListData && savedListData.map(
-						(list, i) => 
-							<EditableText key={i} 
-								text={(list as TodoList).title}
-								saveText={(title: string) => {
-									const i = parseInt((list as TodoList).id, 10);
-									updateListTitle(title, i);
-								}}
-								deleteList={() => {	
-									const i = parseInt((list as TodoList).id, 10);
-									deleteList(i);
-								}}
-								/>
-						)
-				}
+				<DragDropContext onDragEnd={onDragEnd}>
+					<Droppable droppableId="list">
+						{provided => (
+							<div ref={provided.innerRef} {...provided.droppableProps}>
+								{savedListData && savedListData.map(
+									(list, i) => {
+										const dId = (list as TodoList).id?.toString();
+										return (
+											<Draggable key={i} draggableId={dId} index={(list as TodoList).ordinal}>
+												{provided => (
+													<div ref={provided.innerRef}
+														{...provided.draggableProps}
+														{...provided.dragHandleProps}>
+														<EditableText
+															text={(list as TodoList).title}
+															saveText={(title: string) => {
+																const i = parseInt((list as TodoList).id, 10);
+																updateListTitle(title, i);
+															}}
+															deleteList={() => {	
+																const i = parseInt((list as TodoList).id, 10);
+																deleteList(i);
+															}} />
+													</div>
+												)}
+											</Draggable>
+										);
+									}
+								)}
+								{provided.placeholder}
+							</div>
+						)}
+					</Droppable>
+				</DragDropContext>
 			</div>
 		</Layout>
 	)
