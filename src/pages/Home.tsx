@@ -23,7 +23,6 @@ export default function Home(props: Props) {
 
 	const [listName, setListName] = useState<string>("");
 
-
 	function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 		addNewList(listName);
@@ -57,43 +56,15 @@ export default function Home(props: Props) {
 					} />
 				<button type="submit">Go</button>
 			</form>
-			<div>
-				<DragDropContext onDragEnd={onDragEnd}>
-					<Droppable droppableId="list">
-						{provided => (
-							<div ref={provided.innerRef} {...provided.droppableProps}>
-								{savedListData && savedListData.map(
-									(list, i) => {
-										const dId = (list as TodoList).ordinal?.toString();
-										return (
-											<Draggable key={(list as TodoList).ordinal} draggableId={dId} index={(list as TodoList).ordinal}>
-												{provided => (
-													<div ref={provided.innerRef}
-														{...provided.draggableProps}
-														{...provided.dragHandleProps}>
-														<FadeIn>
-															<EditableText
-																text={(list as TodoList).title}
-																saveText={(title: string) => {
-																	const i = parseInt((list as TodoList).id, 10);
-																	updateListTitle(title, i);
-																}}
-																deleteList={() => {	
-																	const i = parseInt((list as TodoList).id, 10);
-																	deleteList(i);
-																}} />
-														</FadeIn>
-													</div>
-												)}
-											</Draggable>
-										);
-									}
-								)}
-								{provided.placeholder}
-							</div>
-						)}
-					</Droppable>
-				</DragDropContext>
+			<div className="py-4">
+				{
+					savedListData && savedListData.map(
+						(list, i) => (
+							<a className="inline-block px-5 py-2 mr-1 mb-1 bg-rose-600 text-rose-100 rounded-md"
+								href={`/list/${(list as TodoList).id}`}>{(list as TodoList).title}</a>
+						)
+					)
+				}
 			</div>
 		</Layout>
 	)
