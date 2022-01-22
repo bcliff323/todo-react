@@ -16,6 +16,7 @@ export default function Home(props: Props) {
 		savedListData,
 		addNewList,
 		updateListTitle,
+		updateListOrder,
 		deleteList
 	} = useContext(LocalStorageContext);
 
@@ -37,7 +38,7 @@ export default function Home(props: Props) {
 			return;
 		}
 
-		console.log(result);
+		updateListOrder(parseInt(result.draggableId, 10), result.source.index, result.destination.index);
 	}
 
 	return (
@@ -62,9 +63,9 @@ export default function Home(props: Props) {
 							<div ref={provided.innerRef} {...provided.droppableProps}>
 								{savedListData && savedListData.map(
 									(list, i) => {
-										const dId = (list as TodoList).id?.toString();
+										const dId = (list as TodoList).ordinal?.toString();
 										return (
-											<Draggable key={i} draggableId={dId} index={(list as TodoList).ordinal}>
+											<Draggable key={(list as TodoList).ordinal} draggableId={dId} index={(list as TodoList).ordinal}>
 												{provided => (
 													<div ref={provided.innerRef}
 														{...provided.draggableProps}

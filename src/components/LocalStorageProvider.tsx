@@ -15,7 +15,8 @@ export default function LocalStorageProvider({children}: Props) {
 		.map((list, i) => {
 			(list as TodoList).ordinal = i;
 			return list;
-		});
+		})
+		.sort((a, b) => (a as TodoList).ordinal > (b as TodoList).ordinal);
 	
 	const addNewList = (title: string) => {
 		if (!savedListData) {
@@ -54,19 +55,34 @@ export default function LocalStorageProvider({children}: Props) {
 		}));
 	}
 
+	// TODO: (When implementing todo items)
+	// Make this smart enough to select list by id before updating order of TODOs.
+	const updateListOrder = (id: number, source: number, destination: number) => {
+		const updatedData = cloneDeep(savedListData || []);
+		const [removed] = updatedData.splice(source, 1);
+		updatedData.splice(destination, 0, removed);
+		
+		const ordered = resetOrdinals(updatedData);
+		setSavedListData(ordered);
+	}
+
 	const deleteList = (id: number) => {
 		const savedData = cloneDeep(savedListData || []);
 
-		setSavedListData(savedData.filter((list, i) => {
+		const withoutList = savedData.filter((list, i) => {
 			const matched = parseInt((list as TodoList).id, 10) === id;
 			return !matched;
-		}));
+		});
+
+		const ordered = resetOrdinals(withoutList);
+		setSavedListData(ordered);
 	}
 
 	const ctx = {
 		savedListData,
 		addNewList,
 		updateListTitle,
+		updateListOrder,
 		deleteList
 	};
 	
