@@ -1,6 +1,7 @@
 import {createContext, useState, useContext, useEffect} from 'react';
 import {LocalStorageContext} from '../context/LocalStorageContext';
 import useLocalStorage from 'use-local-storage';
+import { v4 as uuidv4 } from 'uuid';
 import cloneDeep from 'lodash/cloneDeep';
 import {TodoList} from '../types';
 
@@ -16,38 +17,33 @@ export default function LocalStorageProvider({children}: Props) {
 			(list as TodoList).ordinal = i;
 			return list;
 		})
-		.sort((a, b) => (a as TodoList).ordinal > (b as TodoList).ordinal);
+		.sort((a, b) => (a as TodoList).ordinal - (b as TodoList).ordinal);
 	
 	const addNewList = (title: string) => {
+		const newList = {
+			id: uuidv4(),
+			title: title,
+			todos: [],
+			ordinal: 0
+		};
+
 		if (!savedListData) {
-			setSavedListData([
-				{
-					id: 1,
-					title: title,
-					todos: [],
-					ordinal: 0
-				}
-			]);
+			setSavedListData([newList]);
 			return;
 		}
 
 		const savedData = cloneDeep(savedListData);
-		savedData.unshift({
-			id: savedData.length + 1,
-			title: title,
-			todos: [],
-			ordinal: 0
-		});
+		savedData.unshift(newList);
 
 		const ordered = resetOrdinals(savedData);
 		setSavedListData(ordered);
 	}
 
-	const updateListTitle = (title: string, id: number) => {
+	const updateListTitle = (title: string, id: string) => {
 		const savedData = cloneDeep(savedListData || []);
 
 		setSavedListData(savedData.map((list, i) => {
-			if (parseInt((list as TodoList).id, 10) === id) {
+			if ((list as TodoList).id === id) {
 				(list as TodoList).title = title;
 				return list;
 			}
@@ -57,7 +53,7 @@ export default function LocalStorageProvider({children}: Props) {
 
 	// TODO: (When implementing todo items)
 	// Make this smart enough to select list by id before updating order of TODOs.
-	const updateListOrder = (id: number, source: number, destination: number) => {
+	const updateListOrder = (id: string, source: number, destination: number) => {
 		const updatedData = cloneDeep(savedListData || []);
 		const [removed] = updatedData.splice(source, 1);
 		updatedData.splice(destination, 0, removed);
@@ -66,12 +62,11 @@ export default function LocalStorageProvider({children}: Props) {
 		setSavedListData(ordered);
 	}
 
-	const deleteList = (id: number) => {
+	const deleteList = (id: string) => {
 		const savedData = cloneDeep(savedListData || []);
 
 		const withoutList = savedData.filter((list, i) => {
-			const matched = parseInt((list as TodoList).id, 10) === id;
-			return !matched;
+			return (list as TodoList).id !== id;
 		});
 
 		const ordered = resetOrdinals(withoutList);

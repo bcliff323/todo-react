@@ -39,7 +39,7 @@ export default function ListDetail(props: Props) {
 			return;
 		}
 
-		updateListOrder(parseInt(result.draggableId, 10), result.source.index, result.destination.index);
+		updateListOrder(result.draggableId, result.source.index, result.destination.index);
 	}
 
 	return (
@@ -64,9 +64,9 @@ export default function ListDetail(props: Props) {
 							<div ref={provided.innerRef} {...provided.droppableProps}>
 								{savedListData && savedListData.map(
 									(list, i) => {
-										const dId = (list as TodoList).ordinal?.toString();
+										const dId = (list as TodoList).id?.toString();
 										return (
-											<Draggable key={(list as TodoList).ordinal} draggableId={dId} index={(list as TodoList).ordinal}>
+											<Draggable key={(list as TodoList).id} draggableId={dId} index={(list as TodoList).ordinal}>
 												{provided => (
 													<div ref={provided.innerRef}
 														{...provided.draggableProps}
@@ -75,12 +75,10 @@ export default function ListDetail(props: Props) {
 															<EditableText
 																text={(list as TodoList).title}
 																saveText={(title: string) => {
-																	const i = parseInt((list as TodoList).id, 10);
-																	updateListTitle(title, i);
+																	updateListTitle(title, (list as TodoList).id);
 																}}
-																deleteList={() => {	
-																	const i = parseInt((list as TodoList).id, 10);
-																	deleteList(i);
+																deleteList={() => {
+																	deleteList((list as TodoList).id);
 																}} />
 														</FadeIn>
 													</div>

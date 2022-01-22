@@ -38,24 +38,32 @@ export default function Home(props: Props) {
 			return;
 		}
 
-		updateListOrder(parseInt(result.draggableId, 10), result.source.index, result.destination.index);
+		updateListOrder(result.draggableId, result.source.index, result.destination.index);
 	}
 
 	return (
 		<Layout>
 			<h1>Todo Manager</h1>
-			<form onSubmit={handleSubmit}>
-				<input
-					name="values"
-					value={listName}
-					placeholder="Enter List Name"
-					onChange={
-						(e) => {
-							setListName(e.target.value || "");
-						}
-					} />
-				<button type="submit">Go</button>
-			</form>
+			<div className="bg-rose-200">
+				<form onSubmit={handleSubmit}>
+					<div className="flex bg-rose-400">
+						<input
+							className="flex-auto block"
+							name="values"
+							value={listName}
+							placeholder="Enter List Name"
+							onChange={
+								(e) => {
+									setListName(e.target.value || "");
+								}
+							} />
+						<button
+							type="submit">
+							Go
+						</button>
+					</div>
+				</form>
+			</div>
 			<div className="py-4">
 				{
 					savedListData && savedListData.map(
