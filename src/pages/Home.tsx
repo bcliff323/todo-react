@@ -1,5 +1,6 @@
 import {FormEvent, useState, useContext} from 'react';
 import {DragDropContext, Droppable, Draggable, DropResult} from "react-beautiful-dnd";
+import FadeIn from 'react-fade-in';
 import Layout from '../components/Layout';
 import EditableText from '../components/EditableText';
 import {LocalStorageContext} from '../context/LocalStorageContext';
@@ -70,16 +71,18 @@ export default function Home(props: Props) {
 													<div ref={provided.innerRef}
 														{...provided.draggableProps}
 														{...provided.dragHandleProps}>
-														<EditableText
-															text={(list as TodoList).title}
-															saveText={(title: string) => {
-																const i = parseInt((list as TodoList).id, 10);
-																updateListTitle(title, i);
-															}}
-															deleteList={() => {	
-																const i = parseInt((list as TodoList).id, 10);
-																deleteList(i);
-															}} />
+														<FadeIn>
+															<EditableText
+																text={(list as TodoList).title}
+																saveText={(title: string) => {
+																	const i = parseInt((list as TodoList).id, 10);
+																	updateListTitle(title, i);
+																}}
+																deleteList={() => {	
+																	const i = parseInt((list as TodoList).id, 10);
+																	deleteList(i);
+																}} />
+														</FadeIn>
 													</div>
 												)}
 											</Draggable>
