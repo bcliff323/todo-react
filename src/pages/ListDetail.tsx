@@ -7,7 +7,7 @@ import InputForm from '../components/InputForm';
 import EditableText from '../components/EditableText';
 import {LocalStorageContext} from '../context/LocalStorageContext';
 import cloneDeep from 'lodash/cloneDeep';
-import {TodoList} from '../types';
+import {TodoList, Todo} from '../types';
 import "../css/styles.css";
 
 type Props = {
@@ -17,18 +17,17 @@ type Props = {
 export default function ListDetail(props: Props) {
 	const {
 		savedListData,
-		addNewList,
-		updateListTitle,
-		updateListOrder,
-		deleteList
+		addNewTodo,
+		updateListOrder
 	} = useContext(LocalStorageContext);
 
 	const { id } = useParams();
 	const listDetails = savedListData?.find((list) => (list as TodoList).id === id);
 	const todos = (listDetails as TodoList).todos;
 
-	function handleSubmit(listName: string) {
-		addNewList(listName);
+	function handleSubmit(todoName: string) {
+		const listId = (listDetails as TodoList).id;
+		addNewTodo(listId, todoName);
 	}
 
 	function onDragEnd(result: DropResult) {
@@ -42,7 +41,7 @@ export default function ListDetail(props: Props) {
 
 		updateListOrder(result.draggableId, result.source.index, result.destination.index);
 	}
-	
+
 	return (
 		<Layout>
 			<h1>List Detail Page</h1>
@@ -50,6 +49,8 @@ export default function ListDetail(props: Props) {
 				label="Go"
 				placeholder="Add a Todo" />
 			<div>
+				{todos.map((todo: Todo, i) => <div key={i}>{(todo as Todo).title}</div>)}
+				{/*
 				<DragDropContext onDragEnd={onDragEnd}>
 					<Droppable droppableId="list">
 						{provided => (
@@ -84,6 +85,7 @@ export default function ListDetail(props: Props) {
 						)}
 					</Droppable>
 				</DragDropContext>
+				*/}
 			</div>
 		</Layout>
 	)
