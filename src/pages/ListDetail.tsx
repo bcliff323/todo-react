@@ -23,7 +23,6 @@ export default function ListDetail(props: Props) {
 
 	const [listName, setListName] = useState<string>("");
 
-
 	function handleSubmit(event: FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 		addNewList(listName);

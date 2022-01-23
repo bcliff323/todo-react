@@ -1,5 +1,4 @@
 import {FormEvent, useState, useContext} from 'react';
-import {DragDropContext, Droppable, Draggable, DropResult} from "react-beautiful-dnd";
 import FadeIn from 'react-fade-in';
 import Layout from '../components/Layout';
 import EditableText from '../components/EditableText';
@@ -29,18 +28,6 @@ export default function Home(props: Props) {
 		setListName("");
 	}
 
-	function onDragEnd(result: DropResult) {
-		if (!result.destination) {
-			return;
-		}
-
-		if (result.destination.index === result.source.index) {
-			return;
-		}
-
-		updateListOrder(result.draggableId, result.source.index, result.destination.index);
-	}
-
 	return (
 		<Layout>
 			<h1>Todo Manager</h1>
@@ -68,7 +55,8 @@ export default function Home(props: Props) {
 				{
 					savedListData && savedListData.map(
 						(list, i) => (
-							<a className="inline-block px-5 py-2 mr-1 mb-1 bg-rose-600 text-rose-100 rounded-md"
+							<a key={i}
+								className="inline-block px-5 py-2 mr-1 mb-1 bg-rose-600 text-rose-100 rounded-md"
 								href={`/list/${(list as TodoList).id}`}>{(list as TodoList).title}</a>
 						)
 					)
