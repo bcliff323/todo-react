@@ -18,7 +18,9 @@ export default function ListDetail(props: Props) {
 	const {
 		savedListData,
 		addNewTodo,
-		updateListOrder
+		updateTodoOrder,
+		updateTodoTitle,
+		deleteTodo
 	} = useContext(LocalStorageContext);
 
 	const { id } = useParams();
@@ -39,7 +41,11 @@ export default function ListDetail(props: Props) {
 			return;
 		}
 
-		updateListOrder(result.draggableId, result.source.index, result.destination.index);
+		updateTodoOrder(
+			(listDetails as TodoList).id,
+			result.source.index,
+			result.destination.index
+		);
 	}
 
 	return (
@@ -49,29 +55,27 @@ export default function ListDetail(props: Props) {
 				label="Go"
 				placeholder="Add a Todo" />
 			<div>
-				{todos.map((todo: Todo, i) => <div key={i}>{(todo as Todo).title}</div>)}
-				{/*
 				<DragDropContext onDragEnd={onDragEnd}>
 					<Droppable droppableId="list">
 						{provided => (
 							<div ref={provided.innerRef} {...provided.droppableProps}>
-								{savedListData?.map(
-									(list, i) => {
-										const dId = (list as TodoList).id?.toString();
+								{todos.map(
+									(todo: Todo, i) => {
+										const dId = (todo as Todo).id?.toString();
 										return (
-											<Draggable key={(list as TodoList).id} draggableId={dId} index={(list as TodoList).ordinal}>
+											<Draggable key={(todo as Todo).id} draggableId={dId} index={(todo as Todo).ordinal}>
 												{provided => (
 													<div ref={provided.innerRef}
 														{...provided.draggableProps}
 														{...provided.dragHandleProps}>
 														<FadeIn>
 															<EditableText
-																text={(list as TodoList).title}
+																text={(todo as Todo).title}
 																saveText={(title: string) => {
-																	updateListTitle(title, (list as TodoList).id);
+																	updateTodoTitle(title, (listDetails as TodoList).id, (todo as Todo).id);
 																}}
 																deleteList={() => {
-																	deleteList((list as TodoList).id);
+																	deleteTodo((listDetails as TodoList).id, (todo as Todo).id);
 																}} />
 														</FadeIn>
 													</div>
@@ -85,7 +89,6 @@ export default function ListDetail(props: Props) {
 						)}
 					</Droppable>
 				</DragDropContext>
-				*/}
 			</div>
 		</Layout>
 	)

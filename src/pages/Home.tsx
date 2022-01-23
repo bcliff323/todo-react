@@ -17,7 +17,6 @@ export default function Home(props: Props) {
 		savedListData,
 		addNewList,
 		updateListTitle,
-		updateListOrder,
 		deleteList
 	} = useContext(LocalStorageContext);
 

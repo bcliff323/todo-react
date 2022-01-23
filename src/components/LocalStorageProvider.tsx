@@ -51,15 +51,23 @@ export default function LocalStorageProvider({children}: Props) {
 		}));
 	}
 
-	// TODO: (When implementing todo items)
-	// Make this smart enough to select list by id before updating order of TODOs.
-	const updateListOrder = (id: string, source: number, destination: number) => {
-		const updatedData = cloneDeep(savedListData || []);
-		const [removed] = updatedData.splice(source, 1);
-		updatedData.splice(destination, 0, removed);
-		
-		const ordered = resetOrdinals(updatedData);
-		setSavedListData(ordered);
+	const updateTodoOrder = (listId: string, source: number, destination: number) => {
+		const savedData = cloneDeep(savedListData || []);
+
+		const withReOrderedData = savedData.map((list, i) => {
+			if ((list as TodoList).id === listId) {
+				const todos = (list as TodoList).todos
+				const [removed] = todos.splice(source, 1);
+				todos.splice(destination, 0, removed);
+				todos.forEach((t, i) => {
+					(t as Todo).ordinal = i;
+				})
+				return list;
+			}
+			return list;
+		});
+
+		setSavedListData(withReOrderedData);
 	}
 
 	const deleteList = (id: string) => {
@@ -70,7 +78,7 @@ export default function LocalStorageProvider({children}: Props) {
 		});
 
 		const ordered = resetOrdinals(withoutList);
-		setSavedListData(ordered);
+		setSavedListData(withoutList);
 	}
 
 	const addNewTodo = (id: string, todoTitle: string) => {
@@ -88,7 +96,7 @@ export default function LocalStorageProvider({children}: Props) {
 				todos.unshift(newTodo);
 				todos.forEach((todo: Todo, i: number) => {
 					todo.ordinal = i;
-				})
+				});
 				return list;
 			}
 			return list;
@@ -97,13 +105,54 @@ export default function LocalStorageProvider({children}: Props) {
 		setSavedListData(withNewTodo);
 	}
 
+	const updateTodoTitle = (title: string, listId: string, todoId: string) => {
+		const savedData = cloneDeep(savedListData || []);
+
+		const withUpdatedTitle = savedData.map((list, i) => {
+			if ((list as TodoList).id === listId) {
+				const todos = (list as TodoList).todos;
+				todos.forEach((todo: Todo, i) => {
+					const t = (todo as Todo);
+					if (t.id === todoId) {
+						t.title = title;
+					}
+				});
+				return list;
+			}
+			return list;
+		});
+
+		setSavedListData(withUpdatedTitle);
+	}
+
+	const deleteTodo = (listId: string, todoId: string) => {
+		const savedData = cloneDeep(savedListData || []);
+
+		const withoutDeletedTodo = savedData.map((list, i) => {
+			if ((list as TodoList).id === listId) {
+				const todos = (list as TodoList).todos;
+				const deletedIndex = todos.findIndex(todo => (todo as Todo).id === todoId);
+				todos.splice(deletedIndex, 1);
+				todos.forEach((todo: Todo, i: number) => {
+					todo.ordinal = i;
+				});
+				return list;
+			}
+			return list;
+		});
+
+		setSavedListData(withoutDeletedTodo);
+	}
+
 	const ctx = {
 		savedListData,
 		addNewList,
 		updateListTitle,
-		updateListOrder,
+		updateTodoOrder,
 		deleteList,
-		addNewTodo
+		addNewTodo,
+		updateTodoTitle,
+		deleteTodo
 	};
 	
 	return (
