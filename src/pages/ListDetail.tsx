@@ -1,7 +1,9 @@
-import {FormEvent, useState, useContext} from 'react';
+import {FormEvent, ChangeEvent, useState, useContext} from 'react';
+import {useParams} from 'react-router-dom';
 import {DragDropContext, Droppable, Draggable, DropResult} from "react-beautiful-dnd";
 import FadeIn from 'react-fade-in';
 import Layout from '../components/Layout';
+import InputForm from '../components/InputForm';
 import EditableText from '../components/EditableText';
 import {LocalStorageContext} from '../context/LocalStorageContext';
 import cloneDeep from 'lodash/cloneDeep';
@@ -21,12 +23,12 @@ export default function ListDetail(props: Props) {
 		deleteList
 	} = useContext(LocalStorageContext);
 
-	const [listName, setListName] = useState<string>("");
+	const { id } = useParams();
+	const listDetails = savedListData?.find((list) => (list as TodoList).id === id);
+	const todos = (listDetails as TodoList).todos;
 
-	function handleSubmit(event: FormEvent<HTMLFormElement>) {
-		event.preventDefault();
+	function handleSubmit(listName: string) {
 		addNewList(listName);
-		setListName("");
 	}
 
 	function onDragEnd(result: DropResult) {
@@ -40,28 +42,19 @@ export default function ListDetail(props: Props) {
 
 		updateListOrder(result.draggableId, result.source.index, result.destination.index);
 	}
-
+	
 	return (
 		<Layout>
 			<h1>List Detail Page</h1>
-			<form onSubmit={handleSubmit}>
-				<input
-					name="values"
-					value={listName}
-					placeholder="Enter List Name"
-					onChange={
-						(e) => {
-							setListName(e.target.value || "");
-						}
-					} />
-				<button type="submit">Go</button>
-			</form>
+			<InputForm handleSubmit={handleSubmit}
+				label="Go"
+				placeholder="Add a Todo" />
 			<div>
 				<DragDropContext onDragEnd={onDragEnd}>
 					<Droppable droppableId="list">
 						{provided => (
 							<div ref={provided.innerRef} {...provided.droppableProps}>
-								{savedListData && savedListData.map(
+								{savedListData?.map(
 									(list, i) => {
 										const dId = (list as TodoList).id?.toString();
 										return (

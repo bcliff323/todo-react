@@ -1,6 +1,7 @@
 import {FormEvent, useState, useContext} from 'react';
 import FadeIn from 'react-fade-in';
 import Layout from '../components/Layout';
+import InputForm from '../components/InputForm';
 import EditableText from '../components/EditableText';
 import {LocalStorageContext} from '../context/LocalStorageContext';
 import cloneDeep from 'lodash/cloneDeep';
@@ -22,34 +23,17 @@ export default function Home(props: Props) {
 
 	const [listName, setListName] = useState<string>("");
 
-	function handleSubmit(event: FormEvent<HTMLFormElement>) {
-		event.preventDefault();
+	function handleSubmit(listName: string) {
 		addNewList(listName);
-		setListName("");
 	}
 
 	return (
 		<Layout>
 			<h1>Todo Manager</h1>
 			<div className="bg-rose-200">
-				<form onSubmit={handleSubmit}>
-					<div className="flex bg-rose-400">
-						<input
-							className="flex-auto block"
-							name="values"
-							value={listName}
-							placeholder="Enter List Name"
-							onChange={
-								(e) => {
-									setListName(e.target.value || "");
-								}
-							} />
-						<button
-							type="submit">
-							Go
-						</button>
-					</div>
-				</form>
+				<InputForm handleSubmit={handleSubmit}
+					label="Go"
+					placeholder="Add a Todo List" />
 			</div>
 			<div className="py-4">
 				{

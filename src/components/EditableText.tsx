@@ -28,7 +28,7 @@ export default function EditableText(props: Props) {
 	function updateText(e: ChangeEvent<HTMLInputElement>) {
 		setNewValue(e.target.value);
 	}
-
+	
 	return (
 		<div>
 			{
