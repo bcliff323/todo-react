@@ -3,6 +3,7 @@ import FadeIn from 'react-fade-in';
 import Layout from '../components/Layout';
 import InputForm from '../components/InputForm';
 import EditableText from '../components/EditableText';
+import Deletable from '../components/Deletable';
 import {LocalStorageContext} from '../context/LocalStorageContext';
 import cloneDeep from 'lodash/cloneDeep';
 import {TodoList} from '../types';
@@ -38,9 +39,15 @@ export default function Home(props: Props) {
 				{
 					savedListData && savedListData.map(
 						(list, i) => (
-							<a key={i}
-								className="inline-block px-5 py-2 mr-1 mb-1 bg-rose-600 text-rose-100 rounded-md"
-								href={`/list/${(list as TodoList).id}`}>{(list as TodoList).title}</a>
+							<div className="inline-block px-5 py-2 mr-1 mb-1 bg-rose-600 text-rose-100 rounded-md">
+								<Deletable id={(list as TodoList).id}
+									handleDelete={(id: string) => {
+										console.log(id);
+									}}>
+									<a key={i}
+										href={`/list/${(list as TodoList).id}`}>{(list as TodoList).title}</a>
+								</Deletable>
+							</div>
 						)
 					)
 				}
