@@ -144,6 +144,26 @@ export default function LocalStorageProvider({children}: Props) {
 		setSavedListData(withoutDeletedTodo);
 	}
 
+	function updateTodoStatus(listId: string, todoId: string, isChecked: boolean) {
+		const savedData = cloneDeep(savedListData || []);
+
+		const withUpdatedStatus = savedData.map((list, i) => {
+			if ((list as TodoList).id === listId) {
+				const todos = (list as TodoList).todos;
+				todos.forEach((todo: Todo, i) => {
+					const t = (todo as Todo);
+					if (t.id === todoId) {
+						t.status = isChecked ? Status.Complete : Status.NotStarted;
+					}
+				});
+				return list;
+			}
+			return list;
+		});
+
+		setSavedListData(withUpdatedStatus);
+	}
+
 	const ctx = {
 		savedListData,
 		addNewList,
@@ -152,7 +172,8 @@ export default function LocalStorageProvider({children}: Props) {
 		deleteList,
 		addNewTodo,
 		updateTodoTitle,
-		deleteTodo
+		deleteTodo,
+		updateTodoStatus
 	};
 	
 	return (

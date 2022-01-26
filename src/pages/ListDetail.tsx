@@ -8,7 +8,7 @@ import EditableText from '../components/EditableText';
 import Deletable from '../components/Deletable';
 import {LocalStorageContext} from '../context/LocalStorageContext';
 import cloneDeep from 'lodash/cloneDeep';
-import {TodoList, Todo} from '../types';
+import {TodoList, Todo, Status} from '../types';
 import "../css/styles.css";
 
 type Props = {
@@ -21,6 +21,7 @@ export default function ListDetail(props: Props) {
 		addNewTodo,
 		updateTodoOrder,
 		updateTodoTitle,
+		updateTodoStatus,
 		deleteTodo
 	} = useContext(LocalStorageContext);
 
@@ -34,7 +35,7 @@ export default function ListDetail(props: Props) {
 	}
 
 	function handleCheckChange(listId: string, todoId: string, isChecked: boolean) {
-		console.log(listId, todoId, isChecked);
+		updateTodoStatus(listId, todoId, isChecked);
 	}
 
 	function onDragEnd(result: DropResult) {
@@ -83,11 +84,13 @@ export default function ListDetail(props: Props) {
 																<div className="flex">
 																	<input type="checkbox"
 																		value={(todo as Todo).id}
+																		checked={(todo as Todo).status === Status.Complete}
 																		onChange={(event: ChangeEvent<HTMLInputElement>) => {
 																			handleCheckChange((listDetails as TodoList).id, event.target.value, event.target.checked);
 																		}} />
 																	<EditableText
 																		text={(todo as Todo).title}
+																		strike={(todo as Todo).status === Status.Complete}
 																		saveText={(title: string) => {
 																			updateTodoTitle(title, (listDetails as TodoList).id, (todo as Todo).id);
 																		}} />

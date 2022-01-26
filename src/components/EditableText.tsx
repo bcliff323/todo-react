@@ -3,12 +3,13 @@ import "../css/styles.css";
 
 type Props = {
   text: string;
+	strike: boolean;
 	saveText: (text: string) => void;
 };
 
 export default function EditableText(props: Props) {
 	const textInput = useRef<HTMLInputElement | null>(null);
-	const {text, saveText} = props;
+	const {text, saveText, strike} = props;
 	const [isEditing, setIsEditing] = useState<boolean>(false);
 	const [newValue, setNewValue] = useState<string>(text);
 
@@ -42,8 +43,10 @@ export default function EditableText(props: Props) {
 						<button onClick={toggleAndSave}>Save</button>
 					</div> :
 					<div className="flex">
-						<p>{text}</p>
-						<button onClick={toggleIsEditing}>Edit</button>
+						<p className={`${strike && "line-through"}`}>{text}</p>
+						{
+							!strike && <button onClick={toggleIsEditing}>Edit</button>
+						}
 					</div>
 			}
 		</div>
