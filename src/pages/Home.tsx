@@ -39,12 +39,11 @@ export default function Home(props: Props) {
 				{
 					savedListData && savedListData.map(
 						(list, i) => (
-							<div className="inline-block px-5 py-2 mr-1 mb-1 bg-rose-600 text-rose-100 rounded-md">
+							<div key={(list as TodoList).id}
+								className="inline-block px-5 py-2 mr-1 mb-1 bg-rose-600 text-rose-100 rounded-md">
 								<Deletable id={(list as TodoList).id}
 									message="srsly?"
-									handleDelete={(id: string) => {
-										console.log(id);
-									}}>
+									handleDelete={deleteList}>
 									<a key={i}
 										href={`/list/${(list as TodoList).id}`}>{(list as TodoList).title}</a>
 								</Deletable>

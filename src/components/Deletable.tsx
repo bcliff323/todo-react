@@ -16,6 +16,10 @@ export default function Deletable(props: Props) {
 		isDeleting ? 
 			<div className="flex">
 				<p>{message}</p>
+				<button onClick={() => {
+						handleDelete(id);
+						setIsDeleting(false);
+					}}>Fer sure</button>
 				<button onClick={() => setIsDeleting(false)}>Cancel</button>
 			</div> : 
 			<div className="flex">
@@ -24,7 +28,6 @@ export default function Deletable(props: Props) {
 				</div>
 				<button onClick={e => {
 						setIsDeleting(true);
-						handleDelete(id);
 					}}>
 					Delete
 				</button>
