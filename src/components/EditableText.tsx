@@ -32,14 +32,16 @@ export default function EditableText(props: Props) {
 		<div>
 			{
 				isEditing ? 
-					<div>
-						<input ref={textInput}
-							defaultValue={text}
-							onChange={updateText}
-							onBlur={toggleAndSave} />
+					<div className="flex">
+						<div className="flex-auto">
+							<input ref={textInput}
+								defaultValue={text}
+								onChange={updateText}
+								onBlur={toggleAndSave} />
+						</div>
 						<button onClick={toggleAndSave}>Save</button>
 					</div> :
-					<div>
+					<div className="flex">
 						<p>{text}</p>
 						<button onClick={toggleIsEditing}>Edit</button>
 					</div>

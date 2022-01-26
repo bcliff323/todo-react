@@ -71,7 +71,8 @@ export default function ListDetail(props: Props) {
 														{...provided.dragHandleProps}>
 														<FadeIn>
 															<Deletable id={(todo as Todo).id}
-																message="srsly?"
+																confirmMessage="Confirm"
+																cancelMessage="Cancel"
 																handleDelete={(id) => {
 																	deleteTodo((listDetails as TodoList).id, id);
 																}}>
