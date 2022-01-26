@@ -33,6 +33,10 @@ export default function ListDetail(props: Props) {
 		addNewTodo(listId, todoName);
 	}
 
+	function handleCheckChange(listId: string, todoId: string, isChecked: boolean) {
+		console.log(listId, todoId, isChecked);
+	}
+
 	function onDragEnd(result: DropResult) {
 		if (!result.destination) {
 			return;
@@ -76,11 +80,18 @@ export default function ListDetail(props: Props) {
 																handleDelete={(id) => {
 																	deleteTodo((listDetails as TodoList).id, id);
 																}}>
-																<EditableText
-																	text={(todo as Todo).title}
-																	saveText={(title: string) => {
-																		updateTodoTitle(title, (listDetails as TodoList).id, (todo as Todo).id);
-																	}} />
+																<div className="flex">
+																	<input type="checkbox"
+																		value={(todo as Todo).id}
+																		onChange={(event: ChangeEvent<HTMLInputElement>) => {
+																			handleCheckChange((listDetails as TodoList).id, event.target.value, event.target.checked);
+																		}} />
+																	<EditableText
+																		text={(todo as Todo).title}
+																		saveText={(title: string) => {
+																			updateTodoTitle(title, (listDetails as TodoList).id, (todo as Todo).id);
+																		}} />
+																</div>
 															</Deletable>
 														</FadeIn>
 													</div>
