@@ -41,6 +41,7 @@ export default function Home(props: Props) {
 						(list, i) => (
 							<div className="inline-block px-5 py-2 mr-1 mb-1 bg-rose-600 text-rose-100 rounded-md">
 								<Deletable id={(list as TodoList).id}
+									message="srsly?"
 									handleDelete={(id: string) => {
 										console.log(id);
 									}}>

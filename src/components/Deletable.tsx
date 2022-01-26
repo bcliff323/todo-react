@@ -4,17 +4,18 @@ import "../css/styles.css";
 type Props = {
   children?: React.ReactNode;
 	id: string;
+	message: string;
 	handleDelete: (id: string) => void;
 };
 
 export default function Deletable(props: Props) {
-	const {children, handleDelete, id} = props;
+	const {children, handleDelete, message, id} = props;
 	const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
 	return (
 		isDeleting ? 
 			<div className="flex">
-				<p>srsly?</p>
+				<p>{message}</p>
 				<button onClick={() => setIsDeleting(false)}>Cancel</button>
 			</div> : 
 			<div className="flex">
