@@ -5,6 +5,7 @@ import FadeIn from 'react-fade-in';
 import Layout from '../components/Layout';
 import InputForm from '../components/InputForm';
 import EditableText from '../components/EditableText';
+import Deletable from '../components/Deletable';
 import {LocalStorageContext} from '../context/LocalStorageContext';
 import cloneDeep from 'lodash/cloneDeep';
 import {TodoList, Todo} from '../types';
@@ -69,14 +70,17 @@ export default function ListDetail(props: Props) {
 														{...provided.draggableProps}
 														{...provided.dragHandleProps}>
 														<FadeIn>
-															<EditableText
-																text={(todo as Todo).title}
-																saveText={(title: string) => {
-																	updateTodoTitle(title, (listDetails as TodoList).id, (todo as Todo).id);
-																}}
-																deleteList={() => {
-																	deleteTodo((listDetails as TodoList).id, (todo as Todo).id);
-																}} />
+															<Deletable id={(todo as Todo).id}
+																message="srsly?"
+																handleDelete={(id) => {
+																	deleteTodo((listDetails as TodoList).id, id);
+																}}>
+																<EditableText
+																	text={(todo as Todo).title}
+																	saveText={(title: string) => {
+																		updateTodoTitle(title, (listDetails as TodoList).id, (todo as Todo).id);
+																	}} />
+															</Deletable>
 														</FadeIn>
 													</div>
 												)}

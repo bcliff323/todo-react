@@ -4,12 +4,11 @@ import "../css/styles.css";
 type Props = {
   text: string;
 	saveText: (text: string) => void;
-	deleteList: () => void;
 };
 
 export default function EditableText(props: Props) {
 	const textInput = useRef<HTMLInputElement | null>(null);
-	const {text, saveText, deleteList} = props;
+	const {text, saveText} = props;
 	const [isEditing, setIsEditing] = useState<boolean>(false);
 	const [newValue, setNewValue] = useState<string>(text);
 
@@ -43,7 +42,6 @@ export default function EditableText(props: Props) {
 					<div>
 						<p>{text}</p>
 						<button onClick={toggleIsEditing}>Edit</button>
-						<button onClick={deleteList}>Delete</button>
 					</div>
 			}
 		</div>
