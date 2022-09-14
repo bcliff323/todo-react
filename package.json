@@ -10,6 +10,7 @@
 	"main": "src/index.tsx",
 	"dependencies": {
 		"@reach/dialog": "^0.17.0",
+		"@reach/visually-hidden": "^0.17.0",
 		"lodash": "^4.17.21",
 		"react": "^17.0.2",
 		"react-beautiful-dnd": "^13.1.0",
