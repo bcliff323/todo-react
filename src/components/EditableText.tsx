@@ -1,4 +1,4 @@
-import {useEffect, useState, useRef, ChangeEvent} from 'react';
+import {useEffect, useState, useRef, ChangeEvent, MouseEvent, FocusEvent} from 'react';
 import "../css/styles.css";
 
 type Props = {
@@ -14,6 +14,7 @@ export default function EditableText(props: Props) {
 	const [newValue, setNewValue] = useState<string>(text);
 
 	async function toggleIsEditing() {
+		console.log('clicked edit');
 		await setIsEditing(!isEditing);
 		if (textInput?.current) {
 			textInput?.current?.focus();
@@ -21,6 +22,7 @@ export default function EditableText(props: Props) {
 	}
 
 	function toggleAndSave() {
+		console.log('clicked save');
 		toggleIsEditing();
 		saveText(newValue);
 	}
@@ -30,7 +32,7 @@ export default function EditableText(props: Props) {
 	}
 	
 	return (
-		<div>
+		<div className="flex-auto">
 			{
 				isEditing ? 
 					<div className="flex">
@@ -43,9 +45,9 @@ export default function EditableText(props: Props) {
 						<button onClick={toggleAndSave}>Save</button>
 					</div> :
 					<div className="flex">
-						<p className={`${strike && "line-through"}`}>{text}</p>
+						<p className={`flex-auto ${strike ? "line-through" : ""}`}>{text}</p>
 						{
-							!strike && <button onClick={toggleIsEditing}>Edit</button>
+							!strike && <button className="block" onClick={toggleIsEditing}>Edit</button>
 						}
 					</div>
 			}

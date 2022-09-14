@@ -21,7 +21,7 @@ export default function InputForm(props: Props) {
 	}
 
 	return (
-		<div className="bg-rose-200">
+		<div className="bg-fuchsia-400 rounded overflow-hidden p-2">
 			<form
 				onSubmit={
 					(event: FormEvent<HTMLFormElement>) => {
@@ -30,14 +30,19 @@ export default function InputForm(props: Props) {
 						setListName("");
 					}
 				}>
-				<div className="flex bg-rose-400">
+				<div className="flex">
 					<input
-						className="flex-auto block"
+						className="flex-auto block rounded py-1 px-2"
 						name="values"
 						value={listName}
 						placeholder={placeholder}
 						onChange={handleOnChange} />
-					<button type="submit">{label}</button>
+					<button type="submit"
+						className="text-fuchsia-50 hover:text-fuchia-700 ml-2 my-1">
+						<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+						</svg>
+					</button>
 				</div>
 			</form>
 		</div>
