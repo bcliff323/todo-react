@@ -13,19 +13,19 @@ export default function EditableText(props: Props) {
 	const [isEditing, setIsEditing] = useState<boolean>(false);
 	const [newValue, setNewValue] = useState<string>(text);
 
-	async function toggleIsEditing() {
-		console.log('clicked edit');
-		await setIsEditing(!isEditing);
+	async function edit() {
+		await setIsEditing(true);
 		if (textInput?.current) {
 			textInput?.current?.focus();
 		}
 	}
 
-	function toggleAndSave() {
-		console.log('clicked save');
-		toggleIsEditing();
+	function saveAndClose() {
+		setIsEditing(false);
 		saveText(newValue);
 	}
+
+
 
 	function updateText(e: ChangeEvent<HTMLInputElement>) {
 		setNewValue(e.target.value);
@@ -33,24 +33,22 @@ export default function EditableText(props: Props) {
 
 	return (
 		<div className="flex-auto">
-			{
-				isEditing ?
-					<div className="flex">
-						<div className="flex-auto">
+			<div className="flex">
+				<div className="flex-auto">
+					{
+						isEditing ?
 							<input ref={textInput}
 								defaultValue={text}
 								onChange={updateText}
-								onBlur={toggleAndSave} />
-						</div>
-						<button onClick={toggleAndSave}>Save</button>
-					</div> :
-					<div className="flex">
-						<p className={`flex-auto ${strike ? "line-through" : ""}`}>{text}</p>
-						{
-							!strike && <button className="block" onClick={toggleIsEditing}>Edit</button>
-						}
-					</div>
-			}
+								onBlur={saveAndClose} /> :
+							<p className={`${strike ? "line-through" : ""}`}>{text}</p>
+					}
+				</div>
+				<div className="flex">
+					<button disabled={isEditing} className="block" onClick={edit}>Edit</button>
+					<button disabled={!isEditing} onClick={saveAndClose}>Save</button>
+				</div>
+			</div>
 		</div>
 	)
 }
