@@ -1,15 +1,15 @@
-import {useEffect, useState, useRef, ChangeEvent, MouseEvent, FocusEvent} from 'react';
+import { useState, useRef, ChangeEvent, MouseEvent, FocusEvent } from 'react';
 import "../css/styles.css";
 
 type Props = {
-  text: string;
+	text: string;
 	strike: boolean;
 	saveText: (text: string) => void;
 };
 
 export default function EditableText(props: Props) {
 	const textInput = useRef<HTMLInputElement | null>(null);
-	const {text, saveText, strike} = props;
+	const { text, saveText, strike } = props;
 	const [isEditing, setIsEditing] = useState<boolean>(false);
 	const [newValue, setNewValue] = useState<string>(text);
 
@@ -30,11 +30,11 @@ export default function EditableText(props: Props) {
 	function updateText(e: ChangeEvent<HTMLInputElement>) {
 		setNewValue(e.target.value);
 	}
-	
+
 	return (
 		<div className="flex-auto">
 			{
-				isEditing ? 
+				isEditing ?
 					<div className="flex">
 						<div className="flex-auto">
 							<input ref={textInput}
