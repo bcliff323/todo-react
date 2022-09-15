@@ -17,6 +17,7 @@ type Props = {
 export default function ListDetail(props: Props) {
 	const {
 		savedListData,
+		updateListTitle,
 		addNewTodo,
 		updateTodoOrder,
 		updateTodoTitle,
@@ -57,7 +58,13 @@ export default function ListDetail(props: Props) {
 		<Layout>
 			<div>
 				<a href="/">{`<`} home</a>
-				<h1>{(listDetails as TodoList).title}</h1>
+				<h1>
+					<EditableText
+						text={(listDetails as TodoList).title}
+						saveText={(title: string) => {
+							updateListTitle(title, (listDetails as TodoList).id);
+						}} />
+				</h1>
 			</div>
 			<InputForm handleSubmit={handleSubmit}
 				label="Go"

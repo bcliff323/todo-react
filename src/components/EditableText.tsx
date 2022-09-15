@@ -3,13 +3,13 @@ import "../css/styles.css";
 
 type Props = {
 	text: string;
-	strike: boolean;
+	strike?: boolean;
 	saveText: (text: string) => void;
 };
 
 export default function EditableText(props: Props) {
 	const textInput = useRef<HTMLInputElement | null>(null);
-	const { text, saveText, strike } = props;
+	const { text, saveText, strike = false } = props;
 	const [isEditing, setIsEditing] = useState<boolean>(false);
 	const [newValue, setNewValue] = useState<string>(text);
 
