@@ -1,18 +1,18 @@
-import {FormEvent, ChangeEvent, useState, useContext} from 'react';
-import {useParams} from 'react-router-dom';
-import {DragDropContext, Droppable, Draggable, DropResult} from "react-beautiful-dnd";
+import { ChangeEvent, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import { DragDropContext, Droppable, Draggable, DropResult, DroppableProvided, DraggableProvided } from "react-beautiful-dnd";
 import FadeIn from 'react-fade-in';
 import Layout from '../components/Layout';
 import InputForm from '../components/InputForm';
 import EditableText from '../components/EditableText';
 import Deletable from '../components/Deletable';
-import {LocalStorageContext} from '../context/LocalStorageContext';
+import { LocalStorageContext } from '../context/LocalStorageContext';
 import cloneDeep from 'lodash/cloneDeep';
-import {TodoList, Todo, Status} from '../types';
+import { TodoList, Todo, Status } from '../types';
 import "../css/styles.css";
 
 type Props = {
-  children?: React.ReactNode;
+	children?: React.ReactNode;
 };
 
 export default function ListDetail(props: Props) {
@@ -63,14 +63,14 @@ export default function ListDetail(props: Props) {
 			<div>
 				<DragDropContext onDragEnd={onDragEnd}>
 					<Droppable droppableId="list">
-						{provided => (
+						{(provided: DroppableProvided) => (
 							<div ref={provided.innerRef} {...provided.droppableProps}>
 								{todos.map(
 									(todo: Todo, i) => {
 										const dId = (todo as Todo).id?.toString();
 										return (
 											<Draggable key={(todo as Todo).id} draggableId={dId} index={(todo as Todo).ordinal}>
-												{provided => (
+												{(provided: DraggableProvided) => (
 													<div ref={provided.innerRef}
 														{...provided.draggableProps}
 														{...provided.dragHandleProps}>
