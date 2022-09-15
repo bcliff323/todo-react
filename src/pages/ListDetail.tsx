@@ -1,6 +1,13 @@
 import { ChangeEvent, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { DragDropContext, Droppable, Draggable, DropResult, DroppableProvided, DraggableProvided } from "react-beautiful-dnd";
+import {
+	DragDropContext,
+	Droppable,
+	Draggable,
+	DropResult,
+	DroppableProvided,
+	DraggableProvided
+} from "react-beautiful-dnd";
 import FadeIn from 'react-fade-in';
 import Layout from '../components/Layout';
 import InputForm from '../components/InputForm';

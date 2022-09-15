@@ -1,15 +1,14 @@
-import {createContext, useState, useContext, useEffect} from 'react';
-import {LocalStorageContext} from '../context/LocalStorageContext';
+import { LocalStorageContext } from '../context/LocalStorageContext';
 import useLocalStorage from 'use-local-storage';
 import { v4 as uuidv4 } from 'uuid';
 import cloneDeep from 'lodash/cloneDeep';
-import {TodoList, Todo, Status} from '../types';
+import { TodoList, Todo, Status } from '../types';
 
 type Props = {
-  children?: React.ReactNode;
+	children?: React.ReactNode;
 };
 
-export default function LocalStorageProvider({children}: Props) {
+export default function LocalStorageProvider({ children }: Props) {
 	const [savedListData, setSavedListData] = useLocalStorage<object[]>("todo-lists");
 
 	const resetOrdinals = (savedData: object[]) => savedData
@@ -18,7 +17,7 @@ export default function LocalStorageProvider({children}: Props) {
 			return list;
 		})
 		.sort((a, b) => (a as TodoList).ordinal - (b as TodoList).ordinal);
-	
+
 	const addNewList = (title: string) => {
 		const newList = {
 			id: uuidv4(),
@@ -101,7 +100,7 @@ export default function LocalStorageProvider({children}: Props) {
 			}
 			return list;
 		})
-		
+
 		setSavedListData(withNewTodo);
 	}
 
@@ -175,10 +174,10 @@ export default function LocalStorageProvider({children}: Props) {
 		deleteTodo,
 		updateTodoStatus
 	};
-	
+
 	return (
 		<LocalStorageContext.Provider value={ctx}>
-      {children}
-    </LocalStorageContext.Provider>
+			{children}
+		</LocalStorageContext.Provider>
 	)
 }

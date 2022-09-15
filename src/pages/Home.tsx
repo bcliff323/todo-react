@@ -1,27 +1,21 @@
-import {FormEvent, useState, useContext} from 'react';
-import FadeIn from 'react-fade-in';
+import { useState, useContext } from 'react';
 import Layout from '../components/Layout';
 import InputForm from '../components/InputForm';
-import EditableText from '../components/EditableText';
 import Deletable from '../components/Deletable';
-import {LocalStorageContext} from '../context/LocalStorageContext';
-import cloneDeep from 'lodash/cloneDeep';
-import {TodoList} from '../types';
+import { LocalStorageContext } from '../context/LocalStorageContext';
+import { TodoList } from '../types';
 import "../css/styles.css";
 
 type Props = {
-  children?: React.ReactNode;
+	children?: React.ReactNode;
 };
 
 export default function Home(props: Props) {
 	const {
 		savedListData,
 		addNewList,
-		updateListTitle,
 		deleteList
 	} = useContext(LocalStorageContext);
-
-	const [listName, setListName] = useState<string>("");
 
 	function handleSubmit(listName: string) {
 		addNewList(listName);
@@ -49,8 +43,8 @@ export default function Home(props: Props) {
 											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
 										</svg>
 										<a key={i}
-										className="block"
-										href={`/list/${(list as TodoList).id}`}>{(list as TodoList).title}</a>
+											className="block"
+											href={`/list/${(list as TodoList).id}`}>{(list as TodoList).title}</a>
 									</div>
 								</Deletable>
 							</div>

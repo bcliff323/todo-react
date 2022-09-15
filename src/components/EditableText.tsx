@@ -1,4 +1,4 @@
-import { useState, useRef, ChangeEvent, MouseEvent, FocusEvent } from 'react';
+import { useState, useRef, ChangeEvent } from 'react';
 import "../css/styles.css";
 
 type Props = {

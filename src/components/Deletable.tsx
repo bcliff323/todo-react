@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Dialog, DialogOverlay, DialogContent } from "@reach/dialog";
+import { Dialog } from "@reach/dialog";
 import { VisuallyHidden } from "@reach/visually-hidden";
 import "@reach/dialog/styles.css";
 import "../css/styles.css";
