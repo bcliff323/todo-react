@@ -45,7 +45,7 @@ export default function EditableText(props: Props) {
 					}
 				</div>
 				<div className="flex">
-					<button disabled={isEditing} className="block" onClick={edit}>Edit</button>
+					<button disabled={isEditing || strike} className="block" onClick={edit}>Edit</button>
 					<button disabled={!isEditing} onClick={saveAndClose}>Save</button>
 				</div>
 			</div>
