@@ -7,7 +7,6 @@ import InputForm from '../components/InputForm';
 import EditableText from '../components/EditableText';
 import Deletable from '../components/Deletable';
 import { LocalStorageContext } from '../context/LocalStorageContext';
-import cloneDeep from 'lodash/cloneDeep';
 import { TodoList, Todo, Status } from '../types';
 import "../css/styles.css";
 
@@ -56,7 +55,10 @@ export default function ListDetail(props: Props) {
 
 	return (
 		<Layout>
-			<h1>List Detail Page</h1>
+			<div>
+				<a href="/">{`<`} home</a>
+				<h1>{(listDetails as TodoList).title}</h1>
+			</div>
 			<InputForm handleSubmit={handleSubmit}
 				label="Go"
 				placeholder="Add a Todo" />
