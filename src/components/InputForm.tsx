@@ -1,8 +1,8 @@
 
-import {FormEvent, ChangeEvent, useState} from 'react';
+import { FormEvent, ChangeEvent, useState } from 'react';
 
 type Props = {
-  handleSubmit: (listName: string) => void;
+	handleSubmit: (listName: string) => void;
 	label: string;
 	placeholder: string;
 };
@@ -21,7 +21,7 @@ export default function InputForm(props: Props) {
 	}
 
 	return (
-		<div className="bg-fuchsia-400 rounded overflow-hidden p-2">
+		<div className="rounded overflow-hidden">
 			<form
 				onSubmit={
 					(event: FormEvent<HTMLFormElement>) => {
@@ -32,14 +32,14 @@ export default function InputForm(props: Props) {
 				}>
 				<div className="flex">
 					<input
-						className="flex-auto block rounded py-1 px-2"
+						className="flex-auto block rounded py-1 px-2 bg-blue-200 placeholder-indigo-400 text-sm"
 						name="values"
 						value={listName}
 						placeholder={placeholder}
 						onChange={handleOnChange} />
 					<button type="submit"
 						className="text-fuchsia-50 hover:text-fuchia-700 ml-2 my-1">
-						<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 26 24" stroke="currentColor">
 							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
 						</svg>
 					</button>
