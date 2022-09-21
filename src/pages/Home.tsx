@@ -23,7 +23,7 @@ export default function Home(props: Props) {
 
 	return (
 		<Layout>
-			<h1 className="text-white mb-3">Todo Manager</h1>
+			<h1 className="text-white mb-3">Todos</h1>
 			<InputForm handleSubmit={handleSubmit}
 				label="Go"
 				placeholder="Add a Todo List" />
