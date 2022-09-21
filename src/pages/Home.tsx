@@ -31,7 +31,7 @@ export default function Home(props: Props) {
 				{
 					savedListData && savedListData.map(
 						(list, i) => (
-							<div className="bg-cyan-50 text-indigo-900 p-2 mr-6 mb-3 rounded text-sm"
+							<div className="bg-cyan-50 text-indigo-900 p-2 mb-3 rounded text-sm"
 								key={(list as TodoList).id}>
 								<Deletable id={(list as TodoList).id}
 									confirmMessage="Confirm"

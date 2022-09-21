@@ -30,15 +30,15 @@ export default function InputForm(props: Props) {
 						setListName("");
 					}
 				}>
-				<div className="flex">
+				<div className="flex items-center">
 					<input
-						className="flex-auto block rounded py-1 px-2 bg-blue-200 placeholder-indigo-400 text-sm"
+						className="w-full block rounded-l py-1 px-2 bg-blue-200 placeholder-indigo-400 text-sm"
 						name="values"
 						value={listName}
 						placeholder={placeholder}
 						onChange={handleOnChange} />
 					<button type="submit"
-						className="text-fuchsia-50 hover:text-fuchia-700 ml-2 my-1">
+						className="text-fuchsia-50 hover:text-fuchia-700 p-1.5 bg-indigo-600">
 						<svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 26 24" stroke="currentColor">
 							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
 						</svg>
