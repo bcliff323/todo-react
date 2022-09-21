@@ -37,7 +37,7 @@ export default function EditableText(props: Props) {
 					{
 						isEditing ?
 							<input ref={textInput}
-								className="w-full mr-1 rounded px-1"
+								className="w-full mr-1 rounded px-1 text-indigo-900"
 								defaultValue={text}
 								onChange={updateText} /> :
 							<p className={`${strike ? "line-through" : "mr-1"}`}>{text}</p>

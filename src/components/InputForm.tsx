@@ -32,7 +32,7 @@ export default function InputForm(props: Props) {
 				}>
 				<div className="flex items-center">
 					<input
-						className="w-full block rounded-l py-1 px-2 bg-blue-200 placeholder-indigo-400 text-sm"
+						className="w-full block rounded-l py-1 px-2 bg-blue-200 text-indigo-900 placeholder-indigo-400 text-sm"
 						name="values"
 						value={listName}
 						placeholder={placeholder}
