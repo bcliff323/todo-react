@@ -9,6 +9,7 @@ import {
 	DraggableProvided
 } from "react-beautiful-dnd";
 import FadeIn from 'react-fade-in';
+import { VisuallyHidden } from "@reach/visually-hidden";
 import Layout from '../components/Layout';
 import InputForm from '../components/InputForm';
 import EditableText from '../components/EditableText';
@@ -63,9 +64,15 @@ export default function ListDetail(props: Props) {
 
 	return (
 		<Layout>
-			<div>
-				<a href="/">{`<`} home</a>
-				<h1 className="text-blue-200 my-2">
+			<div className="flex mb-3 text-blue-200" >
+				<a href="/">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+						<path fill-rule="evenodd" d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z" clip-rule="evenodd" />
+					</svg>
+					<VisuallyHidden>home</VisuallyHidden>
+				</a>
+				<span aria-hidden className="mx-1">|</span>
+				<h1>
 					<EditableText
 						text={(listDetails as TodoList).title}
 						saveText={(title: string) => {
@@ -99,7 +106,7 @@ export default function ListDetail(props: Props) {
 																	handleDelete={(id) => {
 																		deleteTodo((listDetails as TodoList).id, id);
 																	}}>
-																	<div className="flex p-1">
+																	<div className="flex pl-1 py-1">
 																		<input type="checkbox"
 																			className="mr-2"
 																			value={(todo as Todo).id}
