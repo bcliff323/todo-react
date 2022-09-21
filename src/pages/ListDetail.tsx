@@ -65,7 +65,7 @@ export default function ListDetail(props: Props) {
 		<Layout>
 			<div>
 				<a href="/">{`<`} home</a>
-				<h1>
+				<h1 className="text-blue-200 my-2">
 					<EditableText
 						text={(listDetails as TodoList).title}
 						saveText={(title: string) => {
@@ -76,55 +76,59 @@ export default function ListDetail(props: Props) {
 			<InputForm handleSubmit={handleSubmit}
 				label="Go"
 				placeholder="Add a Todo" />
-			<div>
-				<DragDropContext onDragEnd={onDragEnd}>
-					<Droppable droppableId="list">
-						{(provided: DroppableProvided) => (
-							<div ref={provided.innerRef} {...provided.droppableProps}>
-								{todos.map(
-									(todo: Todo, i) => {
-										const dId = (todo as Todo).id?.toString();
-										return (
-											<Draggable key={(todo as Todo).id} draggableId={dId} index={(todo as Todo).ordinal}>
-												{(provided: DraggableProvided) => (
-													<div ref={provided.innerRef}
-														{...provided.draggableProps}
-														{...provided.dragHandleProps}>
-														<FadeIn>
-															<Deletable id={(todo as Todo).id}
-																confirmMessage="Confirm"
-																cancelMessage="Cancel"
-																handleDelete={(id) => {
-																	deleteTodo((listDetails as TodoList).id, id);
-																}}>
-																<div className="flex">
-																	<input type="checkbox"
-																		value={(todo as Todo).id}
-																		checked={(todo as Todo).status === Status.Complete}
-																		onChange={(event: ChangeEvent<HTMLInputElement>) => {
-																			handleCheckChange((listDetails as TodoList).id, event.target.value, event.target.checked);
-																		}} />
-																	<EditableText
-																		text={(todo as Todo).title}
-																		strike={(todo as Todo).status === Status.Complete}
-																		saveText={(title: string) => {
-																			updateTodoTitle(title, (listDetails as TodoList).id, (todo as Todo).id);
-																		}} />
-																</div>
-															</Deletable>
-														</FadeIn>
-													</div>
-												)}
-											</Draggable>
-										);
-									}
-								)}
-								{provided.placeholder}
-							</div>
-						)}
-					</Droppable>
-				</DragDropContext>
-			</div>
+			{
+				todos.length > 0 &&
+				<div className="my-4 bg-cyan-50 p-2 mr-6 mb-3 rounded text-sm">
+					<DragDropContext onDragEnd={onDragEnd}>
+						<Droppable droppableId="list">
+							{(provided: DroppableProvided) => (
+								<div ref={provided.innerRef} {...provided.droppableProps}>
+									{todos.map(
+										(todo: Todo, i) => {
+											const dId = (todo as Todo).id?.toString();
+											return (
+												<Draggable key={(todo as Todo).id} draggableId={dId} index={(todo as Todo).ordinal}>
+													{(provided: DraggableProvided) => (
+														<div ref={provided.innerRef}
+															{...provided.draggableProps}
+															{...provided.dragHandleProps}>
+															<FadeIn>
+																<Deletable id={(todo as Todo).id}
+																	confirmMessage="Confirm"
+																	cancelMessage="Cancel"
+																	handleDelete={(id) => {
+																		deleteTodo((listDetails as TodoList).id, id);
+																	}}>
+																	<div className="flex p-1">
+																		<input type="checkbox"
+																			className="mr-2"
+																			value={(todo as Todo).id}
+																			checked={(todo as Todo).status === Status.Complete}
+																			onChange={(event: ChangeEvent<HTMLInputElement>) => {
+																				handleCheckChange((listDetails as TodoList).id, event.target.value, event.target.checked);
+																			}} />
+																		<EditableText
+																			text={(todo as Todo).title}
+																			strike={(todo as Todo).status === Status.Complete}
+																			saveText={(title: string) => {
+																				updateTodoTitle(title, (listDetails as TodoList).id, (todo as Todo).id);
+																			}} />
+																	</div>
+																</Deletable>
+															</FadeIn>
+														</div>
+													)}
+												</Draggable>
+											);
+										}
+									)}
+									{provided.placeholder}
+								</div>
+							)}
+						</Droppable>
+					</DragDropContext>
+				</div>
+			}
 		</Layout>
 	)
 }
