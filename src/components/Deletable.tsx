@@ -35,14 +35,14 @@ export default function Deletable(props: Props) {
 					<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
 				</svg>
 			</button>
-			<Dialog className="my-4 bg-cyan-50 p-2 mr-6 mb-3 rounded text-sm"
+			<Dialog className="my-4 bg-cyan-50 rounded text-sm"
 				isOpen={showDialog}
 				onDismiss={close}>
-				<button className="close-button" onClick={close}>
-					<VisuallyHidden>{cancelMessage}</VisuallyHidden>
-					<span aria-hidden>×</span>
-				</button>
-				<button onClick={onDelete}>{confirmMessage}</button>
+				<p>Are you sure you want to delete this?</p>
+				<div className="flex justify-end">
+					<button className="mt-3 mr-2 py-0.5 px-2.5 rounded bg-indigo-800 hover:bg-indigo-500 text-white" onClick={onDelete}>{confirmMessage}</button>
+					<button className="mt-3 py-0.5 px-2.5 rounded bg-indigo-200 hover:bg-indigo-100 text-indigo-800" onClick={close}>{cancelMessage}</button>
+				</div>
 			</Dialog>
 		</div>
 	)
