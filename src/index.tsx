@@ -6,7 +6,7 @@ import LocalStorageProvider from './components/LocalStorageProvider';
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/todo-manager">
       <Routes>
         <Route path="/" element={
           <LocalStorageProvider>
