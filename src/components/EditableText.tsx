@@ -32,7 +32,7 @@ export default function EditableText(props: Props) {
 
 	return (
 		<div className="flex-auto">
-			<div className="flex">
+			<div className="flex items-center">
 				<div className="w-full flex-auto">
 					{
 						isEditing ?
@@ -46,14 +46,14 @@ export default function EditableText(props: Props) {
 				<div className="flex">
 					{
 						isEditing &&
-						<button disabled={!isEditing} onClick={saveAndClose} className="flex disabled:opacity-25 ml-1">
+						<button disabled={!isEditing} onClick={saveAndClose} className="flex disabled:opacity-25 ml-1 mr-1">
 							<VisuallyHidden>Save</VisuallyHidden>
 							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
 								<path fill-rule="evenodd" d="M3 3.5A1.5 1.5 0 014.5 2h6.879a1.5 1.5 0 011.06.44l4.122 4.12A1.5 1.5 0 0117 7.622V16.5a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 013 16.5v-13zm10.857 5.691a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 00-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd" />
 							</svg>
 						</button>
 					}
-					<button disabled={isEditing || strike} onClick={edit} className="flex disabled:opacity-25">
+					<button disabled={isEditing || strike} onClick={edit} className="flex disabled:opacity-25 mr-1">
 						<VisuallyHidden>Edit</VisuallyHidden>
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
 							<path d="M5.433 13.917l1.262-3.155A4 4 0 017.58 9.42l6.92-6.918a2.121 2.121 0 013 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 01-.65-.65z" />

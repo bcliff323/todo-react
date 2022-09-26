@@ -1,4 +1,5 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
+import { Link } from "react-router-dom";
 import Layout from '../components/Layout';
 import InputForm from '../components/InputForm';
 import Deletable from '../components/Deletable';
@@ -23,7 +24,7 @@ export default function Home(props: Props) {
 
 	return (
 		<Layout>
-			<h1 className="text-white mb-3">Todos</h1>
+			<h1 className="text-white mb-3 text-lg">Todos</h1>
 			<InputForm handleSubmit={handleSubmit}
 				label="Go"
 				placeholder="Add a Todo List" />
@@ -31,7 +32,7 @@ export default function Home(props: Props) {
 				{
 					savedListData && savedListData.map(
 						(list, i) => (
-							<div className="bg-cyan-50 text-indigo-900 p-2 mb-3 rounded text-sm"
+							<div className="bg-cyan-50 text-indigo-900 p-2 mb-3 rounded"
 								key={(list as TodoList).id}>
 								<Deletable id={(list as TodoList).id}
 									confirmMessage="Yes"
@@ -41,9 +42,11 @@ export default function Home(props: Props) {
 										<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 											<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
 										</svg>
-										<a key={i}
+										<Link key={i}
 											className="block flex-auto"
-											href={`/list/${(list as TodoList).id}`}>{(list as TodoList).title}</a>
+											to={`/list/${(list as TodoList).id}`}>
+											{(list as TodoList).title}
+										</Link>
 									</div>
 								</Deletable>
 							</div>

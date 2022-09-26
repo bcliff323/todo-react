@@ -1,5 +1,5 @@
 import { ChangeEvent, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import {
 	DragDropContext,
 	Droppable,
@@ -64,15 +64,15 @@ export default function ListDetail(props: Props) {
 
 	return (
 		<Layout>
-			<div className="flex mb-3 text-white" >
-				<a href="/">
+			<div className="flex mb-3 text-white items-center" >
+				<Link to="/">
 					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
 						<path fill-rule="evenodd" d="M9.293 2.293a1 1 0 011.414 0l7 7A1 1 0 0117 11h-1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-3a1 1 0 00-1-1H9a1 1 0 00-1 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-6H3a1 1 0 01-.707-1.707l7-7z" clip-rule="evenodd" />
 					</svg>
 					<VisuallyHidden>home</VisuallyHidden>
-				</a>
+				</Link>
 				<span aria-hidden className="mx-1">|</span>
-				<h1>
+				<h1 className="text-lg">
 					<EditableText
 						text={(listDetails as TodoList).title}
 						saveText={(title: string) => {
@@ -85,7 +85,7 @@ export default function ListDetail(props: Props) {
 				placeholder="Add a Todo" />
 			{
 				todos.length > 0 &&
-				<div className="my-4 bg-cyan-50 text-indigo-900 p-2 mb-3 rounded text-sm">
+				<div className="my-4 bg-cyan-50 text-indigo-900 p-2 mb-3 rounded">
 					<DragDropContext onDragEnd={onDragEnd}>
 						<Droppable droppableId="list">
 							{(provided: DroppableProvided) => (
