@@ -14,6 +14,8 @@ export default function Layout(props: Props) {
 				w-full
 				sm:w-2/3
 				md:w-1/2
+				text-xl
+				md:text-base
 			">
 				{children}
 			</div>
