@@ -10,13 +10,6 @@ type Props = {
 export default function LocalStorageProvider({ children }: Props) {
 	const [savedListData, setSavedListData] = useLocalStorage<object[]>("todo-lists");
 
-	const resetOrdinals = (savedData: object[]) => savedData
-		.map((list, i) => {
-			(list as TodoList | Todo).ordinal = i;
-			return list;
-		})
-		.sort((a, b) => (a as TodoList).ordinal - (b as TodoList).ordinal);
-
 	const addNewList = (title: string) => {
 		const newList = {
 			id: uuidv4(),
@@ -32,14 +25,18 @@ export default function LocalStorageProvider({ children }: Props) {
 
 		savedListData.unshift(newList);
 
-		const ordered = resetOrdinals(savedListData);
+		const ordered = savedListData.map((list, i) => {
+			(list as TodoList).ordinal = i;
+			return list;
+		});
+
 		setSavedListData(ordered);
 	}
 
 	const updateListTitle = (title: string, id: string) => {
 		const savedData = savedListData || [];
 
-		setSavedListData(savedData.map((list, i) => {
+		setSavedListData(savedData.map(list => {
 			if ((list as TodoList).id === id) {
 				(list as TodoList).title = title;
 				return list;
@@ -70,7 +67,7 @@ export default function LocalStorageProvider({ children }: Props) {
 	const deleteList = (id: string) => {
 		const savedData = savedListData || [];
 
-		const withoutList = savedData.filter((list, i) => {
+		const withoutList = savedData.filter(list => {
 			return (list as TodoList).id !== id;
 		});
 
@@ -86,7 +83,7 @@ export default function LocalStorageProvider({ children }: Props) {
 			ordinal: 0
 		};
 
-		const withNewTodo = savedData.map((list, i) => {
+		const withNewTodo = savedData.map(list => {
 			if ((list as TodoList).id === id) {
 				const todos = (list as TodoList).todos;
 				todos.unshift(newTodo);
@@ -104,7 +101,7 @@ export default function LocalStorageProvider({ children }: Props) {
 	const updateTodoTitle = (title: string, listId: string, todoId: string) => {
 		const savedData = savedListData || [];
 
-		const withUpdatedTitle = savedData.map((list, i) => {
+		const withUpdatedTitle = savedData.map(list => {
 			if ((list as TodoList).id === listId) {
 				const todos = (list as TodoList).todos;
 				todos.forEach((todo: Todo, i) => {
@@ -124,7 +121,7 @@ export default function LocalStorageProvider({ children }: Props) {
 	const deleteTodo = (listId: string, todoId: string) => {
 		const savedData = savedListData || [];
 
-		const withoutDeletedTodo = savedData.map((list, i) => {
+		const withoutDeletedTodo = savedData.map(list => {
 			if ((list as TodoList).id === listId) {
 				const todos = (list as TodoList).todos;
 				const deletedIndex = todos.findIndex(todo => (todo as Todo).id === todoId);
@@ -143,7 +140,7 @@ export default function LocalStorageProvider({ children }: Props) {
 	function updateTodoStatus(listId: string, todoId: string, isChecked: boolean) {
 		const savedData = savedListData || [];
 
-		const withUpdatedStatus = savedData.map((list, i) => {
+		const withUpdatedStatus = savedData.map(list => {
 			if ((list as TodoList).id === listId) {
 				const todos = (list as TodoList).todos;
 				todos.forEach((todo: Todo, i) => {
