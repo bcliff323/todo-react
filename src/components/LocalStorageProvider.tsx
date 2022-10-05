@@ -1,7 +1,6 @@
 import { LocalStorageContext } from '../context/LocalStorageContext';
 import useLocalStorage from 'use-local-storage';
 import { v4 as uuidv4 } from 'uuid';
-import cloneDeep from 'lodash/cloneDeep';
 import { TodoList, Todo, Status } from '../types';
 
 type Props = {
@@ -31,15 +30,14 @@ export default function LocalStorageProvider({ children }: Props) {
 			return;
 		}
 
-		const savedData = cloneDeep(savedListData);
-		savedData.unshift(newList);
+		savedListData.unshift(newList);
 
-		const ordered = resetOrdinals(savedData);
+		const ordered = resetOrdinals(savedListData);
 		setSavedListData(ordered);
 	}
 
 	const updateListTitle = (title: string, id: string) => {
-		const savedData = cloneDeep(savedListData || []);
+		const savedData = savedListData || [];
 
 		setSavedListData(savedData.map((list, i) => {
 			if ((list as TodoList).id === id) {
@@ -51,7 +49,7 @@ export default function LocalStorageProvider({ children }: Props) {
 	}
 
 	const updateTodoOrder = (listId: string, source: number, destination: number) => {
-		const savedData = cloneDeep(savedListData || []);
+		const savedData = savedListData || [];
 
 		const withReOrderedData = savedData.map((list, i) => {
 			if ((list as TodoList).id === listId) {
@@ -70,18 +68,17 @@ export default function LocalStorageProvider({ children }: Props) {
 	}
 
 	const deleteList = (id: string) => {
-		const savedData = cloneDeep(savedListData || []);
+		const savedData = savedListData || [];
 
 		const withoutList = savedData.filter((list, i) => {
 			return (list as TodoList).id !== id;
 		});
 
-		const ordered = resetOrdinals(withoutList);
 		setSavedListData(withoutList);
 	}
 
 	const addNewTodo = (id: string, todoTitle: string) => {
-		const savedData = cloneDeep(savedListData || []);
+		const savedData = savedListData || [];
 		const newTodo = {
 			id: uuidv4(),
 			title: todoTitle,
@@ -105,7 +102,7 @@ export default function LocalStorageProvider({ children }: Props) {
 	}
 
 	const updateTodoTitle = (title: string, listId: string, todoId: string) => {
-		const savedData = cloneDeep(savedListData || []);
+		const savedData = savedListData || [];
 
 		const withUpdatedTitle = savedData.map((list, i) => {
 			if ((list as TodoList).id === listId) {
@@ -125,7 +122,7 @@ export default function LocalStorageProvider({ children }: Props) {
 	}
 
 	const deleteTodo = (listId: string, todoId: string) => {
-		const savedData = cloneDeep(savedListData || []);
+		const savedData = savedListData || [];
 
 		const withoutDeletedTodo = savedData.map((list, i) => {
 			if ((list as TodoList).id === listId) {
@@ -144,7 +141,7 @@ export default function LocalStorageProvider({ children }: Props) {
 	}
 
 	function updateTodoStatus(listId: string, todoId: string, isChecked: boolean) {
-		const savedData = cloneDeep(savedListData || []);
+		const savedData = savedListData || [];
 
 		const withUpdatedStatus = savedData.map((list, i) => {
 			if ((list as TodoList).id === listId) {
