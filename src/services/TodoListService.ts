@@ -23,33 +23,17 @@ export function addNewList(title: string, todoLists: TodoList[] = []) {
 	return ordered;
 }
 
+export function deleteList(id: string, todoLists: TodoList[] = []) {
+	const withoutList = todoLists.filter(list => {
+		return list.id !== id;
+	});
+	return withoutList;
+}
+
 export default function useTodoList(
 	todoLists: TodoList[] | undefined,
 	setSavedListData: (value: TodoList[]) => void
 ): TodoListService {
-	const addNewList = (title: string) => {
-		const newList = {
-			id: uuidv4(),
-			title: title,
-			todos: [],
-			ordinal: 0
-		};
-
-		if (!todoLists) {
-			setSavedListData([newList]);
-			return;
-		}
-
-		todoLists.unshift(newList);
-
-		const ordered = todoLists.map((list, i) => {
-			list.ordinal = i;
-			return list;
-		});
-
-		setSavedListData(ordered);
-	}
-
 	const updateListTitle = (title: string, id: string) => {
 		const savedData = todoLists || [];
 
@@ -79,16 +63,6 @@ export default function useTodoList(
 		});
 
 		setSavedListData(withReOrderedData);
-	}
-
-	const deleteList = (id: string) => {
-		const savedData = todoLists || [];
-
-		const withoutList = savedData.filter(list => {
-			return list.id !== id;
-		});
-
-		setSavedListData(withoutList);
 	}
 
 	const addNewTodo = (id: string, todoTitle: string) => {
@@ -173,10 +147,8 @@ export default function useTodoList(
 	}
 
 	return {
-		addNewList,
 		updateListTitle,
 		updateTodoOrder,
-		deleteList,
 		addNewTodo,
 		updateTodoTitle,
 		deleteTodo,

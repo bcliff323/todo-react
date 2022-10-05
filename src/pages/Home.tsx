@@ -5,7 +5,7 @@ import InputForm from '../components/InputForm';
 import Deletable from '../components/Deletable';
 import ClipboardIcon from '../components/icons/ClipboardIcon';
 import { LocalStorageContext } from '../context/LocalStorageContext';
-import { addNewList } from '../services/TodoListService';
+import { addNewList, deleteList } from '../services/TodoListService';
 import { TodoList } from '../types';
 import "../css/styles.css";
 
@@ -16,8 +16,7 @@ type Props = {
 export default function Home(props: Props) {
 	const {
 		savedListData,
-		setSavedListData,
-		deleteList
+		setSavedListData
 	} = useContext(LocalStorageContext);
 
 	function handleSubmit(listName: string) {
@@ -43,7 +42,10 @@ export default function Home(props: Props) {
 								<Deletable id={(list as TodoList).id}
 									confirmMessage="Yes"
 									cancelMessage="Cancel"
-									handleDelete={deleteList}>
+									handleDelete={(id: string) => {
+										const updatedList = deleteList(id, savedListData);
+										setSavedListData(updatedList);
+									}}>
 									<div className="flex">
 										<ClipboardIcon />
 										<Link key={i}
