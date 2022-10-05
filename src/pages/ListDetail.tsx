@@ -16,7 +16,7 @@ import EditableText from '../components/EditableText';
 import Deletable from '../components/Deletable';
 import HomeIcon from '../components/icons/HomeIcon';
 import { LocalStorageContext } from '../context/LocalStorageContext';
-import { updateListTitle, updateTodoOrder, addNewTodo, updateTodoTitle, deleteTodo } from '../services/TodoListService';
+import { updateListTitle, updateTodoOrder, addNewTodo, updateTodoTitle, deleteTodo, updateTodoStatus } from '../services/TodoListService';
 import { TodoList, Todo, Status } from '../types';
 import "../css/styles.css";
 
@@ -27,8 +27,7 @@ type Props = {
 export default function ListDetail(props: Props) {
 	const {
 		savedListData,
-		setSavedListData,
-		updateTodoStatus
+		setSavedListData
 	} = useContext(LocalStorageContext);
 
 	const { id } = useParams();
@@ -47,7 +46,12 @@ export default function ListDetail(props: Props) {
 	}
 
 	function handleCheckChange(listId: string, todoId: string, isChecked: boolean) {
-		updateTodoStatus(listId, todoId, isChecked);
+		if (!savedListData) {
+			return;
+		}
+
+		const updatedData = updateTodoStatus(listId, todoId, isChecked, savedListData);
+		setSavedListData(updatedData);
 	}
 
 	function onDragEnd(result: DropResult) {

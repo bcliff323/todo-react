@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { TodoList, Status, TodoListService } from '../types';
+import { TodoList, Status } from '../types';
 
 export function addNewList(title: string, todoLists: TodoList[] = []) {
 	const newList = {
@@ -115,32 +115,19 @@ export function deleteTodo(listId: string, todoId: string, todoLists: TodoList[]
 	return withoutDeletedTodo;
 }
 
-export default function useTodoList(
-	todoLists: TodoList[] | undefined,
-	setSavedListData: (value: TodoList[]) => void
-): TodoListService {
-
-
-	function updateTodoStatus(listId: string, todoId: string, isChecked: boolean) {
-		const savedData = todoLists || [];
-
-		const withUpdatedStatus = savedData.map(list => {
-			if (list.id === listId) {
-				const todos = list.todos;
-				todos.forEach(todo => {
-					if (todo.id === todoId) {
-						todo.status = isChecked ? Status.Complete : Status.NotStarted;
-					}
-				});
-				return list;
-			}
+export function updateTodoStatus(listId: string, todoId: string, isChecked: boolean, todoLists: TodoList[]) {
+	const withUpdatedStatus = todoLists.map(list => {
+		if (list.id === listId) {
+			const todos = list.todos;
+			todos.forEach(todo => {
+				if (todo.id === todoId) {
+					todo.status = isChecked ? Status.Complete : Status.NotStarted;
+				}
+			});
 			return list;
-		});
+		}
+		return list;
+	});
 
-		setSavedListData(withUpdatedStatus);
-	}
-
-	return {
-		updateTodoStatus
-	}
+	return withUpdatedStatus;
 }

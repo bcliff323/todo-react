@@ -1,7 +1,7 @@
 import { createContext, useContext, Dispatch } from 'react';
-import { TodoListService, TodoList } from "../types";
+import { TodoList } from "../types";
 
-interface ILocalStorageContext extends TodoListService {
+interface ILocalStorageContext {
 	savedListData: TodoList[] | undefined;
 	setSavedListData: Dispatch<TodoList[]>;
 }
@@ -9,7 +9,6 @@ interface ILocalStorageContext extends TodoListService {
 const defaultState = {
 	savedListData: [],
 	setSavedListData: () => { },
-	updateTodoStatus: (listId: string, todoId: string, isChecked: boolean) => { }
 };
 
 export const LocalStorageContext = createContext<ILocalStorageContext>(defaultState);

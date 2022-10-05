@@ -16,7 +16,3 @@ export interface TodoList {
 	todos: Todo[];
 	ordinal: number;
 }
-
-export interface TodoListService {
-	updateTodoStatus: (listId: string, todoId: string, isChecked: boolean) => void;
-}
