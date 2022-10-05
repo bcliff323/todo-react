@@ -5,6 +5,7 @@ import InputForm from '../components/InputForm';
 import Deletable from '../components/Deletable';
 import ClipboardIcon from '../components/icons/ClipboardIcon';
 import { LocalStorageContext } from '../context/LocalStorageContext';
+import { addNewList } from '../services/TodoListService';
 import { TodoList } from '../types';
 import "../css/styles.css";
 
@@ -15,7 +16,7 @@ type Props = {
 export default function Home(props: Props) {
 	const {
 		savedListData,
-		addNewList,
+		setSavedListData,
 		deleteList
 	} = useContext(LocalStorageContext);
 
@@ -23,7 +24,8 @@ export default function Home(props: Props) {
 		if (listName.length === 0) {
 			return;
 		}
-		addNewList(listName);
+		const updatedList = addNewList(listName, savedListData);
+		setSavedListData(updatedList);
 	}
 
 	return (

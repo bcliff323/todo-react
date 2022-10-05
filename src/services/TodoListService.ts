@@ -1,6 +1,28 @@
 import { v4 as uuidv4 } from 'uuid';
 import { TodoList, Status, TodoListService } from '../types';
 
+export function addNewList(title: string, todoLists: TodoList[] = []) {
+	const newList = {
+		id: uuidv4(),
+		title: title,
+		todos: [],
+		ordinal: 0
+	};
+
+	if (todoLists.length === 0) {
+		return [newList];
+	}
+
+	todoLists.unshift(newList);
+
+	const ordered = todoLists.map((list, i) => {
+		list.ordinal = i;
+		return list;
+	});
+
+	return ordered;
+}
+
 export default function useTodoList(
 	todoLists: TodoList[] | undefined,
 	setSavedListData: (value: TodoList[]) => void

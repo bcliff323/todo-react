@@ -14,6 +14,7 @@ export default function LocalStorageProvider({ children }: Props) {
 
 	const ctx = {
 		savedListData,
+		setSavedListData,
 		...todoLists
 	};
 
