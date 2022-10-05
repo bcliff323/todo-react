@@ -1,5 +1,6 @@
 
 import { FormEvent, ChangeEvent, useState } from 'react';
+import PlusIcon from './PlusIcon';
 
 type Props = {
 	handleSubmit: (listName: string) => void;
@@ -39,9 +40,7 @@ export default function InputForm(props: Props) {
 						onChange={handleOnChange} />
 					<button type="submit"
 						className="text-fuchsia-50 hover:text-fuchia-700 p-2 bg-indigo-600">
-						<svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 md:h-4 md:w-4" fill="none" viewBox="0 0 26 24" stroke="currentColor">
-							<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-						</svg>
+						<PlusIcon />
 					</button>
 				</div>
 			</form>
