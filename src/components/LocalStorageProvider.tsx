@@ -1,14 +1,14 @@
 import { LocalStorageContext } from '../context/LocalStorageContext';
 import useLocalStorage from 'use-local-storage';
 import { v4 as uuidv4 } from 'uuid';
-import { TodoList, Todo, Status } from '../types';
+import { TodoList, Status } from '../types';
 
 type Props = {
 	children?: React.ReactNode;
 };
 
 export default function LocalStorageProvider({ children }: Props) {
-	const [savedListData, setSavedListData] = useLocalStorage<object[]>("todo-lists");
+	const [savedListData, setSavedListData] = useLocalStorage<TodoList[]>("todo-lists");
 
 	const addNewList = (title: string) => {
 		const newList = {
@@ -26,7 +26,7 @@ export default function LocalStorageProvider({ children }: Props) {
 		savedListData.unshift(newList);
 
 		const ordered = savedListData.map((list, i) => {
-			(list as TodoList).ordinal = i;
+			list.ordinal = i;
 			return list;
 		});
 
@@ -37,8 +37,8 @@ export default function LocalStorageProvider({ children }: Props) {
 		const savedData = savedListData || [];
 
 		setSavedListData(savedData.map(list => {
-			if ((list as TodoList).id === id) {
-				(list as TodoList).title = title;
+			if (list.id === id) {
+				list.title = title;
 				return list;
 			}
 			return list;
@@ -49,12 +49,12 @@ export default function LocalStorageProvider({ children }: Props) {
 		const savedData = savedListData || [];
 
 		const withReOrderedData = savedData.map((list, i) => {
-			if ((list as TodoList).id === listId) {
-				const todos = (list as TodoList).todos
+			if (list.id === listId) {
+				const todos = list.todos
 				const [removed] = todos.splice(source, 1);
 				todos.splice(destination, 0, removed);
 				todos.forEach((t, i) => {
-					(t as Todo).ordinal = i;
+					t.ordinal = i;
 				})
 				return list;
 			}
@@ -68,7 +68,7 @@ export default function LocalStorageProvider({ children }: Props) {
 		const savedData = savedListData || [];
 
 		const withoutList = savedData.filter(list => {
-			return (list as TodoList).id !== id;
+			return list.id !== id;
 		});
 
 		setSavedListData(withoutList);
@@ -84,10 +84,10 @@ export default function LocalStorageProvider({ children }: Props) {
 		};
 
 		const withNewTodo = savedData.map(list => {
-			if ((list as TodoList).id === id) {
-				const todos = (list as TodoList).todos;
+			if (list.id === id) {
+				const todos = list.todos;
 				todos.unshift(newTodo);
-				todos.forEach((todo: Todo, i: number) => {
+				todos.forEach((todo, i) => {
 					todo.ordinal = i;
 				});
 				return list;
@@ -102,12 +102,11 @@ export default function LocalStorageProvider({ children }: Props) {
 		const savedData = savedListData || [];
 
 		const withUpdatedTitle = savedData.map(list => {
-			if ((list as TodoList).id === listId) {
-				const todos = (list as TodoList).todos;
-				todos.forEach((todo: Todo, i) => {
-					const t = (todo as Todo);
-					if (t.id === todoId) {
-						t.title = title;
+			if (list.id === listId) {
+				const todos = list.todos;
+				todos.forEach(todo => {
+					if (todo.id === todoId) {
+						todo.title = title;
 					}
 				});
 				return list;
@@ -122,11 +121,11 @@ export default function LocalStorageProvider({ children }: Props) {
 		const savedData = savedListData || [];
 
 		const withoutDeletedTodo = savedData.map(list => {
-			if ((list as TodoList).id === listId) {
-				const todos = (list as TodoList).todos;
-				const deletedIndex = todos.findIndex(todo => (todo as Todo).id === todoId);
+			if (list.id === listId) {
+				const todos = list.todos;
+				const deletedIndex = todos.findIndex(todo => todo.id === todoId);
 				todos.splice(deletedIndex, 1);
-				todos.forEach((todo: Todo, i: number) => {
+				todos.forEach((todo, i) => {
 					todo.ordinal = i;
 				});
 				return list;
@@ -141,12 +140,11 @@ export default function LocalStorageProvider({ children }: Props) {
 		const savedData = savedListData || [];
 
 		const withUpdatedStatus = savedData.map(list => {
-			if ((list as TodoList).id === listId) {
-				const todos = (list as TodoList).todos;
-				todos.forEach((todo: Todo, i) => {
-					const t = (todo as Todo);
-					if (t.id === todoId) {
-						t.status = isChecked ? Status.Complete : Status.NotStarted;
+			if (list.id === listId) {
+				const todos = list.todos;
+				todos.forEach(todo => {
+					if (todo.id === todoId) {
+						todo.status = isChecked ? Status.Complete : Status.NotStarted;
 					}
 				});
 				return list;
