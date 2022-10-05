@@ -16,7 +16,7 @@ import EditableText from '../components/EditableText';
 import Deletable from '../components/Deletable';
 import HomeIcon from '../components/icons/HomeIcon';
 import { LocalStorageContext } from '../context/LocalStorageContext';
-import { updateListTitle } from '../services/TodoListService';
+import { updateListTitle, updateTodoOrder } from '../services/TodoListService';
 import { TodoList, Todo, Status } from '../types';
 import "../css/styles.css";
 
@@ -29,7 +29,6 @@ export default function ListDetail(props: Props) {
 		savedListData,
 		setSavedListData,
 		addNewTodo,
-		updateTodoOrder,
 		updateTodoTitle,
 		updateTodoStatus,
 		deleteTodo
@@ -38,16 +37,13 @@ export default function ListDetail(props: Props) {
 	const { id } = useParams();
 	const listDetails = savedListData?.find((list) => list.id === id);
 
-	// Todo: clean this up a bit
-	if (!listDetails) {
-		return (
-			<div>Oops! Couldn't find that list.</div>
-		)
-	}
-
 	const todos = (listDetails as TodoList).todos;
 
 	function handleSubmit(todoName: string) {
+		if (todoName.length === 0) {
+			return;
+		}
+
 		const listId = (listDetails as TodoList).id;
 		addNewTodo(listId, todoName);
 	}
@@ -65,11 +61,25 @@ export default function ListDetail(props: Props) {
 			return;
 		}
 
-		updateTodoOrder(
+		if (!savedListData) {
+			return;
+		}
+
+		const updatedData = updateTodoOrder(
 			(listDetails as TodoList).id,
 			result.source.index,
-			result.destination.index
+			result.destination.index,
+			savedListData
 		);
+
+		setSavedListData(updatedData);
+	}
+
+	// Todo: clean this up a bit
+	if (!listDetails || !savedListData) {
+		return (
+			<div>Oops! Couldn't find that list.</div>
+		)
 	}
 
 	return (

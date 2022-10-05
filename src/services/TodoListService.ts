@@ -23,14 +23,14 @@ export function addNewList(title: string, todoLists: TodoList[] = []) {
 	return ordered;
 }
 
-export function deleteList(id: string, todoLists: TodoList[] = []) {
+export function deleteList(id: string, todoLists: TodoList[]) {
 	const withoutList = todoLists.filter(list => {
 		return list.id !== id;
 	});
 	return withoutList;
 }
 
-export function updateListTitle(title: string, id: string, todoLists: TodoList[] = []) {
+export function updateListTitle(title: string, id: string, todoLists: TodoList[]) {
 	const updatedLists = todoLists.map(list => {
 		if (list.id === id) {
 			list.title = title;
@@ -41,28 +41,27 @@ export function updateListTitle(title: string, id: string, todoLists: TodoList[]
 	return updatedLists;
 }
 
+export function updateTodoOrder(listId: string, source: number, destination: number, todoLists: TodoList[]) {
+	const withReOrderedData = todoLists.map((list, i) => {
+		if (list.id === listId) {
+			const todos = list.todos
+			const [removed] = todos.splice(source, 1);
+			todos.splice(destination, 0, removed);
+			todos.forEach((t, i) => {
+				t.ordinal = i;
+			})
+			return list;
+		}
+		return list;
+	});
+
+	return withReOrderedData;
+}
+
 export default function useTodoList(
 	todoLists: TodoList[] | undefined,
 	setSavedListData: (value: TodoList[]) => void
 ): TodoListService {
-	const updateTodoOrder = (listId: string, source: number, destination: number) => {
-		const savedData = todoLists || [];
-
-		const withReOrderedData = savedData.map((list, i) => {
-			if (list.id === listId) {
-				const todos = list.todos
-				const [removed] = todos.splice(source, 1);
-				todos.splice(destination, 0, removed);
-				todos.forEach((t, i) => {
-					t.ordinal = i;
-				})
-				return list;
-			}
-			return list;
-		});
-
-		setSavedListData(withReOrderedData);
-	}
 
 	const addNewTodo = (id: string, todoTitle: string) => {
 		const savedData = todoLists || [];
@@ -146,7 +145,6 @@ export default function useTodoList(
 	}
 
 	return {
-		updateTodoOrder,
 		addNewTodo,
 		updateTodoTitle,
 		deleteTodo,

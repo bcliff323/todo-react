@@ -10,7 +10,6 @@ const defaultState = {
 	savedListData: [],
 	setSavedListData: () => { },
 	addNewTodo: (id: string, todoTitle: string) => { },
-	updateTodoOrder: (listId: string, source: number, destination: number) => { },
 	updateTodoTitle: (title: string, listId: string, todoId: string) => { },
 	deleteTodo: (listId: string, todoId: string) => { },
 	updateTodoStatus: (listId: string, todoId: string, isChecked: boolean) => { }
