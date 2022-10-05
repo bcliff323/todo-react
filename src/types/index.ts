@@ -18,7 +18,6 @@ export interface TodoList {
 }
 
 export interface TodoListService {
-	updateListTitle: (title: string, id: string) => void;
 	addNewTodo: (id: string, todoTitle: string) => void;
 	updateTodoOrder: (listId: string, source: number, destination: number) => void;
 	updateTodoTitle: (title: string, listId: string, todoId: string) => void;

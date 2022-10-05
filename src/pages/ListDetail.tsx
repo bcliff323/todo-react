@@ -16,6 +16,7 @@ import EditableText from '../components/EditableText';
 import Deletable from '../components/Deletable';
 import HomeIcon from '../components/icons/HomeIcon';
 import { LocalStorageContext } from '../context/LocalStorageContext';
+import { updateListTitle } from '../services/TodoListService';
 import { TodoList, Todo, Status } from '../types';
 import "../css/styles.css";
 
@@ -26,7 +27,7 @@ type Props = {
 export default function ListDetail(props: Props) {
 	const {
 		savedListData,
-		updateListTitle,
+		setSavedListData,
 		addNewTodo,
 		updateTodoOrder,
 		updateTodoTitle,
@@ -35,7 +36,15 @@ export default function ListDetail(props: Props) {
 	} = useContext(LocalStorageContext);
 
 	const { id } = useParams();
-	const listDetails = savedListData?.find((list) => (list as TodoList).id === id);
+	const listDetails = savedListData?.find((list) => list.id === id);
+
+	// Todo: clean this up a bit
+	if (!listDetails) {
+		return (
+			<div>Oops! Couldn't find that list.</div>
+		)
+	}
+
 	const todos = (listDetails as TodoList).todos;
 
 	function handleSubmit(todoName: string) {
@@ -76,7 +85,8 @@ export default function ListDetail(props: Props) {
 					<EditableText
 						text={(listDetails as TodoList).title}
 						saveText={(title: string) => {
-							updateListTitle(title, (listDetails as TodoList).id);
+							const updatedData = updateListTitle(title, listDetails.id, savedListData);
+							setSavedListData(updatedData);
 						}} />
 				</h1>
 			</div>
