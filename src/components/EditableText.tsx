@@ -1,4 +1,4 @@
-import { useState, useRef, ChangeEvent } from 'react';
+import { useState, useRef, ChangeEvent, FormEvent, MouseEvent } from 'react';
 import { VisuallyHidden } from "@reach/visually-hidden";
 import SaveIcon from "./icons/SaveIcon";
 import EditIcon from "./icons/EditIcon";
@@ -16,7 +16,8 @@ export default function EditableText(props: Props) {
 	const [isEditing, setIsEditing] = useState<boolean>(false);
 	const [newValue, setNewValue] = useState<string>(text);
 
-	async function edit() {
+	async function edit(e: MouseEvent<HTMLButtonElement>) {
+		e.preventDefault();
 		await setIsEditing(true);
 		if (textInput?.current) {
 			textInput?.current?.focus();
@@ -34,7 +35,8 @@ export default function EditableText(props: Props) {
 
 	return (
 		<div className="flex-auto">
-			<div className="flex items-center">
+			<form className="flex items-center"
+				onSubmit={saveAndClose}>
 				<div className="w-full flex-auto">
 					{
 						isEditing ?
@@ -48,7 +50,7 @@ export default function EditableText(props: Props) {
 				<div className="flex">
 					{
 						isEditing &&
-						<button disabled={!isEditing} onClick={saveAndClose} className="flex disabled:opacity-25 ml-1 mr-1">
+						<button type="submit" disabled={!isEditing} onClick={saveAndClose} className="flex disabled:opacity-25 ml-1 mr-1">
 							<VisuallyHidden>Save</VisuallyHidden>
 							<SaveIcon />
 						</button>
@@ -58,7 +60,7 @@ export default function EditableText(props: Props) {
 						<EditIcon />
 					</button>
 				</div>
-			</div>
+			</form>
 		</div>
 	)
 }
