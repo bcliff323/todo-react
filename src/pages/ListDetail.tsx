@@ -16,7 +16,7 @@ import EditableText from '../components/EditableText';
 import Deletable from '../components/Deletable';
 import HomeIcon from '../components/icons/HomeIcon';
 import { LocalStorageContext } from '../context/LocalStorageContext';
-import { updateListTitle, updateTodoOrder, addNewTodo } from '../services/TodoListService';
+import { updateListTitle, updateTodoOrder, addNewTodo, updateTodoTitle } from '../services/TodoListService';
 import { TodoList, Todo, Status } from '../types';
 import "../css/styles.css";
 
@@ -28,7 +28,6 @@ export default function ListDetail(props: Props) {
 	const {
 		savedListData,
 		setSavedListData,
-		updateTodoTitle,
 		updateTodoStatus,
 		deleteTodo
 	} = useContext(LocalStorageContext);
@@ -138,7 +137,8 @@ export default function ListDetail(props: Props) {
 																			text={(todo as Todo).title}
 																			strike={(todo as Todo).status === Status.Complete}
 																			saveText={(title: string) => {
-																				updateTodoTitle(title, (listDetails as TodoList).id, (todo as Todo).id);
+																				const updatedData = updateTodoTitle(title, (listDetails as TodoList).id, (todo as Todo).id, savedListData);
+																				setSavedListData(updatedData);
 																			}} />
 																	</div>
 																</Deletable>
