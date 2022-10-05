@@ -2,7 +2,6 @@
 	"name": "react-typescript",
 	"version": "1.0.0",
 	"description": "A todo application",
-	"homepage": "/todo-manager",
 	"keywords": [
 		"typescript",
 		"react",
