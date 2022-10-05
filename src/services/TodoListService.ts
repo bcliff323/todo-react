@@ -58,35 +58,33 @@ export function updateTodoOrder(listId: string, source: number, destination: num
 	return withReOrderedData;
 }
 
+export function addNewTodo(id: string, todoTitle: string, todoLists: TodoList[]) {
+	const newTodo = {
+		id: uuidv4(),
+		title: todoTitle,
+		status: Status.NotStarted,
+		ordinal: 0
+	};
+
+	const withNewTodo = todoLists.map(list => {
+		if (list.id === id) {
+			const todos = list.todos;
+			todos.unshift(newTodo);
+			todos.forEach((todo, i) => {
+				todo.ordinal = i;
+			});
+			return list;
+		}
+		return list;
+	})
+
+	return withNewTodo;
+}
+
 export default function useTodoList(
 	todoLists: TodoList[] | undefined,
 	setSavedListData: (value: TodoList[]) => void
 ): TodoListService {
-
-	const addNewTodo = (id: string, todoTitle: string) => {
-		const savedData = todoLists || [];
-		const newTodo = {
-			id: uuidv4(),
-			title: todoTitle,
-			status: Status.NotStarted,
-			ordinal: 0
-		};
-
-		const withNewTodo = savedData.map(list => {
-			if (list.id === id) {
-				const todos = list.todos;
-				todos.unshift(newTodo);
-				todos.forEach((todo, i) => {
-					todo.ordinal = i;
-				});
-				return list;
-			}
-			return list;
-		})
-
-		setSavedListData(withNewTodo);
-	}
-
 	const updateTodoTitle = (title: string, listId: string, todoId: string) => {
 		const savedData = todoLists || [];
 
@@ -145,7 +143,6 @@ export default function useTodoList(
 	}
 
 	return {
-		addNewTodo,
 		updateTodoTitle,
 		deleteTodo,
 		updateTodoStatus
