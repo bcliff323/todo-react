@@ -3,23 +3,26 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import ListDetail from './pages/ListDetail';
 import LocalStorageProvider from './components/LocalStorageProvider';
+import ErrorBoundary from "./components/ErrorBoundary";
 
 export default function App() {
   return (
-    <HashRouter>
-      <Routes>
-        <Route path="/" element={
-          <LocalStorageProvider>
-            <Home />
-          </LocalStorageProvider>
-        } />
-        <Route path="/list/:id" element={
-          <LocalStorageProvider>
-            <ListDetail />
-          </LocalStorageProvider>
-        } />
-      </Routes>
-    </HashRouter>
+    <ErrorBoundary>
+      <HashRouter>
+        <Routes>
+          <Route path="/" element={
+            <LocalStorageProvider>
+              <Home />
+            </LocalStorageProvider>
+          } />
+          <Route path="/list/:id" element={
+            <LocalStorageProvider>
+              <ListDetail />
+            </LocalStorageProvider>
+          } />
+        </Routes>
+      </HashRouter>
+    </ErrorBoundary>
   );
 }
 
