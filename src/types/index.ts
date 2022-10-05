@@ -17,10 +17,6 @@ export interface TodoList {
 	ordinal: number;
 }
 
-export interface ListDomain {
-	todo_lists: TodoList[];
-}
-
 export interface TodoListService {
 	addNewList: (title: string) => void;
 	updateListTitle: (title: string, id: string) => void;
