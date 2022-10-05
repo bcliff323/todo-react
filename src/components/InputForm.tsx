@@ -11,7 +11,6 @@ type Props = {
 export default function InputForm(props: Props) {
 	const {
 		handleSubmit,
-		label,
 		placeholder
 	} = props;
 
