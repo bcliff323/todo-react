@@ -1,8 +1,8 @@
 import { createContext, useContext } from 'react';
-import { TodoListService } from "../types";
+import { TodoListService, TodoList } from "../types";
 
 interface ILocalStorageContext extends TodoListService {
-	savedListData: object[] | undefined;
+	savedListData: TodoList[] | undefined;
 }
 
 const defaultState = {
