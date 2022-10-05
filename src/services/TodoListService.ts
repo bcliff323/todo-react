@@ -1,7 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
-import { TodoList, Status } from '../types';
+import { TodoList, Status, TodoListService } from '../types';
 
-export default function useTodoList(todoLists: TodoList[] | undefined, setSavedListData: (value: TodoList[]) => void) {
+export default function useTodoList(
+	todoLists: TodoList[] | undefined,
+	setSavedListData: (value: TodoList[]) => void
+): TodoListService {
 	const addNewList = (title: string) => {
 		const newList = {
 			id: uuidv4(),

@@ -1,15 +1,8 @@
 import { createContext, useContext } from 'react';
+import { TodoListService } from "../types";
 
-interface ILocalStorageContext {
+interface ILocalStorageContext extends TodoListService {
 	savedListData: object[] | undefined;
-	addNewList: (title: string) => void;
-	updateListTitle: (title: string, id: string) => void;
-	deleteList: (id: string) => void;
-	addNewTodo: (id: string, todoTitle: string) => void;
-	updateTodoOrder: (listId: string, source: number, destination: number) => void;
-	updateTodoTitle: (title: string, listId: string, todoId: string) => void;
-	deleteTodo: (listId: string, todoId: string) => void;
-	updateTodoStatus: (listId: string, todoId: string, isChecked: boolean) => void;
 }
 
 const defaultState = {
