@@ -18,6 +18,5 @@ export interface TodoList {
 }
 
 export interface TodoListService {
-	deleteTodo: (listId: string, todoId: string) => void;
 	updateTodoStatus: (listId: string, todoId: string, isChecked: boolean) => void;
 }

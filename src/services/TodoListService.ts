@@ -98,28 +98,28 @@ export function updateTodoTitle(title: string, listId: string, todoId: string, t
 	return withUpdatedTitle;
 }
 
+export function deleteTodo(listId: string, todoId: string, todoLists: TodoList[]) {
+	const withoutDeletedTodo = todoLists.map(list => {
+		if (list.id === listId) {
+			const todos = list.todos;
+			const deletedIndex = todos.findIndex(todo => todo.id === todoId);
+			todos.splice(deletedIndex, 1);
+			todos.forEach((todo, i) => {
+				todo.ordinal = i;
+			});
+			return list;
+		}
+		return list;
+	});
+
+	return withoutDeletedTodo;
+}
+
 export default function useTodoList(
 	todoLists: TodoList[] | undefined,
 	setSavedListData: (value: TodoList[]) => void
 ): TodoListService {
-	const deleteTodo = (listId: string, todoId: string) => {
-		const savedData = todoLists || [];
 
-		const withoutDeletedTodo = savedData.map(list => {
-			if (list.id === listId) {
-				const todos = list.todos;
-				const deletedIndex = todos.findIndex(todo => todo.id === todoId);
-				todos.splice(deletedIndex, 1);
-				todos.forEach((todo, i) => {
-					todo.ordinal = i;
-				});
-				return list;
-			}
-			return list;
-		});
-
-		setSavedListData(withoutDeletedTodo);
-	}
 
 	function updateTodoStatus(listId: string, todoId: string, isChecked: boolean) {
 		const savedData = todoLists || [];
@@ -141,7 +141,6 @@ export default function useTodoList(
 	}
 
 	return {
-		deleteTodo,
 		updateTodoStatus
 	}
 }

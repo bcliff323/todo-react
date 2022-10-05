@@ -9,7 +9,6 @@ interface ILocalStorageContext extends TodoListService {
 const defaultState = {
 	savedListData: [],
 	setSavedListData: () => { },
-	deleteTodo: (listId: string, todoId: string) => { },
 	updateTodoStatus: (listId: string, todoId: string, isChecked: boolean) => { }
 };
 
