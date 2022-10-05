@@ -1,4 +1,4 @@
-import "../css/styles.css";
+import "../../css/styles.css";
 
 export default function DeleteIcon() {
 	return (

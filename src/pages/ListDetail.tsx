@@ -14,7 +14,7 @@ import Layout from '../components/Layout';
 import InputForm from '../components/InputForm';
 import EditableText from '../components/EditableText';
 import Deletable from '../components/Deletable';
-import HomeIcon from '../components/HomeIcon';
+import HomeIcon from '../components/icons/HomeIcon';
 import { LocalStorageContext } from '../context/LocalStorageContext';
 import { TodoList, Todo, Status } from '../types';
 import "../css/styles.css";

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Dialog } from "@reach/dialog";
-import DeleteIcon from "./DeleteIcon";
+import DeleteIcon from "./icons/DeleteIcon";
 import "@reach/dialog/styles.css";
 import "../css/styles.css";
 

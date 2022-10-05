@@ -1,7 +1,7 @@
 import { useState, useRef, ChangeEvent } from 'react';
 import { VisuallyHidden } from "@reach/visually-hidden";
-import SaveIcon from "./SaveIcon";
-import EditIcon from "./EditIcon";
+import SaveIcon from "./icons/SaveIcon";
+import EditIcon from "./icons/EditIcon";
 import "../css/styles.css";
 
 type Props = {

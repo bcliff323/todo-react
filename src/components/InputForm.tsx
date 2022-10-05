@@ -1,6 +1,6 @@
 
 import { FormEvent, ChangeEvent, useState } from 'react';
-import PlusIcon from './PlusIcon';
+import PlusIcon from './icons/PlusIcon';
 
 type Props = {
 	handleSubmit: (listName: string) => void;

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Layout from '../components/Layout';
 import InputForm from '../components/InputForm';
 import Deletable from '../components/Deletable';
-import ClipboardIcon from '../components/ClipboardIcon';
+import ClipboardIcon from '../components/icons/ClipboardIcon';
 import { LocalStorageContext } from '../context/LocalStorageContext';
 import { TodoList } from '../types';
 import "../css/styles.css";
