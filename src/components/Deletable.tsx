@@ -35,7 +35,8 @@ export default function Deletable(props: Props) {
 			</button>
 			<Dialog className="my-4 bg-cyan-50 rounded"
 				isOpen={showDialog}
-				onDismiss={close}>
+				onDismiss={close}
+				aria-label="Warning about permanently deleting item">
 				<p>Are you sure you want to delete this?</p>
 				<div className="flex justify-end">
 					<button className="mt-3 mr-2 py-0.5 px-2.5 rounded bg-indigo-800 hover:bg-indigo-500 text-white"
