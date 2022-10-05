@@ -20,6 +20,9 @@ export default function Home(props: Props) {
 	} = useContext(LocalStorageContext);
 
 	function handleSubmit(listName: string) {
+		if (listName.length === 0) {
+			return;
+		}
 		addNewList(listName);
 	}
 
