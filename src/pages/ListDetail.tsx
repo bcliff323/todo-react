@@ -109,15 +109,18 @@ export default function ListDetail(props: Props) {
 				<div className="my-4 bg-cyan-50 text-indigo-900 p-2 mb-3 rounded">
 					<DragDropContext onDragEnd={onDragEnd}>
 						<Droppable droppableId="list">
-							{(provided: DroppableProvided) => (
-								<div ref={provided.innerRef} {...provided.droppableProps}>
+							{(provided, dropSnapshot) => (
+								<div ref={provided.innerRef}
+									className={`rounded ${dropSnapshot.isDraggingOver ? 'bg-cyan-100' : ''}`}
+									{...provided.droppableProps}>
 									{todos.map(
 										(todo: Todo, i) => {
 											const dId = (todo as Todo).id?.toString();
 											return (
 												<Draggable key={(todo as Todo).id} draggableId={dId} index={(todo as Todo).ordinal}>
-													{(provided: DraggableProvided) => (
+													{(provided, snapshot) => (
 														<div ref={provided.innerRef}
+															className={`px-1 rounded ${snapshot.isDragging ? 'bg-blue-200' : ''}`}
 															{...provided.draggableProps}
 															{...provided.dragHandleProps}>
 															<FadeIn>
