@@ -5,10 +5,7 @@ import {
 	Droppable,
 	Draggable,
 	DropResult,
-	DroppableProvided,
-	DraggableProvided
 } from "react-beautiful-dnd";
-import FadeIn from 'react-fade-in';
 import { VisuallyHidden } from "@reach/visually-hidden";
 import Layout from '../components/Layout';
 import InputForm from '../components/InputForm';
@@ -123,32 +120,30 @@ export default function ListDetail(props: Props) {
 															className={`px-1 rounded ${snapshot.isDragging ? 'bg-blue-200' : ''}`}
 															{...provided.draggableProps}
 															{...provided.dragHandleProps}>
-															<FadeIn>
-																<Deletable id={(todo as Todo).id}
-																	confirmMessage="Yes"
-																	cancelMessage="Cancel"
-																	handleDelete={(id) => {
-																		const updatedData = deleteTodo((listDetails as TodoList).id, id, savedListData);
-																		setSavedListData(updatedData);
-																	}}>
-																	<div className="flex pl-1 py-1">
-																		<input type="checkbox"
-																			className="mr-2"
-																			value={(todo as Todo).id}
-																			checked={(todo as Todo).status === Status.Complete}
-																			onChange={(event: ChangeEvent<HTMLInputElement>) => {
-																				handleCheckChange((listDetails as TodoList).id, event.target.value, event.target.checked);
-																			}} />
-																		<EditableText
-																			text={(todo as Todo).title}
-																			strike={(todo as Todo).status === Status.Complete}
-																			saveText={(title: string) => {
-																				const updatedData = updateTodoTitle(title, (listDetails as TodoList).id, (todo as Todo).id, savedListData);
-																				setSavedListData(updatedData);
-																			}} />
-																	</div>
-																</Deletable>
-															</FadeIn>
+															<Deletable id={(todo as Todo).id}
+																confirmMessage="Yes"
+																cancelMessage="Cancel"
+																handleDelete={(id) => {
+																	const updatedData = deleteTodo((listDetails as TodoList).id, id, savedListData);
+																	setSavedListData(updatedData);
+																}}>
+																<div className="flex pl-1 py-1">
+																	<input type="checkbox"
+																		className="mr-2"
+																		value={(todo as Todo).id}
+																		checked={(todo as Todo).status === Status.Complete}
+																		onChange={(event: ChangeEvent<HTMLInputElement>) => {
+																			handleCheckChange((listDetails as TodoList).id, event.target.value, event.target.checked);
+																		}} />
+																	<EditableText
+																		text={(todo as Todo).title}
+																		strike={(todo as Todo).status === Status.Complete}
+																		saveText={(title: string) => {
+																			const updatedData = updateTodoTitle(title, (listDetails as TodoList).id, (todo as Todo).id, savedListData);
+																			setSavedListData(updatedData);
+																		}} />
+																</div>
+															</Deletable>
 														</div>
 													)}
 												</Draggable>
