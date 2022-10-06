@@ -29,11 +29,17 @@ export default function ListDetail(props: Props) {
 		savedListData,
 		setSavedListData
 	} = useContext(LocalStorageContext);
+	if (!savedListData) {
+		throw new Error(`No list data was saved`);
+	}
 
 	const { id } = useParams();
 	const listDetails = savedListData?.find((list) => list.id === id);
+	if (!listDetails) {
+		throw new Error(`No list found with id: ${id}`)
+	}
 
-	const todos = (listDetails as TodoList).todos;
+	const todos = listDetails.todos;
 
 	function handleSubmit(todoName: string) {
 		if (todoName.length === 0 || !savedListData) {
@@ -63,25 +69,18 @@ export default function ListDetail(props: Props) {
 			return;
 		}
 
-		if (!savedListData) {
+		if (!savedListData || !listDetails) {
 			return;
 		}
 
 		const updatedData = updateTodoOrder(
-			(listDetails as TodoList).id,
+			listDetails.id,
 			result.source.index,
 			result.destination.index,
 			savedListData
 		);
 
 		setSavedListData(updatedData);
-	}
-
-	// Todo: clean this up a bit
-	if (!listDetails || !savedListData) {
-		return (
-			<div>Oops! Couldn't find that list.</div>
-		)
 	}
 
 	return (
