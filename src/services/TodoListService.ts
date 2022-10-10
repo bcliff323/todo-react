@@ -2,6 +2,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { TodoList, Status } from '../types';
 import cloneDeep from 'lodash/cloneDeep';
 
+function order(list: TodoList, i: number) {
+	list.ordinal = i;
+	return list;
+}
+
 export function addNewList(title: string, todoLists: TodoList[] = []) {
 	const newList = {
 		id: uuidv4(),
@@ -18,11 +23,7 @@ export function addNewList(title: string, todoLists: TodoList[] = []) {
 
 	updatedList.unshift(newList);
 
-	const ordered = updatedList.map((list, i) => {
-		list.ordinal = i;
-		return list;
-	});
-
+	const ordered = updatedList.map(order);
 	return ordered;
 }
 
@@ -30,7 +31,9 @@ export function deleteList(id: string, todoLists: TodoList[]) {
 	const withoutList = todoLists.filter(list => {
 		return list.id !== id;
 	});
-	return withoutList;
+
+	const ordered = withoutList.map(order);
+	return ordered;
 }
 
 export function updateListTitle(title: string, id: string, todoLists: TodoList[]) {
