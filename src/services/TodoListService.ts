@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { TodoList, Status } from '../types';
+import cloneDeep from 'lodash/cloneDeep';
 
 export function addNewList(title: string, todoLists: TodoList[] = []) {
 	const newList = {
@@ -9,13 +10,15 @@ export function addNewList(title: string, todoLists: TodoList[] = []) {
 		ordinal: 0
 	};
 
-	if (todoLists.length === 0) {
+	const updatedList = cloneDeep(todoLists);
+
+	if (updatedList.length === 0) {
 		return [newList];
 	}
 
-	todoLists.unshift(newList);
+	updatedList.unshift(newList);
 
-	const ordered = todoLists.map((list, i) => {
+	const ordered = updatedList.map((list, i) => {
 		list.ordinal = i;
 		return list;
 	});
