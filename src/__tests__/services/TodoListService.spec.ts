@@ -50,6 +50,7 @@ describe('deleteList', () => {
 		const updatedLists = deleteList(listId, lists);
 		const updatedIds = updatedLists.map(l => l.id);
 
+		// The list has been removed
 		expect(updatedIds.includes(listId)).toBeFalsy();
 	});
 
@@ -81,6 +82,7 @@ describe('updateListTitle', () => {
 		const newTitle = 'New list name';
 		const updatedList = updateListTitle(newTitle, listId, lists);
 
+		// Title of list matching intended id has been updated
 		expect(updatedList.find(l => l.id === listId)?.title).toBe(newTitle);
 	});
 
@@ -100,6 +102,7 @@ describe('addNewTodo', () => {
 		const list = lists[0];
 		const newTodoTitle = 'new';
 
+		// Verify this list has no todos
 		expect(list.todos.length).toEqual(0);
 
 		const withNewTodo = addNewTodo(list.id, newTodoTitle, lists);
@@ -107,6 +110,7 @@ describe('addNewTodo', () => {
 		const todos = withNewTodo.find(l => l.id === list.id)?.todos;
 		const newTodo = todos?.find(t => t.title === newTodoTitle);
 
+		// A todo has been added with the correct title
 		expect(newTodo).toBeTruthy();
 	});
 
@@ -120,6 +124,7 @@ describe('addNewTodo', () => {
 		const todos = withNewTodo.find(l => l.id === list.id)?.todos;
 		const newTodo = todos?.find(t => t.title === newTodoTitle);
 
+		// A new todo has been added to the beginning/top, ordinal 0
 		expect(newTodo?.ordinal).toEqual(0);
 	});
 
@@ -143,7 +148,9 @@ describe('deleteTodo', () => {
 		const withoutDeletedTodo = deleteTodo(list.id, list.todos[0].id, lists);
 		const todos = withoutDeletedTodo.find(l => l.id === list.id)?.todos;
 
+		// There is one fewer todo in the list
 		expect(todos?.length).toEqual(2);
+		// There is no longer a todo list matching the id passed to the function
 		expect(todos?.find(t => t.id === list.todos[0].id)).toBeFalsy();
 	});
 
@@ -154,6 +161,7 @@ describe('deleteTodo', () => {
 
 		const withoutDeletedTodo = deleteTodo(list.id, list.todos[1].id, lists);
 
+		// deleteTodo resets the ordinals after the todo is deleted
 		const todos = withoutDeletedTodo.find(l => l.id === list.id)?.todos;
 		todos?.forEach((t, i) => {
 			expect(t.ordinal).toEqual(i);
@@ -177,11 +185,13 @@ describe('updateTodoTitle', () => {
 		list.todos = givenTodos(['one', 'two', 'three']);
 		const newTitle = 'new';
 
+		// Searches through all lists, first matching a list id, then searching through todos until a todo id is matched, before updating the title
 		const withUpdatedTodoTitle = updateTodoTitle(newTitle, list.id, list.todos[0].id, lists);
 
 		const todos = withUpdatedTodoTitle.find(l => l.id === list.id)?.todos;
 		const successfullyUpdated = todos?.find(t => t.title === newTitle);
 
+		// The title of the todo matching both the list id and todo id, has been updated
 		expect(successfullyUpdated).toBeTruthy();
 	});
 
@@ -209,6 +219,7 @@ describe('updateTodoOrder', () => {
 			.find(l => l.id === list.id)
 			?.todos.map(t => t.title);
 
+		// The todo at position 0 has been moved to the end of the list. The two other items were moved up one position.
 		expect(todosTitles1).toEqual(['two', 'three', 'one']);
 
 		const reorderedTodos2 = updateTodoOrder(list.id, 1, 0, lists);
@@ -216,6 +227,7 @@ describe('updateTodoOrder', () => {
 			.find(l => l.id === list.id)
 			?.todos.map(t => t.title);
 
+		// The todo at the second position was moved to be top/beginning. Pushing the first todo down to the second position.
 		expect(todosTitles2).toEqual(['two', 'one', 'three']);
 	});
 
@@ -238,10 +250,12 @@ describe('updateTodoStatus', () => {
 		list.todos = givenTodos(['one', 'two', 'three']);
 		const todoIndex = 1;
 
+		// Passing true indicates that the todo is complete
 		const withUpdatedStatus = updateTodoStatus(list.id, list.todos[todoIndex].id, true, lists);
 
 		const todos = withUpdatedStatus.find(l => l.id === list.id)?.todos || [];
 
+		// Status of the todo at index 1 should be complete. Otherwise they should all be not started.
 		todos.forEach((t, i) => {
 			if (i === todoIndex) {
 				expect(t.status).toEqual(Status.Complete);
