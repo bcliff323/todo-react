@@ -37,34 +37,22 @@ export function deleteList(id: string, todoLists: TodoList[]) {
 }
 
 export function updateListTitle(title: string, id: string, todoLists: TodoList[]) {
-	const updatedLists = todoLists.map(list => {
+	const lists = cloneDeep(todoLists);
+
+	const updatedLists = lists.map(list => {
 		if (list.id === id) {
 			list.title = title;
 			return list;
 		}
 		return list;
 	});
+
 	return updatedLists;
 }
 
-export function updateTodoOrder(listId: string, source: number, destination: number, todoLists: TodoList[]) {
-	const withReOrderedData = todoLists.map((list, i) => {
-		if (list.id === listId) {
-			const todos = list.todos
-			const [removed] = todos.splice(source, 1);
-			todos.splice(destination, 0, removed);
-			todos.forEach((t, i) => {
-				t.ordinal = i;
-			})
-			return list;
-		}
-		return list;
-	});
-
-	return withReOrderedData;
-}
-
 export function addNewTodo(id: string, todoTitle: string, todoLists: TodoList[]) {
+	const lists = cloneDeep(todoLists);
+
 	const newTodo = {
 		id: uuidv4(),
 		title: todoTitle,
@@ -72,7 +60,7 @@ export function addNewTodo(id: string, todoTitle: string, todoLists: TodoList[])
 		ordinal: 0
 	};
 
-	const withNewTodo = todoLists.map(list => {
+	const withNewTodo = lists.map(list => {
 		if (list.id === id) {
 			const todos = list.todos;
 			todos.unshift(newTodo);
@@ -87,25 +75,10 @@ export function addNewTodo(id: string, todoTitle: string, todoLists: TodoList[])
 	return withNewTodo;
 }
 
-export function updateTodoTitle(title: string, listId: string, todoId: string, todoLists: TodoList[]) {
-	const withUpdatedTitle = todoLists.map(list => {
-		if (list.id === listId) {
-			const todos = list.todos;
-			todos.forEach(todo => {
-				if (todo.id === todoId) {
-					todo.title = title;
-				}
-			});
-			return list;
-		}
-		return list;
-	});
-
-	return withUpdatedTitle;
-}
-
 export function deleteTodo(listId: string, todoId: string, todoLists: TodoList[]) {
-	const withoutDeletedTodo = todoLists.map(list => {
+	const lists = cloneDeep(todoLists);
+
+	const withoutDeletedTodo = lists.map(list => {
 		if (list.id === listId) {
 			const todos = list.todos;
 			const deletedIndex = todos.findIndex(todo => todo.id === todoId);
@@ -121,8 +94,48 @@ export function deleteTodo(listId: string, todoId: string, todoLists: TodoList[]
 	return withoutDeletedTodo;
 }
 
+export function updateTodoTitle(title: string, listId: string, todoId: string, todoLists: TodoList[]) {
+	const lists = cloneDeep(todoLists);
+
+	const withUpdatedTitle = lists.map(list => {
+		if (list.id === listId) {
+			const todos = list.todos;
+			todos.forEach(todo => {
+				if (todo.id === todoId) {
+					todo.title = title;
+				}
+			});
+			return list;
+		}
+		return list;
+	});
+
+	return withUpdatedTitle;
+}
+
+export function updateTodoOrder(listId: string, source: number, destination: number, todoLists: TodoList[]) {
+	const lists = cloneDeep(todoLists);
+
+	const withReOrderedData = lists.map((list, i) => {
+		if (list.id === listId) {
+			const todos = list.todos
+			const [removed] = todos.splice(source, 1);
+			todos.splice(destination, 0, removed);
+			todos.forEach((t, i) => {
+				t.ordinal = i;
+			})
+			return list;
+		}
+		return list;
+	});
+
+	return withReOrderedData;
+}
+
 export function updateTodoStatus(listId: string, todoId: string, isChecked: boolean, todoLists: TodoList[]) {
-	const withUpdatedStatus = todoLists.map(list => {
+	const lists = cloneDeep(todoLists);
+
+	const withUpdatedStatus = lists.map(list => {
 		if (list.id === listId) {
 			const todos = list.todos;
 			todos.forEach(todo => {
