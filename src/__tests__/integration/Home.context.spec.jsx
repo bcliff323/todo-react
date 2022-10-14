@@ -29,7 +29,7 @@ describe('<Home /> Context integration', () => {
 		jest.clearAllMocks();
 	});
 
-	it('should call setSavedListData on todo form submit', async () => {
+	it('should call setSavedListData on list form submit', async () => {
 		const newValue = 'Todo';
 		const input = screen.getByTestId('form-input');
 		const button = screen.getByText('Submit');
@@ -40,7 +40,7 @@ describe('<Home /> Context integration', () => {
 		expect(ctx.setSavedListData).toHaveBeenCalledTimes(1);
 	});
 
-	it('should call setSavedListData on todo list delete', async () => {
+	it('should call setSavedListData on list delete', async () => {
 		const deletable = await screen.findByText('Delete');
 		await userEvent.click(deletable);
 
@@ -48,5 +48,16 @@ describe('<Home /> Context integration', () => {
 		await userEvent.click(confirmButton);
 
 		expect(ctx.setSavedListData).toHaveBeenCalledTimes(1);
+	});
+
+	it('should not call setSavedList data if user submits empty value', async () => {
+		const newValue = '';
+		const input = screen.getByTestId('form-input');
+		const button = screen.getByText('Submit');
+
+		fireEvent.change(input, { target: { value: newValue } });
+		await userEvent.click(button);
+
+		expect(ctx.setSavedListData).toHaveBeenCalledTimes(0);
 	});
 });
