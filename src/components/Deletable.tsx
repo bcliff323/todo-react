@@ -3,6 +3,7 @@ import { Dialog } from "@reach/dialog";
 import DeleteIcon from "./icons/DeleteIcon";
 import "@reach/dialog/styles.css";
 import "../css/styles.css";
+import { VisuallyHidden } from '@reach/visually-hidden';
 
 type Props = {
 	children?: React.ReactNode;
@@ -30,7 +31,9 @@ export default function Deletable(props: Props) {
 			<div className="flex-auto">
 				{children}
 			</div>
-			<button onClick={open}>
+			<button data-testid="delete-list-button"
+				onClick={open}>
+				<VisuallyHidden>Delete</VisuallyHidden>
 				<DeleteIcon />
 			</button>
 			<Dialog className="my-4 bg-cyan-50 rounded"
@@ -39,7 +42,8 @@ export default function Deletable(props: Props) {
 				aria-label="Warning about permanently deleting item">
 				<p>Are you sure you want to delete this?</p>
 				<div className="flex justify-end">
-					<button className="mt-3 mr-2 py-0.5 px-2.5 rounded bg-indigo-800 hover:bg-indigo-500 text-white"
+					<button data-testid="confirm-delete"
+						className="mt-3 mr-2 py-0.5 px-2.5 rounded bg-indigo-800 hover:bg-indigo-500 text-white"
 						onClick={onDelete}>
 						{confirmMessage}
 					</button>

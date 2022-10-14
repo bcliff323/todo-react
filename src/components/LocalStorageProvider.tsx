@@ -7,7 +7,7 @@ type Props = {
 };
 
 export default function LocalStorageProvider({ children }: Props) {
-	const [savedListData, setSavedListData] = useLocalStorage<TodoList[]>("todo-lists");
+	const [savedListData, setSavedListData] = useLocalStorage<TodoList[]>("todo-lists", []);
 
 	const ctx = {
 		savedListData,
