@@ -5,7 +5,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { givenTodoLists, givenTodos } from '../../helpers';
 
-describe('<ListDetail /> Context integration', () => {
+describe('<LocalStorageProvider /> integration', () => {
 	function TestComponent() {
 		const {
 			savedListData,
