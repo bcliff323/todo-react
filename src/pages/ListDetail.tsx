@@ -32,6 +32,7 @@ export default function ListDetail(props: Props) {
 
 	const { id } = useParams();
 	const listDetails = savedListData?.find((list) => list.id === id);
+
 	if (!listDetails) {
 		throw new Error(`No list found with id: ${id}`)
 	}
@@ -117,6 +118,7 @@ export default function ListDetail(props: Props) {
 												<Draggable key={(todo as Todo).id} draggableId={dId} index={(todo as Todo).ordinal}>
 													{(provided, snapshot) => (
 														<div ref={provided.innerRef}
+															data-testid="todo"
 															className={`px-1 rounded ${snapshot.isDragging ? 'bg-blue-200' : ''}`}
 															{...provided.draggableProps}
 															{...provided.dragHandleProps}>
@@ -128,7 +130,8 @@ export default function ListDetail(props: Props) {
 																	setSavedListData(updatedData);
 																}}>
 																<div className="flex pl-1 py-1">
-																	<input type="checkbox"
+																	<input data-testid="check-input"
+																		type="checkbox"
 																		className="mr-2"
 																		value={(todo as Todo).id}
 																		checked={(todo as Todo).status === Status.Complete}

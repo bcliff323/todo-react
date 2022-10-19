@@ -33,11 +33,13 @@ export default function Home(props: Props) {
 			<InputForm handleSubmit={handleSubmit}
 				label="Go"
 				placeholder="Add a Todo List" />
-			<div className="py-4">
+			<div data-testid="todo-lists"
+				className="py-4">
 				{
 					savedListData && savedListData.map(
 						(list, i) => (
-							<div className="bg-cyan-50 text-indigo-900 p-2 mb-3 rounded"
+							<div data-testid="todo-list"
+								className="bg-cyan-50 text-indigo-900 p-2 mb-3 rounded"
 								key={(list as TodoList).id}>
 								<Deletable id={(list as TodoList).id}
 									confirmMessage="Yes"
@@ -48,7 +50,8 @@ export default function Home(props: Props) {
 									}}>
 									<div className="flex">
 										<ClipboardIcon />
-										<Link key={i}
+										<Link data-testid="list-link"
+											key={i}
 											className="block flex-auto"
 											to={`/list/${(list as TodoList).id}`}>
 											{(list as TodoList).title}

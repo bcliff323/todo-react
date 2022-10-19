@@ -47,7 +47,8 @@ export default function Deletable(props: Props) {
 						onClick={onDelete}>
 						{confirmMessage}
 					</button>
-					<button className="mt-3 py-0.5 px-2.5 rounded bg-indigo-200 hover:bg-indigo-100 text-indigo-800"
+					<button data-testid="cancel-delete"
+						className="mt-3 py-0.5 px-2.5 rounded bg-indigo-200 hover:bg-indigo-100 text-indigo-800"
 						onClick={close}>
 						{cancelMessage}
 					</button>
