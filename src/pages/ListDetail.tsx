@@ -83,15 +83,19 @@ export default function ListDetail(props: Props) {
 
 	return (
 		<Layout>
-			<div className="flex mb-3 text-white items-center" >
-				<Link to="/"
+			<div data-testid="detail-header"
+				className="flex mb-3 text-white items-center" >
+				<Link data-testid="home-link"
+					to="/"
 					className="mr-1.5">
 					<HomeIcon />
 					<VisuallyHidden>home</VisuallyHidden>
 				</Link>
 				<span aria-hidden className="mx-1 mr-2.5">|</span>
-				<h1 className="text-2xl">
+				<h1 data-testid="list-title"
+					className="text-2xl">
 					<EditableText
+						testId="list-title-edit"
 						text={(listDetails as TodoList).title}
 						saveText={(title: string) => {
 							const updatedData = updateListTitle(title, listDetails.id, savedListData);
@@ -102,64 +106,63 @@ export default function ListDetail(props: Props) {
 			<InputForm handleSubmit={handleSubmit}
 				label="Go"
 				placeholder="Add a Todo" />
-			{
-				todos.length > 0 &&
-				<div className="my-4 bg-cyan-50 text-indigo-900 p-2 mb-3 rounded">
-					<DragDropContext onDragEnd={onDragEnd}>
-						<Droppable droppableId="list">
-							{(provided, dropSnapshot) => (
-								<div ref={provided.innerRef}
-									className={`rounded ${dropSnapshot.isDraggingOver ? 'bg-cyan-100' : ''}`}
-									{...provided.droppableProps}>
-									{todos.map(
-										(todo: Todo, i) => {
-											const dId = (todo as Todo).id?.toString();
-											return (
-												<Draggable key={(todo as Todo).id} draggableId={dId} index={(todo as Todo).ordinal}>
-													{(provided, snapshot) => (
-														<div ref={provided.innerRef}
-															data-testid="todo"
-															className={`px-1 rounded ${snapshot.isDragging ? 'bg-blue-200' : ''}`}
-															{...provided.draggableProps}
-															{...provided.dragHandleProps}>
-															<Deletable id={(todo as Todo).id}
-																confirmMessage="Yes"
-																cancelMessage="Cancel"
-																handleDelete={(id) => {
-																	const updatedData = deleteTodo((listDetails as TodoList).id, id, savedListData);
-																	setSavedListData(updatedData);
-																}}>
-																<div className="flex pl-1 py-1">
-																	<input data-testid="check-input"
-																		type="checkbox"
-																		className="mr-2"
-																		value={(todo as Todo).id}
-																		checked={(todo as Todo).status === Status.Complete}
-																		onChange={(event: ChangeEvent<HTMLInputElement>) => {
-																			handleCheckChange((listDetails as TodoList).id, event.target.value, event.target.checked);
-																		}} />
-																	<EditableText
-																		text={(todo as Todo).title}
-																		strike={(todo as Todo).status === Status.Complete}
-																		saveText={(title: string) => {
-																			const updatedData = updateTodoTitle(title, (listDetails as TodoList).id, (todo as Todo).id, savedListData);
-																			setSavedListData(updatedData);
-																		}} />
-																</div>
-															</Deletable>
-														</div>
-													)}
-												</Draggable>
-											);
-										}
-									)}
-									{provided.placeholder}
-								</div>
-							)}
-						</Droppable>
-					</DragDropContext>
-				</div>
-			}
+			<div className="my-4 bg-cyan-50 text-indigo-900 p-2 mb-3 rounded">
+				<DragDropContext onDragEnd={onDragEnd}>
+					<Droppable droppableId="list">
+						{(provided, dropSnapshot) => (
+							<div data-testid="todos"
+								ref={provided.innerRef}
+								className={`rounded ${dropSnapshot.isDraggingOver ? 'bg-cyan-100' : ''}`}
+								{...provided.droppableProps}>
+								{todos.length > 0 && todos.map(
+									(todo: Todo, i) => {
+										const dId = (todo as Todo).id?.toString();
+										return (
+											<Draggable key={(todo as Todo).id} draggableId={dId} index={(todo as Todo).ordinal}>
+												{(provided, snapshot) => (
+													<div ref={provided.innerRef}
+														data-testid="todo"
+														className={`px-1 rounded ${snapshot.isDragging ? 'bg-blue-200' : ''}`}
+														{...provided.draggableProps}
+														{...provided.dragHandleProps}>
+														<Deletable id={(todo as Todo).id}
+															confirmMessage="Yes"
+															cancelMessage="Cancel"
+															handleDelete={(id) => {
+																const updatedData = deleteTodo((listDetails as TodoList).id, id, savedListData);
+																setSavedListData(updatedData);
+															}}>
+															<div className="flex pl-1 py-1">
+																<input data-testid={`check-input-${i}`}
+																	type="checkbox"
+																	className="mr-2"
+																	value={(todo as Todo).id}
+																	checked={(todo as Todo).status === Status.Complete}
+																	onChange={(event: ChangeEvent<HTMLInputElement>) => {
+																		handleCheckChange((listDetails as TodoList).id, event.target.value, event.target.checked);
+																	}} />
+																<EditableText
+																	testId={`todo-input-${i}`}
+																	text={(todo as Todo).title}
+																	strike={(todo as Todo).status === Status.Complete}
+																	saveText={(title: string) => {
+																		const updatedData = updateTodoTitle(title, (listDetails as TodoList).id, (todo as Todo).id, savedListData);
+																		setSavedListData(updatedData);
+																	}} />
+															</div>
+														</Deletable>
+													</div>
+												)}
+											</Draggable>
+										);
+									}
+								)}
+								{provided.placeholder}
+							</div>
+						)}
+					</Droppable>
+				</DragDropContext>
+			</div>
 		</Layout>
 	)
 }

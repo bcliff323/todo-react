@@ -6,13 +6,14 @@ import "../css/styles.css";
 
 type Props = {
 	text: string;
-	strike?: boolean;
 	saveText: (text: string) => void;
+	strike?: boolean;
+	testId?: string;
 };
 
 export default function EditableText(props: Props) {
 	const textInput = useRef<HTMLInputElement | null>(null);
-	const { text, saveText, strike = false } = props;
+	const { text, saveText, strike = false, testId = '' } = props;
 	const [isEditing, setIsEditing] = useState<boolean>(false);
 	const [newValue, setNewValue] = useState<string>(text);
 
@@ -24,7 +25,9 @@ export default function EditableText(props: Props) {
 		}
 	}
 
-	function saveAndClose() {
+	function saveAndClose(e: FormEvent) {
+		e.preventDefault();
+
 		setIsEditing(false);
 		saveText(newValue);
 	}
@@ -40,7 +43,8 @@ export default function EditableText(props: Props) {
 				<div className="w-full flex-auto">
 					{
 						isEditing ?
-							<input ref={textInput}
+							<input data-testid={testId}
+								ref={textInput}
 								className="w-full mr-1 rounded px-1 text-indigo-900"
 								defaultValue={text}
 								onChange={updateText} /> :
@@ -50,12 +54,12 @@ export default function EditableText(props: Props) {
 				<div className="flex">
 					{
 						isEditing &&
-						<button type="submit" disabled={!isEditing} onClick={saveAndClose} className="flex disabled:opacity-25 ml-1 mr-1">
+						<button data-testid={`${testId}-save`} type="submit" disabled={!isEditing} onClick={saveAndClose} className="flex disabled:opacity-25 ml-1 mr-1">
 							<VisuallyHidden>Save</VisuallyHidden>
 							<SaveIcon />
 						</button>
 					}
-					<button disabled={isEditing || strike} onClick={edit} className="flex disabled:opacity-25 mr-1">
+					<button data-testid={`${testId}-edit`} disabled={isEditing || strike} onClick={edit} className="flex disabled:opacity-25 mr-1">
 						<VisuallyHidden>Edit</VisuallyHidden>
 						<EditIcon />
 					</button>
