@@ -50,7 +50,7 @@ describe('<Home />', () => {
 
 		it("should render no todos", () => {
 			const todos = screen.queryByTestId('todos');
-			expect(todos?.children.length).toEqual(0);
+			expect(todos).not.toBeInTheDocument();
 		});
 	});
 
@@ -151,8 +151,10 @@ describe('<Home />', () => {
 			const confirmButton = await screen.findByTestId('confirm-delete');
 			await userEvent.click(confirmButton);
 
-			listContainer = await screen.findByTestId('todos');
-			expect(listContainer.children.length).toEqual(0);
+			const container = screen.queryByTestId('todos');
+			await waitFor(() => {
+				expect(container).not.toBeInTheDocument();
+			})
 		});
 	});
 
