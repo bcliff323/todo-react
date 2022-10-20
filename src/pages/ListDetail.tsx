@@ -12,9 +12,10 @@ import InputForm from '../components/InputForm';
 import EditableText from '../components/EditableText';
 import Deletable from '../components/Deletable';
 import HomeIcon from '../components/icons/HomeIcon';
+import ErrorMessage from '../components/ErrorMessage';
 import { LocalStorageContext } from '../context/LocalStorageContext';
 import { updateListTitle, updateTodoOrder, addNewTodo, updateTodoTitle, deleteTodo, updateTodoStatus } from '../services/TodoListService';
-import { TodoList, Todo, Status } from '../types';
+import { TodoList, Todo, Status, ErrorTypes } from '../types';
 import "../css/styles.css";
 
 type Props = {
@@ -27,14 +28,14 @@ export default function ListDetail(props: Props) {
 		setSavedListData
 	} = useContext(LocalStorageContext);
 	if (!savedListData?.length) {
-		throw new Error(`No list data was saved`);
+		return <ErrorMessage errorType={ErrorTypes.ListNotFound} />
 	}
 
 	const { id } = useParams();
 	const listDetails = savedListData?.find((list) => list.id === id);
 
 	if (!listDetails) {
-		throw new Error(`No list found with id: ${id}`)
+		return <ErrorMessage errorType={ErrorTypes.ListNotFound} />
 	}
 
 	const todos = listDetails.todos;

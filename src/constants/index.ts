@@ -1,0 +1,3 @@
+export const LIST_NOT_FOUND_MSG = "It seems like the list you're looking for does not exist. It's possible your browser history has been cleared since you last viewed this page. You can get started on a new list using the button below.";
+export const PAGE_NOT_FOUND_MSG = "It seems like the page you're looking for does not exist, but you can get started on a new list using the button below.";
+export const GENERIC_ERROR_MSG = "Appologies, something seems to have gone wrong and it's likely my fault. Please send me an email and I can try to troubleshoot!";

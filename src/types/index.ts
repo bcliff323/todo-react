@@ -1,3 +1,9 @@
+export enum ErrorTypes {
+	ListNotFound = "LIST_NOT_FOUND",
+	PageNotFound = "PAGE_NOT_FOUND",
+	GenericError = "GENERIC_ERROR"
+}
+
 export enum Status {
 	NotStarted = "NOT_STARTED",
 	Complete = "COMPLETE"

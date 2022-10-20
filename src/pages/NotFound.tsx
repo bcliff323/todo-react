@@ -1,11 +1,12 @@
+import ErrorMessage from "../components/ErrorMessage";
+import { ErrorTypes } from "../types";
+
 type Props = {
 	children?: React.ReactNode;
 };
 
 export default function NotFound(props: Props) {
 	return (
-		<>
-			<h1>Page Not Found!</h1>
-		</>
+		<ErrorMessage errorType={ErrorTypes.PageNotFound} />
 	)
 }

@@ -1,4 +1,6 @@
 import React, { ReactNode, ErrorInfo } from "react";
+import { ErrorTypes } from "../types";
+import ErrorMessage from "./ErrorMessage";
 
 interface Props {
 	children: ReactNode;
@@ -27,9 +29,7 @@ class ErrorBoundary extends React.Component<Props, State> {
 	render() {
 		if (this.state.hasError) {
 			return (
-				<>
-					<h1>Something went wrong.</h1>
-				</>
+				<ErrorMessage errorType={ErrorTypes.GenericError} />
 			);
 		}
 		return this.props.children;
