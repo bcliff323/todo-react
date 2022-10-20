@@ -2,9 +2,10 @@ import { render } from "react-dom";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import ListDetail from './pages/ListDetail';
-import NotFound from './pages/NotFound';
 import LocalStorageProvider from './components/LocalStorageProvider';
 import ErrorBoundary from "./components/ErrorBoundary";
+import ErrorMessage from "./components/ErrorMessage";
+import { ErrorTypes } from "./types";
 
 export default function App() {
   return (
@@ -13,7 +14,7 @@ export default function App() {
         <Routes>
           <Route path="*" element={
             <LocalStorageProvider>
-              <NotFound />
+              <ErrorMessage errorType={ErrorTypes.PageNotFound} />
             </LocalStorageProvider>
           } />
           <Route path="/" element={
