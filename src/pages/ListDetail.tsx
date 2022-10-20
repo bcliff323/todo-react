@@ -26,7 +26,7 @@ export default function ListDetail(props: Props) {
 		savedListData,
 		setSavedListData
 	} = useContext(LocalStorageContext);
-	if (!savedListData) {
+	if (!savedListData?.length) {
 		throw new Error(`No list data was saved`);
 	}
 

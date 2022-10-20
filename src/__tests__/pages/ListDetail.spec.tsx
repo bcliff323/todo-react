@@ -281,4 +281,52 @@ describe('<Home />', () => {
 			expect(updatedTitle).not.toBeNull();
 		});
 	});
+
+	describe("when user somehow navigates to lists page before any lists exist", () => {
+		beforeEach(() => {
+			global.console.error = jest.fn();
+			global.Storage.prototype.getItem = jest.fn();
+			global.Storage.prototype.setItem = jest.fn();
+		});
+
+		it("should throw an error", () => {
+			expect(() => render(
+				<MemoryRouter initialEntries={[`/list/1234`]}>
+					<Routes>
+						<Route path="/list/:id" element={
+							<LocalStorageProvider>
+								<ListDetail />
+							</LocalStorageProvider>
+						} />
+					</Routes>
+				</MemoryRouter>
+			)).toThrow("No list data was saved");
+		});
+	});
+
+	describe("when user navigates to lists page using an invalid list id", () => {
+		const lists = givenTodoLists(["List One"]);
+
+		beforeEach(() => {
+			global.console.error = jest.fn();
+			global.Storage.prototype.getItem = jest.fn(() => JSON.stringify(lists));
+			global.Storage.prototype.setItem = jest.fn();
+		});
+
+		it("should throw an error", () => {
+			const invalidId = "1234";
+
+			expect(() => render(
+				<MemoryRouter initialEntries={[`/list/${invalidId}`]}>
+					<Routes>
+						<Route path="/list/:id" element={
+							<LocalStorageProvider>
+								<ListDetail />
+							</LocalStorageProvider>
+						} />
+					</Routes>
+				</MemoryRouter>
+			)).toThrow(`No list found with id: ${invalidId}`);
+		});
+	});
 });
