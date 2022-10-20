@@ -12,7 +12,9 @@ export default function App() {
       <HashRouter>
         <Routes>
           <Route path="*" element={
-            <NotFound />
+            <LocalStorageProvider>
+              <NotFound />
+            </LocalStorageProvider>
           } />
           <Route path="/" element={
             <LocalStorageProvider>
