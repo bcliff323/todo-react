@@ -1,10 +1,9 @@
 import ListDetail from "../../pages/ListDetail";
 import LocalStorageProvider from "../../components/LocalStorageProvider";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor, getByTestId } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { givenTodoLists, givenTodos } from '../../helpers';
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { useContext } from "react";
 import "@testing-library/jest-dom/extend-expect";
 
 describe('<Home />', () => {
@@ -287,10 +286,8 @@ describe('<Home />', () => {
 			global.console.error = jest.fn();
 			global.Storage.prototype.getItem = jest.fn();
 			global.Storage.prototype.setItem = jest.fn();
-		});
 
-		it("should throw an error", () => {
-			expect(() => render(
+			render(
 				<MemoryRouter initialEntries={[`/list/1234`]}>
 					<Routes>
 						<Route path="/list/:id" element={
@@ -300,7 +297,20 @@ describe('<Home />', () => {
 						} />
 					</Routes>
 				</MemoryRouter>
-			)).toThrow("No list data was saved");
+			)
+		});
+
+		it("should display the error message view", () => {
+			const errorMessage = screen.getByTestId("error-message");
+			const errorButton = screen.getByTestId('error-button');
+
+			expect(errorMessage).toBeInTheDocument();
+			expect(errorButton).toBeInTheDocument();
+		});
+
+		it("should not render error view lists", async () => {
+			const lists = screen.queryByTestId('error-view-lists');
+			expect(lists).not.toBeInTheDocument();
 		});
 	});
 
@@ -311,13 +321,9 @@ describe('<Home />', () => {
 			global.console.error = jest.fn();
 			global.Storage.prototype.getItem = jest.fn(() => JSON.stringify(lists));
 			global.Storage.prototype.setItem = jest.fn();
-		});
 
-		it("should throw an error", () => {
-			const invalidId = "1234";
-
-			expect(() => render(
-				<MemoryRouter initialEntries={[`/list/${invalidId}`]}>
+			render(
+				<MemoryRouter initialEntries={[`/list/1234`]}>
 					<Routes>
 						<Route path="/list/:id" element={
 							<LocalStorageProvider>
@@ -326,7 +332,20 @@ describe('<Home />', () => {
 						} />
 					</Routes>
 				</MemoryRouter>
-			)).toThrow(`No list found with id: ${invalidId}`);
+			)
+		});
+
+		it("should display the error message view", () => {
+			const errorMessage = screen.getByTestId("error-message");
+			const errorButton = screen.getByTestId('error-button');
+
+			expect(errorMessage).toBeInTheDocument();
+			expect(errorButton).toBeInTheDocument();
+		});
+
+		it("should render error view lists", async () => {
+			const lists = screen.queryByTestId('error-view-lists');
+			expect(lists).toBeInTheDocument();
 		});
 	});
 });
