@@ -1,12 +1,12 @@
 import ListDetail from "../../pages/ListDetail";
 import LocalStorageProvider from "../../components/LocalStorageProvider";
-import { render, screen, fireEvent, waitFor, getByTestId } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { givenTodoLists, givenTodos } from '../../helpers';
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import "@testing-library/jest-dom/extend-expect";
 
-describe('<Home />', () => {
+describe('<List Detail />', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
 	});

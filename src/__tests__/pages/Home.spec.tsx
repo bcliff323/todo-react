@@ -2,10 +2,8 @@ import Home from "../../pages/Home";
 import LocalStorageProvider from "../../components/LocalStorageProvider";
 import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { givenTodoLists, givenTodos } from '../../helpers';
+import { givenTodoLists } from '../../helpers';
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { LocalStorageContext } from "../../context/LocalStorageContext";
-import { useContext } from "react";
 
 describe('<Home />', () => {
 	afterEach(() => {
