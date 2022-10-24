@@ -38,7 +38,8 @@ export default function EditableText(props: Props) {
 
 	return (
 		<div className="flex-auto">
-			<form className="flex items-center"
+			<form data-testid={`${testId}-form`}
+				className="flex items-center"
 				onSubmit={saveAndClose}>
 				<div className="w-full flex-auto">
 					{
@@ -48,7 +49,10 @@ export default function EditableText(props: Props) {
 								className="w-full mr-1 rounded px-1 text-indigo-900"
 								defaultValue={text}
 								onChange={updateText} /> :
-							<p className={`${strike ? "line-through" : "mr-1"}`}>{text}</p>
+							<p data-testid={`${testId}-text`}
+								className={`${strike ? "line-through" : "mr-1"}`}>
+								{text}
+							</p>
 					}
 				</div>
 				<div className="flex">
