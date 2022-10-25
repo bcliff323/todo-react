@@ -1,6 +1,7 @@
 import React, { ReactNode, ErrorInfo } from "react";
-import { ErrorTypes } from "../types";
-import ErrorMessage from "./ErrorMessage";
+import { GENERIC_ERROR_MSG } from "../constants";
+import Layout from "./Layout";
+import MessageLinkCard from "./MessageLinkCard";
 
 interface Props {
 	children: ReactNode;
@@ -29,7 +30,9 @@ class ErrorBoundary extends React.Component<Props, State> {
 	render() {
 		if (this.state.hasError) {
 			return (
-				<ErrorMessage errorType={ErrorTypes.GenericError} />
+				<Layout>
+					<MessageLinkCard message={GENERIC_ERROR_MSG} />
+				</Layout>
 			);
 		}
 		return this.props.children;

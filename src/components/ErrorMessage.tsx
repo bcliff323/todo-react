@@ -1,11 +1,12 @@
-import { Link, useNavigate } from "react-router-dom";
 import Layout from "./Layout";
 import { ErrorTypes } from '../types';
 import { LIST_NOT_FOUND_MSG, PAGE_NOT_FOUND_MSG, GENERIC_ERROR_MSG } from '../constants';
 import { LocalStorageContext } from "../context/LocalStorageContext";
 import { useContext } from "react";
 import ClipboardIcon from "./icons/ClipboardIcon";
+import MessageLinkCard from "./MessageLinkCard";
 import "../css/styles.css";
+import { Link } from "react-router-dom";
 
 type Props = {
 	errorType: ErrorTypes
@@ -15,8 +16,6 @@ export default function MissingList(props: Props) {
 	const {
 		savedListData
 	} = useContext(LocalStorageContext);
-	const navigate = useNavigate();
-
 	function getMessage(errType: ErrorTypes) {
 		switch (errType) {
 			case (ErrorTypes.ListNotFound):
@@ -29,20 +28,17 @@ export default function MissingList(props: Props) {
 		}
 	}
 
-	function directHome() {
-		navigate('/');
-	}
-
 	return (
 		<Layout>
-			<div className="my-4 bg-cyan-50 text-indigo-900 p-4 mb-3 rounded">
-				<p data-testid="error-message" className="p-4">{getMessage(props.errorType)}</p>
-				<button data-testid="error-button"
-					className="my-3 py-0.5 px-2.5 rounded bg-indigo-800 hover:bg-indigo-500 text-white block mx-auto"
-					onClick={directHome}>
-					Let's go!
-				</button>
-			</div>
+			<MessageLinkCard message={getMessage(props.errorType)}>
+				<div className="flex">
+					<Link data-testid="error-button"
+						className="my-3 py-0.5 px-2.5 rounded bg-indigo-800 hover:bg-indigo-500 text-white inline-block mx-auto"
+						to="/">
+						Let's go!
+					</Link>
+				</div>
+			</MessageLinkCard>
 			{savedListData && savedListData.length > 0 &&
 				<div className="flex justify-center">
 					<div>
