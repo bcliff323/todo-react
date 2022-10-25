@@ -6,23 +6,30 @@ import userEvent from "@testing-library/user-event";
 import { givenTodoLists, givenTodos } from '../../helpers';
 
 describe('<LocalStorageProvider /> integration', () => {
+	const listUpdate = givenTodoLists(["Updated List"]);
+
 	function TestComponent() {
 		const {
-			savedListData,
-			setSaveListData
+			savedListData = [],
+			setSavedListData
 		} = useContext(LocalStorageContext);
 
-		return (
-			<>
-				<h1 data-testid="list-title">
-					{savedListData[0].title}
-				</h1>
-				<button data-testid="save"
-					onClick={setSaveListData}>
-					Set Saved List Data
-				</button>
-			</>
-		);
+		if (savedListData.length) {
+			return (
+				<>
+					<h1 data-testid="list-title">
+						{savedListData[0].title}
+					</h1>
+					<button data-testid="save"
+						onClick={() => {
+							setSavedListData(listUpdate);
+						}}>
+						Set Saved List Data
+					</button>
+				</>
+			);
+		}
+		return null;
 	}
 
 	beforeEach(() => {
@@ -54,6 +61,6 @@ describe('<LocalStorageProvider /> integration', () => {
 		const saveButton = await screen.findByTestId('save');
 		await userEvent.click(saveButton);
 
-		expect(global.localStorage.setItem).toBeCalledTimes(1);
+		expect(global.localStorage.setItem).toHaveBeenCalledWith("todo-lists", JSON.stringify(listUpdate));
 	});
 });

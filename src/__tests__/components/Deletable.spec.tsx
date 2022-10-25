@@ -4,13 +4,22 @@ import "@testing-library/jest-dom/extend-expect";
 import Deletable from "../../components/Deletable";
 
 describe("<Deletable />", () => {
+	const id = "1";
+	const defaultConfirm = "confirm";
+	const defaultCancel = "cancel";
+	const defaultHandle = () => { }
+
 	afterEach(() => {
 		jest.clearAllMocks();
 	});
 
 	it("should render children", () => {
 		render(
-			<Deletable>
+			<Deletable
+				id={id}
+				confirmMessage={defaultConfirm}
+				cancelMessage={defaultCancel}
+				handleDelete={defaultHandle}>
 				<div>Child</div>
 			</Deletable>
 		);
@@ -21,7 +30,11 @@ describe("<Deletable />", () => {
 
 	it("should render a delete button", () => {
 		render(
-			<Deletable>
+			<Deletable
+				id={id}
+				confirmMessage={defaultConfirm}
+				cancelMessage={defaultCancel}
+				handleDelete={defaultHandle}>
 				<div>Child</div>
 			</Deletable>
 		);
@@ -32,7 +45,11 @@ describe("<Deletable />", () => {
 
 	it("should launch the modal window", async () => {
 		render(
-			<Deletable>
+			<Deletable
+				id={id}
+				confirmMessage={defaultConfirm}
+				cancelMessage={defaultCancel}
+				handleDelete={defaultHandle}>
 				<div>Child</div>
 			</Deletable>
 		);
@@ -52,7 +69,9 @@ describe("<Deletable />", () => {
 		const cancelMsg = "cancel!";
 
 		render(
-			<Deletable confirmMessage={confirmMsg}
+			<Deletable id={id}
+				handleDelete={defaultHandle}
+				confirmMessage={confirmMsg}
 				cancelMessage={cancelMsg}>
 				<div>Child</div>
 			</Deletable>
@@ -70,7 +89,11 @@ describe("<Deletable />", () => {
 
 	it("should allow the user to cancel deletion", async () => {
 		render(
-			<Deletable>
+			<Deletable
+				id={id}
+				confirmMessage={defaultConfirm}
+				cancelMessage={defaultCancel}
+				handleDelete={defaultHandle}>
 				<div>Child</div>
 			</Deletable>
 		);
@@ -89,7 +112,11 @@ describe("<Deletable />", () => {
 		const deletionId = 1;
 
 		render(
-			<Deletable handleDelete={deleteFn} id={deletionId} />
+			<Deletable
+				handleDelete={deleteFn}
+				id={id}
+				confirmMessage={defaultConfirm}
+				cancelMessage={defaultCancel} />
 		);
 
 		const button = screen.getByTestId("delete-list-button");
@@ -99,6 +126,6 @@ describe("<Deletable />", () => {
 		await userEvent.click(cancelButton);
 
 		expect(deleteFn).toHaveBeenCalledTimes(1);
-		expect(deleteFn).toBeCalledWith(deletionId);
+		expect(deleteFn).toBeCalledWith(id);
 	});
 });
