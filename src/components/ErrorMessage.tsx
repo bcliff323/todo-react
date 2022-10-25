@@ -4,7 +4,7 @@ import { LIST_NOT_FOUND_MSG, PAGE_NOT_FOUND_MSG, GENERIC_ERROR_MSG } from '../co
 import { LocalStorageContext } from "../context/LocalStorageContext";
 import { useContext } from "react";
 import ClipboardIcon from "./icons/ClipboardIcon";
-import MessageLinkCard from "./MessageLinkCard";
+import MessageCard from "./MessageCard";
 import "../css/styles.css";
 import { Link } from "react-router-dom";
 
@@ -30,7 +30,7 @@ export default function MissingList(props: Props) {
 
 	return (
 		<Layout>
-			<MessageLinkCard message={getMessage(props.errorType)}>
+			<MessageCard message={getMessage(props.errorType)}>
 				<div className="flex">
 					<Link data-testid="error-button"
 						className="my-3 py-0.5 px-2.5 rounded bg-indigo-800 hover:bg-indigo-500 text-white inline-block mx-auto"
@@ -38,7 +38,7 @@ export default function MissingList(props: Props) {
 						Let's go!
 					</Link>
 				</div>
-			</MessageLinkCard>
+			</MessageCard>
 			{savedListData && savedListData.length > 0 &&
 				<div className="flex justify-center">
 					<div>
