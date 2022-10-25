@@ -5,7 +5,6 @@ import PlusIcon from './icons/PlusIcon';
 
 type Props = {
 	handleSubmit: (listName: string) => void;
-	label: string;
 	placeholder: string;
 };
 
@@ -23,7 +22,7 @@ export default function InputForm(props: Props) {
 
 	return (
 		<div className="rounded overflow-hidden">
-			<form
+			<form data-testid="form"
 				onSubmit={
 					(event: FormEvent<HTMLFormElement>) => {
 						event.preventDefault();
