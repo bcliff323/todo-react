@@ -31,7 +31,7 @@ export default function Home(props: Props) {
 		<Layout>
 			<h1 className="text-white mb-3 text-2xl">Todos</h1>
 			<InputForm handleSubmit={handleSubmit}
-				label="Go"
+				label="Todo List Title"
 				placeholder="Add a Todo List" />
 			<div data-testid="todo-lists"
 				className="py-4">

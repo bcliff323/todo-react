@@ -7,11 +7,13 @@ describe("<InputForm />", () => {
 	const handleSubmitFn = jest.fn();
 	const placeholderText = "New Item";
 	const updatedValue = "New List Was Created";
+	const labelText = "List Title";
 
 	beforeEach(() => {
 		render(
 			<InputForm handleSubmit={handleSubmitFn}
-				placeholder={placeholderText} />
+				placeholder={placeholderText}
+				label={labelText} />
 		)
 	})
 	afterEach(() => {
@@ -26,6 +28,11 @@ describe("<InputForm />", () => {
 	it("should render a placeholder", () => {
 		const input = screen.getByPlaceholderText(placeholderText);
 		expect(input).toBeInTheDocument();
+	});
+
+	it("should render a field label", () => {
+		const label = screen.getByLabelText(labelText);
+		expect(label).toBeInTheDocument();
 	});
 
 	it("should render a submit button", () => {
