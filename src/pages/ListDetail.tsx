@@ -108,7 +108,7 @@ export default function ListDetail(props: Props) {
 				label="Todo Item Title"
 				placeholder="Add a Todo" />
 			{todos.length > 0 &&
-				<div className="my-4 bg-cyan-50 text-indigo-900 p-2 mb-3 rounded">
+				<div className="my-4 bg-cyan-50 text-indigo-900 p-2 mb-3 rounded text-2xl md:text-base">
 					<DragDropContext onDragEnd={onDragEnd}>
 						<Droppable droppableId="list">
 							{(provided, dropSnapshot) => (
