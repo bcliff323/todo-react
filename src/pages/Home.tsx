@@ -38,26 +38,28 @@ export default function Home(props: Props) {
 				{
 					savedListData && savedListData.map(
 						(list, i) => (
-							<div data-testid="todo-list"
-								className="bg-cyan-50 text-indigo-900 p-2 mb-3 rounded"
-								key={(list as TodoList).id}>
-								<Deletable id={(list as TodoList).id}
-									confirmMessage="Yes"
-									cancelMessage="Cancel"
-									handleDelete={(id: string) => {
-										const updatedList = deleteList(id, savedListData);
-										setSavedListData(updatedList);
-									}}>
-									<div className="flex">
-										<ClipboardIcon />
-										<Link data-testid="list-link"
-											key={i}
-											className="block flex-auto"
-											to={`/list/${(list as TodoList).id}`}>
-											{(list as TodoList).title}
-										</Link>
-									</div>
-								</Deletable>
+							<div key={list.id}>
+								<div data-testid="todo-list"
+									className="bg-cyan-50 p-2 rounded text-indigo-900">
+									<Deletable id={(list as TodoList).id}
+										confirmMessage="Yes"
+										cancelMessage="Cancel"
+										handleDelete={(id: string) => {
+											const updatedList = deleteList(id, savedListData);
+											setSavedListData(updatedList);
+										}}>
+										<div className="flex">
+											<ClipboardIcon />
+											<Link data-testid="list-link"
+												key={i}
+												className="block flex-auto"
+												to={`/list/${(list as TodoList).id}`}>
+												{(list as TodoList).title}
+											</Link>
+										</div>
+									</Deletable>
+								</div>
+								<p className="text-xs text-blue-300 mb-3 mt-1">Created: {list.createdDate}</p>
 							</div>
 						)
 					)

@@ -8,7 +8,8 @@ export function givenTodos(titles: string[]): Todo[] {
 			id: uuidv4(),
 			title: titles[i],
 			status: Status.NotStarted,
-			ordinal: i
+			ordinal: i,
+			createdDate: new Date().toLocaleDateString()
 		});
 	}
 	return todos;
@@ -21,7 +22,8 @@ export function givenTodoLists(titles: string[]): TodoList[] {
 			id: uuidv4(),
 			title: titles[i],
 			todos: [] as Todo[],
-			ordinal: i
+			ordinal: i,
+			createdDate: new Date().toLocaleDateString()
 		});
 	}
 	return lists;

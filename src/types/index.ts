@@ -14,6 +14,7 @@ export interface Todo {
 	title: string;
 	status: Status;
 	ordinal: number;
+	createdDate: string;
 }
 
 export interface TodoList {
@@ -21,4 +22,5 @@ export interface TodoList {
 	title: string;
 	todos: Todo[];
 	ordinal: number;
+	createdDate: string;
 }

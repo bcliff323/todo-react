@@ -12,7 +12,8 @@ export function addNewList(title: string, todoLists: TodoList[] = []) {
 		id: uuidv4(),
 		title: title,
 		todos: [],
-		ordinal: 0
+		ordinal: 0,
+		createdDate: new Date().toLocaleDateString()
 	};
 
 	const updatedList = cloneDeep(todoLists);
@@ -57,7 +58,8 @@ export function addNewTodo(id: string, todoTitle: string, todoLists: TodoList[])
 		id: uuidv4(),
 		title: todoTitle,
 		status: Status.NotStarted,
-		ordinal: 0
+		ordinal: 0,
+		createdDate: new Date().toLocaleDateString()
 	};
 
 	const withNewTodo = lists.map(list => {
