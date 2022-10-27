@@ -152,3 +152,15 @@ export function updateTodoStatus(listId: string, todoId: string, isChecked: bool
 
 	return withUpdatedStatus;
 }
+
+export function deleteAllTodosInList(listId: string, todoLists: TodoList[]) {
+	const lists = cloneDeep(todoLists);
+
+	const withDeletedTodos = lists.map(l => {
+		if (l.id === listId) {
+			l.todos = [];
+		}
+		return l;
+	})
+	return withDeletedTodos;
+}

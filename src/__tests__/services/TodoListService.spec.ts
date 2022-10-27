@@ -2,6 +2,7 @@ import { givenTodoLists, givenTodos } from '../../helpers';
 import {
 	addNewList,
 	addNewTodo,
+	deleteAllTodosInList,
 	deleteList,
 	deleteTodo,
 	updateListTitle,
@@ -274,6 +275,29 @@ describe('updateTodoStatus', () => {
 
 		list.todos.forEach(t => {
 			expect(t.status).toEqual(Status.NotStarted);
+		});
+	});
+
+	describe("deleteAllTodosInList", () => {
+		it("should delete all the todos in the list", () => {
+			const lists = givenTodoLists(['List one']);
+			const list = lists[0];
+			list.todos = givenTodos(['one', 'two', 'three']);
+
+			const newLists = deleteAllTodosInList(list.id, lists);
+			const updatedList = newLists.find(l => l.id === list.id);
+			expect(updatedList).not.toBeUndefined();
+			expect(updatedList!.todos.length).toEqual(0);
+		});
+
+		it("should not mutate lists passed in", () => {
+			const lists = givenTodoLists(['List one']);
+			const list = lists[0];
+			list.todos = givenTodos(['one', 'two', 'three']);
+
+			deleteAllTodosInList(list.id, lists);
+
+			expect(list.todos.length).toEqual(3);
 		});
 	});
 });
