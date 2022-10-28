@@ -45,12 +45,12 @@ export default function Deletable(props: Props) {
 				<p>Are you sure you want to delete this?</p>
 				<div className="flex justify-end">
 					<button data-testid="confirm-delete"
-						ref={buttonRef}
 						className="mt-3 mr-2 py-0.5 px-2.5 rounded bg-indigo-800 hover:bg-indigo-500 text-white"
 						onClick={onDelete}>
 						{confirmMessage}
 					</button>
 					<button data-testid="cancel-delete"
+						ref={buttonRef}
 						className="mt-3 py-0.5 px-2.5 rounded bg-indigo-200 hover:bg-indigo-100 text-indigo-800"
 						onClick={close}>
 						{cancelMessage}
