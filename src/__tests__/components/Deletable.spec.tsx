@@ -10,6 +10,7 @@ describe("<Deletable />", () => {
 	const defaultCancel = "cancel";
 	const defaultAriaLabel = "Warning about deleting";
 	const defaultWarning = "Are you sure?";
+	const defaultButtonLabel = "Delete";
 	const defaultHandle = () => { }
 
 	afterEach(() => {
@@ -27,7 +28,9 @@ describe("<Deletable />", () => {
 				warningMessage={defaultWarning}
 				icon={
 					<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />
-				}>
+				}
+				buttonLabel={defaultButtonLabel}
+				showLabel={false}>
 				<div>Child</div>
 			</Deletable>
 		);
@@ -47,13 +50,38 @@ describe("<Deletable />", () => {
 				warningMessage={defaultWarning}
 				icon={
 					<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />
-				}>
+				}
+				buttonLabel={defaultButtonLabel}
+				showLabel={false}>
 				<div>Child</div>
 			</Deletable>
 		);
 
 		const button = screen.getByTestId("delete-list-button");
 		expect(button).toBeInTheDocument();
+	});
+
+	it("should render a delete button label", () => {
+		const labelTxt = "Delete This Please";
+		render(
+			<Deletable
+				id={id}
+				confirmMessage={defaultConfirm}
+				cancelMessage={defaultCancel}
+				handleDelete={defaultHandle}
+				ariaLabel={defaultAriaLabel}
+				warningMessage={defaultWarning}
+				icon={
+					<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />
+				}
+				buttonLabel={labelTxt}
+				showLabel={true}>
+				<div>Child</div>
+			</Deletable>
+		);
+
+		const label = screen.getByText(labelTxt);
+		expect(label).toBeInTheDocument();
 	});
 
 	it("should launch the modal window", async () => {
@@ -67,7 +95,9 @@ describe("<Deletable />", () => {
 				warningMessage={defaultWarning}
 				icon={
 					<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />
-				}>
+				}
+				buttonLabel={defaultButtonLabel}
+				showLabel={false}>
 				<div>Child</div>
 			</Deletable>
 		);
@@ -95,7 +125,9 @@ describe("<Deletable />", () => {
 				warningMessage={defaultWarning}
 				icon={
 					<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />
-				}>
+				}
+				buttonLabel={defaultButtonLabel}
+				showLabel={false}>
 				<div>Child</div>
 			</Deletable>
 		);
@@ -121,7 +153,9 @@ describe("<Deletable />", () => {
 				warningMessage={defaultWarning}
 				icon={
 					<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />
-				}>
+				}
+				buttonLabel={defaultButtonLabel}
+				showLabel={false}>
 				<div>Child</div>
 			</Deletable>
 		);
@@ -149,7 +183,9 @@ describe("<Deletable />", () => {
 				warningMessage={defaultWarning}
 				icon={
 					<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />
-				} />
+				}
+				buttonLabel={defaultButtonLabel}
+				showLabel={false} />
 		);
 
 		const button = screen.getByTestId("delete-list-button");

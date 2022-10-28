@@ -30,7 +30,7 @@ export default function DeleteModal(props: Props) {
 	const buttonRef = useRef<HTMLButtonElement | null>(null);
 
 	return (
-		<>
+		<div className="flex">
 			<button data-testid="delete-list-button"
 				onClick={open} className="flex">
 				{
@@ -60,6 +60,6 @@ export default function DeleteModal(props: Props) {
 					</button>
 				</div>
 			</Dialog>
-		</>
+		</div>
 	)
 }
