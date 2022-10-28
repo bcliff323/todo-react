@@ -26,7 +26,7 @@ describe("<Deletable />", () => {
 				ariaLabel={defaultAriaLabel}
 				warningMessage={defaultWarning}
 				icon={
-					<DeleteIcon />
+					<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />
 				}>
 				<div>Child</div>
 			</Deletable>
@@ -46,7 +46,7 @@ describe("<Deletable />", () => {
 				ariaLabel={defaultAriaLabel}
 				warningMessage={defaultWarning}
 				icon={
-					<DeleteIcon />
+					<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />
 				}>
 				<div>Child</div>
 			</Deletable>
@@ -66,7 +66,7 @@ describe("<Deletable />", () => {
 				ariaLabel={defaultAriaLabel}
 				warningMessage={defaultWarning}
 				icon={
-					<DeleteIcon />
+					<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />
 				}>
 				<div>Child</div>
 			</Deletable>
@@ -94,7 +94,7 @@ describe("<Deletable />", () => {
 				ariaLabel={defaultAriaLabel}
 				warningMessage={defaultWarning}
 				icon={
-					<DeleteIcon />
+					<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />
 				}>
 				<div>Child</div>
 			</Deletable>
@@ -120,7 +120,7 @@ describe("<Deletable />", () => {
 				ariaLabel={defaultAriaLabel}
 				warningMessage={defaultWarning}
 				icon={
-					<DeleteIcon />
+					<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />
 				}>
 				<div>Child</div>
 			</Deletable>
@@ -148,7 +148,7 @@ describe("<Deletable />", () => {
 				ariaLabel={defaultAriaLabel}
 				warningMessage={defaultWarning}
 				icon={
-					<DeleteIcon />
+					<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />
 				} />
 		);
 

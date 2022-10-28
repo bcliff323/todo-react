@@ -14,10 +14,11 @@ import Deletable from '../components/Deletable';
 import HomeIcon from '../components/icons/HomeIcon';
 import ErrorMessage from '../components/ErrorMessage';
 import { LocalStorageContext } from '../context/LocalStorageContext';
-import { updateListTitle, updateTodoOrder, addNewTodo, updateTodoTitle, deleteTodo, updateTodoStatus } from '../services/TodoListService';
+import { updateListTitle, updateTodoOrder, addNewTodo, updateTodoTitle, deleteTodo, updateTodoStatus, deleteAllTodosInList } from '../services/TodoListService';
 import { TodoList, Todo, Status, ErrorTypes } from '../types';
 import "../css/styles.css";
 import DeleteIcon from '../components/icons/DeleteIcon';
+import DeleteModal from '../components/DeleteModal';
 
 type Props = {
 	children?: React.ReactNode;
@@ -83,6 +84,14 @@ export default function ListDetail(props: Props) {
 		setSavedListData(updatedData);
 	}
 
+	function deleteAll() {
+		if (!listDetails || !savedListData) {
+			return;
+		}
+		const updatedData = deleteAllTodosInList(listDetails.id, savedListData);
+		setSavedListData(updatedData);
+	}
+
 	return (
 		<Layout>
 			<div data-testid="detail-header"
@@ -137,7 +146,7 @@ export default function ListDetail(props: Props) {
 																	const updatedData = deleteTodo((listDetails as TodoList).id, id, savedListData);
 																	setSavedListData(updatedData);
 																}}
-																icon={<DeleteIcon />}>
+																icon={<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5 mt-1.5" />}>
 																<div className="flex pl-1 py-1">
 																	<input data-testid={`check-input-${i}`}
 																		type="checkbox"
@@ -168,6 +177,19 @@ export default function ListDetail(props: Props) {
 							)}
 						</Droppable>
 					</DragDropContext>
+				</div>
+			}
+			{todos.length > 0 &&
+				<div data-testid="delete-all-todos"
+					className="flex justify-end text-white text-sm">
+					<DeleteModal handleDelete={deleteAll}
+						confirmMessage="Yes"
+						cancelMessage="Cancel"
+						ariaLabel="Warning about permanently deleting all todo list items"
+						warningMessage="Are you sure you want to delete all todos in this list?"
+						icon={<DeleteIcon sizing="w-5 h-5 ml-2" />}
+						buttonLabel="Delete All"
+						showLabel={true} />
 				</div>
 			}
 		</Layout>

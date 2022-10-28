@@ -32,7 +32,7 @@ export default function DeleteModal(props: Props) {
 	return (
 		<>
 			<button data-testid="delete-list-button"
-				onClick={open}>
+				onClick={open} className="flex">
 				{
 					showLabel ?
 						buttonLabel :

@@ -51,7 +51,7 @@ export default function Home(props: Props) {
 											const updatedList = deleteList(id, savedListData);
 											setSavedListData(updatedList);
 										}}
-										icon={<DeleteIcon />}>
+										icon={<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5 mt-1.5" />}>
 										<div className="flex">
 											<ClipboardIcon />
 											<Link data-testid="list-link"

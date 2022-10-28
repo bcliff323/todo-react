@@ -1,6 +1,6 @@
 import ListDetail from "../../pages/ListDetail";
 import LocalStorageProvider from "../../components/LocalStorageProvider";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { givenTodoLists, givenTodos } from '../../helpers';
 import { MemoryRouter, Route, Routes } from "react-router-dom";
@@ -146,8 +146,10 @@ describe('<List Detail />', () => {
 			let listContainer = await screen.findByTestId('todos');
 			expect(listContainer.children.length).toEqual(1);
 
-			const deleteButton = await screen.findByTestId('delete-list-button');
+			const todos = await screen.findByTestId('todos');
+			const deleteButton = await within(todos).findByTestId('delete-list-button');
 			await userEvent.click(deleteButton);
+
 			const confirmButton = await screen.findByTestId('confirm-delete');
 			await userEvent.click(confirmButton);
 
@@ -155,6 +157,51 @@ describe('<List Detail />', () => {
 			await waitFor(() => {
 				expect(container).not.toBeInTheDocument();
 			})
+		});
+	});
+
+	describe("when the user deletes all todos", () => {
+		const listTitle = "List One";
+		const lists = givenTodoLists([listTitle]);
+		const todoData = givenTodos(["1", "2", "3"]);
+		lists[0].todos = todoData;
+		const id = lists[0].id;
+
+		beforeEach(() => {
+			global.Storage.prototype.getItem = jest.fn(() => JSON.stringify(lists));
+			global.Storage.prototype.setItem = jest.fn();
+
+			render(
+				<MemoryRouter initialEntries={[`/list/${id}`]}>
+					<Routes>
+						<Route path="/list/:id" element={
+							<LocalStorageProvider>
+								<ListDetail />
+							</LocalStorageProvider>
+						} />
+					</Routes>
+				</MemoryRouter>
+			);
+		});
+
+		it("should remove all todo items from the list", async () => {
+			let listContainer = await screen.findByTestId('todos');
+			expect(listContainer.children.length).toEqual(3);
+
+			const deleteAllContainer = await screen.findByTestId('delete-all-todos');
+			const deleteButton = await within(deleteAllContainer).findByTestId('delete-list-button');
+			await userEvent.click(deleteButton);
+
+			const confirmButton = await screen.findByTestId('confirm-delete');
+			await userEvent.click(confirmButton);
+
+			const container = screen.queryByTestId('todos');
+			const deleteAllButton = screen.queryByTestId('delete-all-todos');
+
+			await waitFor(() => {
+				expect(container).not.toBeInTheDocument();
+				expect(deleteAllButton).not.toBeInTheDocument();
+			});
 		});
 	});
 
