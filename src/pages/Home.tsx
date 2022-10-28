@@ -8,6 +8,7 @@ import { LocalStorageContext } from '../context/LocalStorageContext';
 import { addNewList, deleteList } from '../services/TodoListService';
 import { TodoList } from '../types';
 import "../css/styles.css";
+import DeleteIcon from '../components/icons/DeleteIcon';
 
 type Props = {
 	children?: React.ReactNode;
@@ -49,7 +50,8 @@ export default function Home(props: Props) {
 										handleDelete={(id: string) => {
 											const updatedList = deleteList(id, savedListData);
 											setSavedListData(updatedList);
-										}}>
+										}}
+										icon={<DeleteIcon />}>
 										<div className="flex">
 											<ClipboardIcon />
 											<Link data-testid="list-link"

@@ -14,6 +14,7 @@ type Props = {
 	handleDelete: (id: string) => void;
 	ariaLabel: string;
 	warningMessage: string;
+	icon: React.ReactNode;
 };
 
 export default function Deletable(props: Props) {
@@ -24,7 +25,8 @@ export default function Deletable(props: Props) {
 		cancelMessage,
 		id,
 		ariaLabel,
-		warningMessage
+		warningMessage,
+		icon
 	} = props;
 	const onDelete = () => handleDelete(id);
 
@@ -38,7 +40,7 @@ export default function Deletable(props: Props) {
 				cancelMessage={cancelMessage}
 				ariaLabel={ariaLabel}
 				warningMessage={warningMessage}
-				icon={<DeleteIcon />}
+				icon={icon}
 				buttonLabel="Delete"
 				showLabel={false} />
 		</div>

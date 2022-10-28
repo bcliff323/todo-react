@@ -17,6 +17,7 @@ import { LocalStorageContext } from '../context/LocalStorageContext';
 import { updateListTitle, updateTodoOrder, addNewTodo, updateTodoTitle, deleteTodo, updateTodoStatus } from '../services/TodoListService';
 import { TodoList, Todo, Status, ErrorTypes } from '../types';
 import "../css/styles.css";
+import DeleteIcon from '../components/icons/DeleteIcon';
 
 type Props = {
 	children?: React.ReactNode;
@@ -135,7 +136,8 @@ export default function ListDetail(props: Props) {
 																handleDelete={(id) => {
 																	const updatedData = deleteTodo((listDetails as TodoList).id, id, savedListData);
 																	setSavedListData(updatedData);
-																}}>
+																}}
+																icon={<DeleteIcon />}>
 																<div className="flex pl-1 py-1">
 																	<input data-testid={`check-input-${i}`}
 																		type="checkbox"

@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom/extend-expect";
 import Deletable from "../../components/Deletable";
+import DeleteIcon from "../../components/icons/DeleteIcon";
 
 describe("<Deletable />", () => {
 	const id = "1";
@@ -23,7 +24,10 @@ describe("<Deletable />", () => {
 				cancelMessage={defaultCancel}
 				handleDelete={defaultHandle}
 				ariaLabel={defaultAriaLabel}
-				warningMessage={defaultWarning}>
+				warningMessage={defaultWarning}
+				icon={
+					<DeleteIcon />
+				}>
 				<div>Child</div>
 			</Deletable>
 		);
@@ -40,7 +44,10 @@ describe("<Deletable />", () => {
 				cancelMessage={defaultCancel}
 				handleDelete={defaultHandle}
 				ariaLabel={defaultAriaLabel}
-				warningMessage={defaultWarning}>
+				warningMessage={defaultWarning}
+				icon={
+					<DeleteIcon />
+				}>
 				<div>Child</div>
 			</Deletable>
 		);
@@ -57,7 +64,10 @@ describe("<Deletable />", () => {
 				cancelMessage={defaultCancel}
 				handleDelete={defaultHandle}
 				ariaLabel={defaultAriaLabel}
-				warningMessage={defaultWarning}>
+				warningMessage={defaultWarning}
+				icon={
+					<DeleteIcon />
+				}>
 				<div>Child</div>
 			</Deletable>
 		);
@@ -82,7 +92,10 @@ describe("<Deletable />", () => {
 				confirmMessage={confirmMsg}
 				cancelMessage={cancelMsg}
 				ariaLabel={defaultAriaLabel}
-				warningMessage={defaultWarning}>
+				warningMessage={defaultWarning}
+				icon={
+					<DeleteIcon />
+				}>
 				<div>Child</div>
 			</Deletable>
 		);
@@ -105,7 +118,10 @@ describe("<Deletable />", () => {
 				cancelMessage={defaultCancel}
 				handleDelete={defaultHandle}
 				ariaLabel={defaultAriaLabel}
-				warningMessage={defaultWarning}>
+				warningMessage={defaultWarning}
+				icon={
+					<DeleteIcon />
+				}>
 				<div>Child</div>
 			</Deletable>
 		);
@@ -130,7 +146,10 @@ describe("<Deletable />", () => {
 				confirmMessage={defaultConfirm}
 				cancelMessage={defaultCancel}
 				ariaLabel={defaultAriaLabel}
-				warningMessage={defaultWarning} />
+				warningMessage={defaultWarning}
+				icon={
+					<DeleteIcon />
+				} />
 		);
 
 		const button = screen.getByTestId("delete-list-button");
