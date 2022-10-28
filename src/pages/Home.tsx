@@ -44,6 +44,8 @@ export default function Home(props: Props) {
 									<Deletable id={(list as TodoList).id}
 										confirmMessage="Yes"
 										cancelMessage="Cancel"
+										ariaLabel="Warning about permanently deleting list"
+										warningMessage="Are you sure you want to delete this list?"
 										handleDelete={(id: string) => {
 											const updatedList = deleteList(id, savedListData);
 											setSavedListData(updatedList);

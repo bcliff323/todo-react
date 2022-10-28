@@ -130,6 +130,8 @@ export default function ListDetail(props: Props) {
 															<Deletable id={(todo as Todo).id}
 																confirmMessage="Yes"
 																cancelMessage="Cancel"
+																ariaLabel="Warning about permanently deleting todo item"
+																warningMessage="Are you sure you want to delete this todo?"
 																handleDelete={(id) => {
 																	const updatedData = deleteTodo((listDetails as TodoList).id, id, savedListData);
 																	setSavedListData(updatedData);

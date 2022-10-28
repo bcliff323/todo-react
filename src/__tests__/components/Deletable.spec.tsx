@@ -7,6 +7,8 @@ describe("<Deletable />", () => {
 	const id = "1";
 	const defaultConfirm = "confirm";
 	const defaultCancel = "cancel";
+	const defaultAriaLabel = "Warning about deleting";
+	const defaultWarning = "Are you sure?";
 	const defaultHandle = () => { }
 
 	afterEach(() => {
@@ -19,7 +21,9 @@ describe("<Deletable />", () => {
 				id={id}
 				confirmMessage={defaultConfirm}
 				cancelMessage={defaultCancel}
-				handleDelete={defaultHandle}>
+				handleDelete={defaultHandle}
+				ariaLabel={defaultAriaLabel}
+				warningMessage={defaultWarning}>
 				<div>Child</div>
 			</Deletable>
 		);
@@ -34,7 +38,9 @@ describe("<Deletable />", () => {
 				id={id}
 				confirmMessage={defaultConfirm}
 				cancelMessage={defaultCancel}
-				handleDelete={defaultHandle}>
+				handleDelete={defaultHandle}
+				ariaLabel={defaultAriaLabel}
+				warningMessage={defaultWarning}>
 				<div>Child</div>
 			</Deletable>
 		);
@@ -49,7 +55,9 @@ describe("<Deletable />", () => {
 				id={id}
 				confirmMessage={defaultConfirm}
 				cancelMessage={defaultCancel}
-				handleDelete={defaultHandle}>
+				handleDelete={defaultHandle}
+				ariaLabel={defaultAriaLabel}
+				warningMessage={defaultWarning}>
 				<div>Child</div>
 			</Deletable>
 		);
@@ -72,7 +80,9 @@ describe("<Deletable />", () => {
 			<Deletable id={id}
 				handleDelete={defaultHandle}
 				confirmMessage={confirmMsg}
-				cancelMessage={cancelMsg}>
+				cancelMessage={cancelMsg}
+				ariaLabel={defaultAriaLabel}
+				warningMessage={defaultWarning}>
 				<div>Child</div>
 			</Deletable>
 		);
@@ -93,7 +103,9 @@ describe("<Deletable />", () => {
 				id={id}
 				confirmMessage={defaultConfirm}
 				cancelMessage={defaultCancel}
-				handleDelete={defaultHandle}>
+				handleDelete={defaultHandle}
+				ariaLabel={defaultAriaLabel}
+				warningMessage={defaultWarning}>
 				<div>Child</div>
 			</Deletable>
 		);
@@ -116,7 +128,9 @@ describe("<Deletable />", () => {
 				handleDelete={deleteFn}
 				id={id}
 				confirmMessage={defaultConfirm}
-				cancelMessage={defaultCancel} />
+				cancelMessage={defaultCancel}
+				ariaLabel={defaultAriaLabel}
+				warningMessage={defaultWarning} />
 		);
 
 		const button = screen.getByTestId("delete-list-button");

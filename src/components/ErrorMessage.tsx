@@ -44,9 +44,9 @@ export default function MissingList(props: Props) {
 					<div>
 						<p className="text-indigo-200 mb-2 pt-2">Were you looking for these lists?</p>
 						<div data-testid="error-view-lists" className="text-cyan-300">
-							{savedListData.map((l, i) =>
+							{savedListData.map(l =>
 								<Link data-testid="error-view-list"
-									key={i}
+									key={l.id}
 									className="flex hover:text-cyan-50"
 									to={`/list/${l.id}`}>
 									<ClipboardIcon /> {l.title}
