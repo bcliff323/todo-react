@@ -46,7 +46,7 @@ export default function EditableText(props: Props) {
 						isEditing ?
 							<input data-testid={testId}
 								ref={textInput}
-								className="w-full mr-1 rounded px-1 text-indigo-900"
+								className="w-full mr-1 rounded px-1 text-indigo-800"
 								defaultValue={text}
 								onChange={updateText} /> :
 							<p data-testid={`${testId}-text`}

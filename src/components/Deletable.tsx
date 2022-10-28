@@ -37,7 +37,7 @@ export default function Deletable(props: Props) {
 	const onDelete = () => handleDelete(id);
 
 	return (
-		<div className="flex">
+		<div className="flex items-center">
 			{children &&
 				<div className="flex-auto">
 					{children}
@@ -72,8 +72,6 @@ export default function Deletable(props: Props) {
 					</button>
 				</div>
 			</Dialog>
-
-
 		</div>
 	)
 }

@@ -117,7 +117,7 @@ export default function ListDetail(props: Props) {
 				label="Todo Item Title"
 				placeholder="Add a Todo" />
 			{todos.length > 0 &&
-				<div className="my-4 bg-cyan-50 text-indigo-900 p-2 mb-3 rounded text-2xl md:text-base">
+				<div className="my-4 bg-cyan-50 text-indigo-800 p-2 mb-3 rounded text-2xl md:text-base">
 					<DragDropContext onDragEnd={onDragEnd}>
 						<Droppable droppableId="list">
 							{(provided, dropSnapshot) => (
@@ -145,13 +145,13 @@ export default function ListDetail(props: Props) {
 																	const updatedData = deleteTodo((listDetails as TodoList).id, id, savedListData);
 																	setSavedListData(updatedData);
 																}}
-																icon={<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5 mt-1.5" />}
+																icon={<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />}
 																buttonLabel="Delete Todo"
 																showLabel={false}>
-																<div className="flex pl-1 py-1">
+																<div className="flex pl-1 py-1 items-center">
 																	<input data-testid={`check-input-${i}`}
 																		type="checkbox"
-																		className="mr-2"
+																		className="mr-2 accent-indigo-800 h-[20px] w-[20px]"
 																		value={(todo as Todo).id}
 																		checked={(todo as Todo).status === Status.Complete}
 																		onChange={(event: ChangeEvent<HTMLInputElement>) => {

@@ -41,7 +41,7 @@ export default function Home(props: Props) {
 						(list, i) => (
 							<div key={list.id}>
 								<div data-testid="todo-list"
-									className="bg-cyan-50 p-2 rounded text-indigo-900">
+									className="bg-cyan-50 p-2 rounded text-indigo-800">
 									<Deletable id={(list as TodoList).id}
 										confirmMessage="Yes"
 										cancelMessage="Cancel"
@@ -51,10 +51,10 @@ export default function Home(props: Props) {
 											const updatedList = deleteList(id, savedListData);
 											setSavedListData(updatedList);
 										}}
-										icon={<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5 mt-1.5" />}
+										icon={<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />}
 										buttonLabel="Delete List"
 										showLabel={false}>
-										<div className="flex">
+										<div className="flex items-center">
 											<ClipboardIcon />
 											<Link data-testid="list-link"
 												key={i}
