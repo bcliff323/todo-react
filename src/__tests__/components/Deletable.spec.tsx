@@ -1,4 +1,4 @@
-import { render, screen, getRoles, findByTestId } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe, toHaveNoViolations } from "jest-axe";
 import "@testing-library/jest-dom/extend-expect";
@@ -116,7 +116,7 @@ describe("<Deletable />", () => {
 	});
 
 	it("should display accessible modal content", async () => {
-		const { container } = render(
+		render(
 			<Deletable
 				id={id}
 				confirmMessage={defaultConfirm}
