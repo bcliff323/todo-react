@@ -44,11 +44,17 @@ export default function EditableText(props: Props) {
 				<div className="w-full flex-auto">
 					{
 						isEditing ?
-							<input data-testid={testId}
-								ref={textInput}
-								className="w-full mr-1 rounded px-1 text-indigo-800"
-								defaultValue={text}
-								onChange={updateText} /> :
+							<div>
+								<input data-testid={testId}
+									ref={textInput}
+									className="w-full mr-1 rounded px-1 text-indigo-800"
+									defaultValue={text}
+									onChange={updateText}
+									id="edit-text" />
+								<VisuallyHidden>
+									<label htmlFor="edit-text">Todo Text</label>
+								</VisuallyHidden>
+							</div> :
 							<p data-testid={`${testId}-text`}
 								className={`${strike ? "line-through" : "mr-1"}`}>
 								{text}

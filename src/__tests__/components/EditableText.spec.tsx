@@ -1,7 +1,10 @@
-import { fireEvent, queryByTestId, render, screen } from "@testing-library/react";
+import { findByRole, fireEvent, queryByTestId, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe, toHaveNoViolations } from "jest-axe";
 import "@testing-library/jest-dom/extend-expect";
 import EditableText from "../../components/EditableText";
+
+expect.extend(toHaveNoViolations);
 
 describe("<EditableText />", () => {
 	afterEach(() => {
@@ -22,6 +25,17 @@ describe("<EditableText />", () => {
 		expect(editInput).not.toBeInTheDocument();
 	});
 
+	it("should not violate accessibility rules by default", async () => {
+		const content = "Text Here";
+
+		const { container } = render(
+			<EditableText text={content} saveText={() => { }} testId="edit-text" />
+		);
+
+		const results = await axe(container);
+		expect(results).toHaveNoViolations();
+	});
+
 	it("should show editable field when user selects edit button", async () => {
 		const saveFn = jest.fn();
 		const content = "Text Here";
@@ -40,6 +54,21 @@ describe("<EditableText />", () => {
 		// The input element should appear
 		const input = screen.getByTestId('edit-text');
 		expect(input).toBeInTheDocument();
+	});
+
+	it("should not violate accessibility rules in edit-mode", async () => {
+		const saveFn = jest.fn();
+		const content = "Text Here";
+
+		const { container } = render(
+			<EditableText text={content} saveText={saveFn} testId="edit-text" />
+		);
+
+		const editButton = screen.getByTestId("edit-text-edit");
+		await userEvent.click(editButton);
+
+		const results = await axe(container);
+		expect(results).toHaveNoViolations();
 	});
 
 	it("should show the save button when the user selects the edit button", async () => {
