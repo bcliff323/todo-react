@@ -1,8 +1,11 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, getRoles, findByTestId } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe, toHaveNoViolations } from "jest-axe";
 import "@testing-library/jest-dom/extend-expect";
 import Deletable from "../../components/Deletable";
 import DeleteIcon from "../../components/icons/DeleteIcon";
+
+expect.extend(toHaveNoViolations);
 
 describe("<Deletable />", () => {
 	const id = "1";
@@ -112,6 +115,32 @@ describe("<Deletable />", () => {
 		expect(cancelButton).toBeInTheDocument();
 	});
 
+	it("should display accessible modal content", async () => {
+		const { container } = render(
+			<Deletable
+				id={id}
+				confirmMessage={defaultConfirm}
+				cancelMessage={defaultCancel}
+				handleDelete={defaultHandle}
+				ariaLabel={defaultAriaLabel}
+				warningMessage={defaultWarning}
+				icon={
+					<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />
+				}
+				buttonLabel={defaultButtonLabel}
+				showLabel={false}>
+				<div>Child</div>
+			</Deletable>
+		);
+
+		const button = screen.getByTestId("delete-list-button");
+		await userEvent.click(button);
+
+		const dialog = await screen.findByTestId('delete-modal');
+		const results = await axe(dialog);
+		expect(results).toHaveNoViolations();
+	});
+
 	it("should display confirm/cancel labels", async () => {
 		const confirmMsg = "confirm!";
 		const cancelMsg = "cancel!";
@@ -196,5 +225,49 @@ describe("<Deletable />", () => {
 
 		expect(deleteFn).toHaveBeenCalledTimes(1);
 		expect(deleteFn).toBeCalledWith(id);
+	});
+
+	it("should not violate accessibility rules when label is visibly hidden", async () => {
+		const { container } = render(
+			<Deletable
+				id={id}
+				confirmMessage={defaultConfirm}
+				cancelMessage={defaultCancel}
+				handleDelete={defaultHandle}
+				ariaLabel={defaultAriaLabel}
+				warningMessage={defaultWarning}
+				icon={
+					<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />
+				}
+				buttonLabel={defaultButtonLabel}
+				showLabel={false}>
+				<div>Child</div>
+			</Deletable>
+		);
+
+		const results = await axe(container);
+		expect(results).toHaveNoViolations();
+	});
+
+	it("should not violate accessibility rules when label is shown", async () => {
+		const { container } = render(
+			<Deletable
+				id={id}
+				confirmMessage={defaultConfirm}
+				cancelMessage={defaultCancel}
+				handleDelete={defaultHandle}
+				ariaLabel={defaultAriaLabel}
+				warningMessage={defaultWarning}
+				icon={
+					<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />
+				}
+				buttonLabel={defaultButtonLabel}
+				showLabel={true}>
+				<div>Child</div>
+			</Deletable>
+		);
+
+		const results = await axe(container);
+		expect(results).toHaveNoViolations();
 	});
 });

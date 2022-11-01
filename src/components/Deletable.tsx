@@ -56,7 +56,8 @@ export default function Deletable(props: Props) {
 				isOpen={showDialog}
 				onDismiss={close}
 				aria-label={ariaLabel}
-				initialFocusRef={buttonRef}>
+				initialFocusRef={buttonRef}
+				data-testid="delete-modal">
 				<p>{warningMessage}</p>
 				<div className="flex justify-end">
 					<button data-testid="confirm-delete"
