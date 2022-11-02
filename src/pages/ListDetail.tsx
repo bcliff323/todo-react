@@ -107,6 +107,8 @@ export default function ListDetail(props: Props) {
 					<EditableText
 						testId="list-title-edit"
 						text={(listDetails as TodoList).title}
+						editButtonLabel="Edit list title"
+						saveButtonLabel="Save list title"
 						saveText={(title: string) => {
 							const updatedData = updateListTitle(title, listDetails.id, savedListData);
 							setSavedListData(updatedData);
@@ -163,6 +165,8 @@ export default function ListDetail(props: Props) {
 																		testId={`todo-input-${i}`}
 																		text={(todo as Todo).title}
 																		strike={(todo as Todo).status === Status.Complete}
+																		editButtonLabel="Edit todo text"
+																		saveButtonLabel="Save todo text"
 																		saveText={(title: string) => {
 																			const updatedData = updateTodoTitle(title, (listDetails as TodoList).id, (todo as Todo).id, savedListData);
 																			setSavedListData(updatedData);
