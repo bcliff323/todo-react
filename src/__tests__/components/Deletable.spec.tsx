@@ -11,6 +11,7 @@ describe("<Deletable />", () => {
 	const id = "1";
 	const defaultConfirm = "confirm";
 	const defaultCancel = "cancel";
+	const defaultAriaLabel = "List Item";
 	const defaultAriaModalLabel = "Warning about deleting";
 	const defaultWarning = "Are you sure?";
 	const defaultButtonLabel = "Delete";
@@ -21,6 +22,52 @@ describe("<Deletable />", () => {
 	});
 
 	it("should render children", () => {
+		render(
+			<Deletable
+				id={id}
+				confirmMessage={defaultConfirm}
+				cancelMessage={defaultCancel}
+				handleDelete={defaultHandle}
+				ariaLabel={defaultAriaLabel}
+				ariaModalLabel={defaultAriaModalLabel}
+				warningMessage={defaultWarning}
+				icon={
+					<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />
+				}
+				buttonLabel={defaultButtonLabel}
+				showLabel={false}>
+				<div>Child</div>
+			</Deletable>
+		);
+
+		const child = screen.getByText("Child");
+		expect(child).toBeInTheDocument();
+	});
+
+	it("should render an aria label attribute if one is passed", () => {
+		render(
+			<Deletable
+				id={id}
+				confirmMessage={defaultConfirm}
+				cancelMessage={defaultCancel}
+				handleDelete={defaultHandle}
+				ariaLabel={defaultAriaLabel}
+				ariaModalLabel={defaultAriaModalLabel}
+				warningMessage={defaultWarning}
+				icon={
+					<DeleteIcon sizing="w-7 h-7 md:h-5 md:w-5" />
+				}
+				buttonLabel={defaultButtonLabel}
+				showLabel={false}>
+				<div>Child</div>
+			</Deletable>
+		);
+
+		const container = screen.getByTestId(`deletable-${id}`);
+		expect(container).toHaveAttribute('aria-label', defaultAriaLabel);
+	});
+
+	it("should not render an aria label attribute if one omitted", () => {
 		render(
 			<Deletable
 				id={id}
@@ -38,8 +85,8 @@ describe("<Deletable />", () => {
 			</Deletable>
 		);
 
-		const child = screen.getByText("Child");
-		expect(child).toBeInTheDocument();
+		const container = screen.getByTestId(`deletable-${id}`);
+		expect(container).not.toHaveAttribute('aria-label', defaultAriaLabel);
 	});
 
 	it("should render a delete button", () => {
@@ -49,6 +96,7 @@ describe("<Deletable />", () => {
 				confirmMessage={defaultConfirm}
 				cancelMessage={defaultCancel}
 				handleDelete={defaultHandle}
+				ariaLabel={defaultAriaLabel}
 				ariaModalLabel={defaultAriaModalLabel}
 				warningMessage={defaultWarning}
 				icon={
@@ -72,6 +120,7 @@ describe("<Deletable />", () => {
 				confirmMessage={defaultConfirm}
 				cancelMessage={defaultCancel}
 				handleDelete={defaultHandle}
+				ariaLabel={defaultAriaLabel}
 				ariaModalLabel={defaultAriaModalLabel}
 				warningMessage={defaultWarning}
 				icon={
@@ -94,6 +143,7 @@ describe("<Deletable />", () => {
 				confirmMessage={defaultConfirm}
 				cancelMessage={defaultCancel}
 				handleDelete={defaultHandle}
+				ariaLabel={defaultAriaLabel}
 				ariaModalLabel={defaultAriaModalLabel}
 				warningMessage={defaultWarning}
 				icon={
@@ -122,6 +172,7 @@ describe("<Deletable />", () => {
 				confirmMessage={defaultConfirm}
 				cancelMessage={defaultCancel}
 				handleDelete={defaultHandle}
+				ariaLabel={defaultAriaLabel}
 				ariaModalLabel={defaultAriaModalLabel}
 				warningMessage={defaultWarning}
 				icon={
@@ -148,6 +199,7 @@ describe("<Deletable />", () => {
 		render(
 			<Deletable id={id}
 				handleDelete={defaultHandle}
+				ariaLabel={defaultAriaLabel}
 				confirmMessage={confirmMsg}
 				cancelMessage={cancelMsg}
 				ariaModalLabel={defaultAriaModalLabel}
@@ -178,6 +230,7 @@ describe("<Deletable />", () => {
 				confirmMessage={defaultConfirm}
 				cancelMessage={defaultCancel}
 				handleDelete={defaultHandle}
+				ariaLabel={defaultAriaLabel}
 				ariaModalLabel={defaultAriaModalLabel}
 				warningMessage={defaultWarning}
 				icon={
@@ -208,6 +261,7 @@ describe("<Deletable />", () => {
 				id={id}
 				confirmMessage={defaultConfirm}
 				cancelMessage={defaultCancel}
+				ariaLabel={defaultAriaLabel}
 				ariaModalLabel={defaultAriaModalLabel}
 				warningMessage={defaultWarning}
 				icon={
@@ -234,6 +288,7 @@ describe("<Deletable />", () => {
 				confirmMessage={defaultConfirm}
 				cancelMessage={defaultCancel}
 				handleDelete={defaultHandle}
+				ariaLabel={defaultAriaLabel}
 				ariaModalLabel={defaultAriaModalLabel}
 				warningMessage={defaultWarning}
 				icon={
@@ -256,6 +311,7 @@ describe("<Deletable />", () => {
 				confirmMessage={defaultConfirm}
 				cancelMessage={defaultCancel}
 				handleDelete={defaultHandle}
+				ariaLabel={defaultAriaLabel}
 				ariaModalLabel={defaultAriaModalLabel}
 				warningMessage={defaultWarning}
 				icon={

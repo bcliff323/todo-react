@@ -122,6 +122,7 @@ export default function ListDetail(props: Props) {
 						<Droppable droppableId="list">
 							{(provided, dropSnapshot) => (
 								<div data-testid="todos"
+									aria-live="polite"
 									ref={provided.innerRef}
 									className={`rounded ${dropSnapshot.isDraggingOver ? 'bg-cyan-100' : ''}`}
 									{...provided.droppableProps}>
@@ -139,7 +140,8 @@ export default function ListDetail(props: Props) {
 															<Deletable id={(todo as Todo).id}
 																confirmMessage="Yes"
 																cancelMessage="Cancel"
-																ariaLabel="Warning about permanently deleting todo item"
+																ariaLabel="Todo item"
+																ariaModalLabel="Warning about permanently deleting todo item"
 																warningMessage="Are you sure you want to delete this todo?"
 																handleDelete={(id) => {
 																	const updatedData = deleteTodo((listDetails as TodoList).id, id, savedListData);
@@ -186,7 +188,7 @@ export default function ListDetail(props: Props) {
 					<Deletable id={listDetails.id}
 						confirmMessage="Yes"
 						cancelMessage="Cancel"
-						ariaLabel="Warning about permanently deleting all todo items in list"
+						ariaModalLabel="Warning about permanently deleting all todo items in list"
 						warningMessage="Are you sure you want to delete all todos in this list?"
 						handleDelete={deleteAll}
 						icon={<DeleteIcon sizing="w-5 h-5 ml-2" />}

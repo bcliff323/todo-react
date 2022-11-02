@@ -35,6 +35,7 @@ export default function Home(props: Props) {
 				label="Todo List Title"
 				placeholder="Add a Todo List" />
 			<div data-testid="todo-lists"
+				aria-live="polite"
 				className="py-4">
 				{
 					savedListData && savedListData.map(
@@ -43,9 +44,10 @@ export default function Home(props: Props) {
 								<div data-testid="todo-list"
 									className="bg-cyan-50 p-2 rounded text-indigo-800">
 									<Deletable id={(list as TodoList).id}
-										confirmMessage="Yes"
+										confirmMessage="Delete List"
 										cancelMessage="Cancel"
-										ariaLabel="Warning about permanently deleting list"
+										ariaLabel="Todo list"
+										ariaModalLabel="Warning about permanently deleting list"
 										warningMessage="Are you sure you want to delete this list?"
 										handleDelete={(id: string) => {
 											const updatedList = deleteList(id, savedListData);

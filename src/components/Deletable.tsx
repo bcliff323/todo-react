@@ -10,6 +10,7 @@ type Props = {
 	confirmMessage: string;
 	cancelMessage: string;
 	handleDelete: (id: string) => void;
+	ariaLabel?: string;
 	ariaModalLabel: string;
 	warningMessage: string;
 	icon: React.ReactNode;
@@ -28,7 +29,8 @@ export default function Deletable(props: Props) {
 		warningMessage,
 		icon,
 		buttonLabel,
-		showLabel
+		showLabel,
+		ariaLabel
 	} = props;
 	const [showDialog, setShowDialog] = useState<boolean>(false);
 	const close = () => setShowDialog(false);
@@ -37,8 +39,9 @@ export default function Deletable(props: Props) {
 	const onDelete = () => handleDelete(id);
 
 	return (
-		<div className="flex items-center"
-			aria-label="Todo item">
+		<div data-testid={`deletable-${id}`}
+			className="flex items-center"
+			aria-label={ariaLabel}>
 			{children &&
 				<div className="flex-auto">
 					{children}
