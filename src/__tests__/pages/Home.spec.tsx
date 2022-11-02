@@ -1,13 +1,36 @@
 import Home from "../../pages/Home";
 import LocalStorageProvider from "../../components/LocalStorageProvider";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
 import userEvent from "@testing-library/user-event";
 import { givenTodoLists } from '../../helpers';
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 
+expect.extend(toHaveNoViolations);
+
 describe('<Home />', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
+	});
+
+	it("should not violate accessibility rules", async () => {
+		const listTitles = ["List One", "List Two"];
+		const lists = givenTodoLists(listTitles);
+		global.Storage.prototype.getItem = jest.fn(() => JSON.stringify(lists));
+
+		const { container } = render(
+			<MemoryRouter initialEntries={[`/`]}>
+				<Routes>
+					<Route path="/" element={
+						<LocalStorageProvider>
+							<Home />
+						</LocalStorageProvider>
+					} />
+				</Routes>
+			</MemoryRouter>
+		);
+		const results = await axe(container);
+		expect(results).toHaveNoViolations();
 	});
 
 	describe("when there is no saved data", () => {
