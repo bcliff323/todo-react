@@ -7,7 +7,8 @@ type Props = {
 export default function Layout(props: Props) {
 	const { children } = props;
 	return (
-		<div className="flex justify-center">
+		<div aria-live="polite"
+			className="flex justify-center">
 			<div className="
 				mx-5
 				my-5

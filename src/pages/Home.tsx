@@ -36,7 +36,6 @@ export default function Home(props: Props) {
 				placeholder="Add a Todo List"
 				buttonLabel="Save todo list" />
 			<div data-testid="todo-lists"
-				aria-live="polite"
 				className="py-4">
 				{
 					savedListData && savedListData.map(

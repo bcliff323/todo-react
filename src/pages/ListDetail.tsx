@@ -125,7 +125,6 @@ export default function ListDetail(props: Props) {
 						<Droppable droppableId="list">
 							{(provided, dropSnapshot) => (
 								<div data-testid="todos"
-									aria-live="polite"
 									ref={provided.innerRef}
 									className={`rounded ${dropSnapshot.isDraggingOver ? 'bg-cyan-100' : ''}`}
 									{...provided.droppableProps}>
