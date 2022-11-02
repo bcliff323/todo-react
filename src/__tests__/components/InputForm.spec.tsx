@@ -1,7 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { axe, toHaveNoViolations } from "jest-axe";
 import "@testing-library/jest-dom/extend-expect";
 import InputForm from "../../components/InputForm";
+
+expect.extend(toHaveNoViolations);
 
 describe("<InputForm />", () => {
 	const handleSubmitFn = jest.fn();
@@ -49,5 +51,11 @@ describe("<InputForm />", () => {
 
 		expect(handleSubmitFn).toHaveBeenCalledTimes(1);
 		expect(handleSubmitFn).toHaveBeenLastCalledWith(updatedValue);
+	});
+
+	it("should not violate accessibility rules", async () => {
+		const form = screen.getByTestId("form");
+		const results = await axe(form);
+		expect(results).toHaveNoViolations();
 	});
 });
