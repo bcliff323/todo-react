@@ -2,13 +2,46 @@ import ListDetail from "../../pages/ListDetail";
 import LocalStorageProvider from "../../components/LocalStorageProvider";
 import { render, screen, fireEvent, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { axe, toHaveNoViolations } from "jest-axe";
 import { givenTodoLists, givenTodos } from '../../helpers';
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import "@testing-library/jest-dom/extend-expect";
 
+expect.extend(toHaveNoViolations);
+
 describe('<List Detail />', () => {
 	afterEach(() => {
 		jest.clearAllMocks();
+	});
+
+	/* TODO: 
+	 * React beautiful dnd library uses role=button to enable dragging.
+	 * This causes todo item inputs to throw nested interactive element
+	 * errors. Find an accessible solution to let screen reader users know
+	 * they can tab into draggable items to edit, delete, check, etc.
+	*/
+	it.skip("should not violate accessibility rules", async () => {
+		const listTitle = "List One";
+		const lists = givenTodoLists([listTitle]);
+		const todoData = givenTodos(["1", "2", "3"]);
+		lists[0].todos = todoData;
+		const id = lists[0].id;
+
+		global.Storage.prototype.getItem = jest.fn(() => JSON.stringify(lists));
+
+		const { container } = render(
+			<MemoryRouter initialEntries={[`/list/${id}`]}>
+				<Routes>
+					<Route path="/list/:id" element={
+						<LocalStorageProvider>
+							<ListDetail />
+						</LocalStorageProvider>
+					} />
+				</Routes>
+			</MemoryRouter>
+		);
+		const results = await axe(container);
+		expect(results).toHaveNoViolations();
 	});
 
 	describe("when there are no saved todos", () => {
