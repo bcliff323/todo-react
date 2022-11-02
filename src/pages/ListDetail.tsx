@@ -116,7 +116,8 @@ export default function ListDetail(props: Props) {
 				</h1>
 			</div>
 			<InputForm handleSubmit={handleSubmit}
-				label="Todo Item Title"
+				inputLabel="Todo Item Title"
+				buttonLabel="Save todo item"
 				placeholder="Add a Todo" />
 			{todos.length > 0 &&
 				<div className="my-4 bg-cyan-50 text-indigo-800 p-2 mb-3 rounded text-2xl md:text-base">

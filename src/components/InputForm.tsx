@@ -6,14 +6,16 @@ import PlusIcon from './icons/PlusIcon';
 type Props = {
 	handleSubmit: (listName: string) => void;
 	placeholder: string;
-	label: string;
+	inputLabel: string;
+	buttonLabel: string;
 };
 
 export default function InputForm(props: Props) {
 	const {
 		handleSubmit,
 		placeholder,
-		label
+		inputLabel,
+		buttonLabel
 	} = props;
 
 	const [listName, setListName] = useState<string>("");
@@ -42,13 +44,13 @@ export default function InputForm(props: Props) {
 					<button data-testid="form-submit"
 						type="submit"
 						className="text-fuchsia-50 hover:text-fuchia-700 p-2 bg-indigo-600 rounded-r">
-						<VisuallyHidden>Submit</VisuallyHidden>
+						<VisuallyHidden>{buttonLabel}</VisuallyHidden>
 						<PlusIcon />
 					</button>
 				</div>
 				<label className="text-cyan-200 text-xs"
 					htmlFor="values">
-					{label}
+					{inputLabel}
 				</label>
 			</form>
 		</div>

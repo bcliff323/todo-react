@@ -32,8 +32,9 @@ export default function Home(props: Props) {
 		<Layout>
 			<h1 className="text-white mb-3 text-2xl">Todos</h1>
 			<InputForm handleSubmit={handleSubmit}
-				label="Todo List Title"
-				placeholder="Add a Todo List" />
+				inputLabel="Todo List Title"
+				placeholder="Add a Todo List"
+				buttonLabel="Save todo list" />
 			<div data-testid="todo-lists"
 				aria-live="polite"
 				className="py-4">

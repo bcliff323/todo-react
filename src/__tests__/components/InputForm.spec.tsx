@@ -10,12 +10,14 @@ describe("<InputForm />", () => {
 	const placeholderText = "New Item";
 	const updatedValue = "New List Was Created";
 	const labelText = "List Title";
+	const buttonLabel = "Save";
 
 	beforeEach(() => {
 		render(
 			<InputForm handleSubmit={handleSubmitFn}
 				placeholder={placeholderText}
-				label={labelText} />
+				inputLabel={labelText}
+				buttonLabel={buttonLabel} />
 		)
 	})
 	afterEach(() => {
@@ -38,7 +40,7 @@ describe("<InputForm />", () => {
 	});
 
 	it("should render a submit button", () => {
-		const button = screen.getByTestId("form-submit");
+		const button = screen.getByText(buttonLabel);
 		expect(button).toBeInTheDocument();
 	});
 
