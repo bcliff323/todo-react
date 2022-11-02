@@ -10,7 +10,7 @@ type Props = {
 	confirmMessage: string;
 	cancelMessage: string;
 	handleDelete: (id: string) => void;
-	ariaLabel: string;
+	ariaModalLabel: string;
 	warningMessage: string;
 	icon: React.ReactNode;
 	buttonLabel: string;
@@ -24,7 +24,7 @@ export default function Deletable(props: Props) {
 		confirmMessage,
 		cancelMessage,
 		id,
-		ariaLabel,
+		ariaModalLabel,
 		warningMessage,
 		icon,
 		buttonLabel,
@@ -37,7 +37,8 @@ export default function Deletable(props: Props) {
 	const onDelete = () => handleDelete(id);
 
 	return (
-		<div className="flex items-center">
+		<div className="flex items-center"
+			aria-label="Todo item">
 			{children &&
 				<div className="flex-auto">
 					{children}
@@ -55,10 +56,11 @@ export default function Deletable(props: Props) {
 			<Dialog className="my-4 bg-cyan-50 rounded"
 				isOpen={showDialog}
 				onDismiss={close}
-				aria-label={ariaLabel}
+				aria-label={ariaModalLabel}
+				aria-describedby="warning-message"
 				initialFocusRef={buttonRef}
 				data-testid="delete-modal">
-				<p>{warningMessage}</p>
+				<p id="warning-message">{warningMessage}</p>
 				<div className="flex justify-end">
 					<button data-testid="confirm-delete"
 						className="mt-3 mr-2 py-0.5 px-2.5 rounded bg-indigo-800 hover:bg-indigo-500 text-white"
