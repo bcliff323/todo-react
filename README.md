@@ -1,4 +1,4 @@
-# A Todo List Application
+# A Todo List Application [![Netlify Status](https://api.netlify.com/api/v1/badges/e54d0028-0070-4add-b5bd-3aaafdc75097/deploy-status)](https://app.netlify.com/sites/storied-caramel-d5710b/deploys)
 
 This react app allows you to create, and update todo lists. All data is saved temporarily in your browser. The experience was built using `create-react-app`.
 
