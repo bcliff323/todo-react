@@ -1,23 +1,30 @@
-name: 'Deploy to Netlify'
+name: 'Netlify Deploy'
 
 on:
-  push:
-    branches: [main]
+  release:
+    types: ['published']
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Run tests
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '18.x'
+    - run: npm ci
+    - run: npm test
+    
   deploy:
     name: 'Deploy'
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
-      - name: Build the website
-        run: |
-          mkdir -p /home/runner/work/_temp/_github_home/build <commands_to_build_the_site_and_store_the_output_in_'/home/runner/work_temp/_github_home/build'>
-      - name: Deploy Netlify
-        uses: danakim/gh-action-deploy-netlify@master
+      - uses: actions/checkout@v1
+      - uses: jsmrcaga/action-netlify-deploy@master
         with:
-          AUTH_TOKEN: ${{ secrets.NETLIFY_TODO_REACT }}
-          SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          DEPLOY_PROD: true
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_TODO_REACT }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_DEPLOY_MESSAGE: "Prod deploy v${{ github.ref }}"
+          NETLIFY_DEPLOY_TO_PROD: true
