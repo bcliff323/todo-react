@@ -18,6 +18,7 @@ import { updateListTitle, updateTodoOrder, addNewTodo, updateTodoTitle, deleteTo
 import { TodoList, Todo, Status, ErrorTypes } from '../types';
 import "../css/styles.css";
 import DeleteIcon from '../components/icons/DeleteIcon';
+import { CUSTOM_TODO_FOCUS_NOTIFICATION, TODO_CHECKBOX_NOTIFICATION } from "../constants";
 
 type Props = {
 	children?: React.ReactNode;
@@ -138,7 +139,8 @@ export default function ListDetail(props: Props) {
 															data-testid="todo"
 															className={`px-1 rounded ${snapshot.isDragging ? 'bg-blue-200' : ''}`}
 															{...provided.draggableProps}
-															{...provided.dragHandleProps}>
+															{...provided.dragHandleProps}
+															aria-describedby="custom-screen-reader-notification">
 															<Deletable id={(todo as Todo).id}
 																confirmMessage="Yes"
 																cancelMessage="Cancel"
@@ -153,14 +155,21 @@ export default function ListDetail(props: Props) {
 																buttonLabel="Delete Todo"
 																showLabel={false}>
 																<div className="flex pl-1 py-1 items-center">
-																	<input data-testid={`check-input-${i}`}
-																		type="checkbox"
-																		className="mr-2 accent-indigo-800 h-[20px] w-[20px]"
-																		value={(todo as Todo).id}
-																		checked={(todo as Todo).status === Status.Complete}
-																		onChange={(event: ChangeEvent<HTMLInputElement>) => {
-																			handleCheckChange((listDetails as TodoList).id, event.target.value, event.target.checked);
-																		}} />
+																	<div>
+																		<VisuallyHidden>
+																			<label htmlFor={`check-input-${i}`}>Todo status</label>
+																		</VisuallyHidden>
+																		<input id={`check-input-${i}`}
+																			aria-describedby="input-check-description"
+																			data-testid={`check-input-${i}`}
+																			type="checkbox"
+																			className="mr-2 accent-indigo-800 h-[20px] w-[20px]"
+																			value={(todo as Todo).id}
+																			checked={(todo as Todo).status === Status.Complete}
+																			onChange={(event: ChangeEvent<HTMLInputElement>) => {
+																				handleCheckChange((listDetails as TodoList).id, event.target.value, event.target.checked);
+																			}} />
+																	</div>
 																	<EditableText
 																		testId={`todo-input-${i}`}
 																		text={(todo as Todo).title}
@@ -200,6 +209,14 @@ export default function ListDetail(props: Props) {
 						showLabel={true} />
 				</div>
 			}
+			<p id="custom-screen-reader-notification"
+				className="hidden">
+				{CUSTOM_TODO_FOCUS_NOTIFICATION}
+			</p>
+			<p id="input-check-description"
+				className="hidden">
+				{TODO_CHECKBOX_NOTIFICATION}
+			</p>
 		</Layout>
 	)
 }

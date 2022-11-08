@@ -1,3 +1,5 @@
 export const LIST_NOT_FOUND_MSG = "It seems like the list you're looking for does not exist. It's possible your browser history has been cleared since you last viewed this page. You can get started on a new list using the button below.";
 export const PAGE_NOT_FOUND_MSG = "It seems like the page you're looking for does not exist, but you can get started on a new list using the button below.";
 export const GENERIC_ERROR_MSG = "Appologies, something seems to have gone wrong and it's likely my fault. Please send me an email and I can try to troubleshoot!";
+export const CUSTOM_TODO_FOCUS_NOTIFICATION = "This item is both draggable and editable. To edit the state or contents of this todo, press tab. To drag the todo, press space bar. When dragging you can use the up and down arrow keys to move the item around and escape to cancel. Some screen readers may require you to be in focus mode or to use your pass through key."
+export const TODO_CHECKBOX_NOTIFICATION = "Select this checkbox to complete the todo"
